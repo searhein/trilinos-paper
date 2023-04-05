@@ -1,6 +1,17 @@
 \todo{Describe new linear solver packages, ShyLU, FROSch, new packages similar to old packages, new capabilities in these packages (two level DD), GPU supported features}
 
-\subsection{MueLu}
+Trilinos have several linear solver capabilities that vary from direct solvers, iterative solvers, preconditioners that are local to a compute node to scalable domain decomposition and multigrid methods. Almost all the capabilities described here are focused on the current generation Trilinos with the Tpetra stack. All of these solver capabilities are built on top of Kokkos and are GPU capable to varying degrees. We present any exception to this on the detailed description below.
+
+\subsection{Iterative Linear Solvers}
+
+
+\subsection{Domain Decomposition or Schur Complement Type Methods: Ifpack2 and ShyLU}
+
+
+\subsection{Multilevel Domain Decomposition: FROSch}
+
+
+\subsection{Multigrid Methods: MueLu}
 
 MueLu is a flexible and scalable high-performance multigrid solver library.
 It provides a variety of multigrid algorithms for problems ranging from Poisson-like operators over elasticity, convection-diffusion, and Navier-Stokes to Maxwell’s equations.
@@ -44,3 +55,11 @@ Details on the compatibility of MueLu and its predecessor ML~\cite{Heroux2005a,G
 
 Besides its C++ API, MueLu offers a MATLAB interface, MueMex, to provide access to MueLu's aggregation and solver routines from MATLAB
 MueMex allows users to setup and solve arbitrarily many problems with either MueLu as a preconditioner, Belos as a solver and Epetra or Tpetra for data structures.
+
+
+
+\subsection{Direct Linear Solvers}
+
+\subsection{Native Direct Linear Solvers}
+
+\subsection{Interfaces to Third-party Direct Linear Solvers}
