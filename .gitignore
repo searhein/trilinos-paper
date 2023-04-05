@@ -1,0 +1,12 @@
+.DS_Store
+*.aux
+*.bbl
+*.blg
+*.out
+*.log
+*.synctex.gz
+.fdb_latexmk
+.fls
+
+*-eps-converted-to.pdf
+
