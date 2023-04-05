@@ -5,8 +5,10 @@
 *.out
 *.log
 *.synctex.gz
-.fdb_latexmk
-.fls
+main.fdb_latexmk
+main.fls
+main.pdf
+comment.cut
 
 *-eps-converted-to.pdf
 
