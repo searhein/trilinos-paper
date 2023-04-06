@@ -5,10 +5,14 @@ Trilinos have several linear solver capabilities that vary from direct solvers, 
 \subsection{Iterative Linear Solvers}
 
 
-\subsection{Domain Decomposition or Schur Complement Type Methods: Ifpack2 and ShyLU}
+\subsection{Domain Decomposition: Ifpack2}
+
+Trilinos has domain decomposition approaches in two different packages: Ifpack2 and ShyLU (specifically the ShyLU\_DD subpackage). Ifpack2 implements overlapping additive Schwarz approach with several options for the local subdomain solves. The local subdomain solvers could vary from sequential versions of preconditioners such as ILU implemented in Ifpack2 itself or portable algorithms for incomplete facatorizations and triangular solvers implemented in Kokkos Kernels. It is possible to use direct solvers as sudomain solvers as well. There are options that exist to call node level inexact incomplete factorization preconditioners in ShyLU as well. One level preconditioners such as these are primarily used as smoothers within multigrid methods or for solving ``simpler'' problems where the cost of setup for more robust multilevel methods is  prohibitive when compared to the reduction in the number of iterations.
+\todo{Jonathan, Chris, Brian: expand / fix?}
 
 
 \subsection{Multilevel Domain Decomposition: FROSch}
+\label{ssec:frosch}
 
 FROSch (Fast and Robust Overlapping Schwarz) is a framework for the construction multilevel Schwarz domain decomposition solvers. Besides parallel scalability, FROSch focuses on a wide range of applicability and robustness for challenging problems while allowing for an algebraic construction of the Schwarz operators, that is, the construction only based on the fully assembled system matrix. This is facilitated by an algebraic construction of an overlapping domain decomposition on the first level, as in Ifpack2, as well as the use of extension-based coarse spaces, such as in the classical two-level generalized Dryja--Smith--Widlund (GDSW) preconditioner~\cite{dohrmann_domain_2008} and related variants. While the first version was still based on the Epetra linear algebra framework~\cite{heinlein_parallel_2016}, the current implementation is based on Xpetra~\cite{heinlein_frosch_2020}, which allows the use of both Epetra and Tpetra. Algorithmic variants of Schwarz methods implemented in FROSch include:
 \begin{itemize}
@@ -68,14 +72,18 @@ Besides its C++ API, MueLu offers a MATLAB interface, MueMex, to provide access 
 MueMex allows users to setup and solve arbitrarily many problems with either MueLu as a preconditioner, Belos as a solver and Epetra or Tpetra for data structures.
 
 
-
 \subsection{Direct Linear Solvers}
 
-\subsection{Native Direct Linear Solvers}
+\subsection{Native Direct / Hybrid Linear Solvers: ShyLU}
+ The Schur complement based hybrid solver in Trilinos is implemented in ShyLU. This is a hybrid direct and iterative solver where the subdomains use a direct solver and the Schur complement is solved using an iterative approach. The preconditioner for the Schur complement solver is computed using a probing approach or using a threshold based dropping strategy. This solver was developed to address the requirements of circuit simulation applications. The solver is also hybrid in the parallel computing sense as it uses MPI+threads. This is solver algorithm is not focused on GPU architectures. As a result, we have not implemented this solver using Kokkos. This solver has been shown to be useful for circuit simulation applications.
+
+ ShyLU also has two sparse direct linear solvers. Basker is a sparse LU factorization focused on problems that have the block triangular form structure typically seen in circuit simulation applications. Basker uses these structures to factor and solve the diagonal blocks in parallel. The larger diagonal blocks can themselves be factored in parallel by discovering the parallelism available using a nested-dissection reordering. Basker is focused on the CPU architectures. However, we have still implemented the solver using Kokkos. \todo{Ichi, Nathan expand / add?}
+
+ Tacho computes supernodal sparse Cholesky factorizations. This was designed for problems that are common in the mechanics applications. Tacho exploits the supernodal structure both in factorization and triangular solve phase.  Trilinos also has a templated implementation of the KLU solver called KLU2 to be used as a native coarse solver for multigrid preconditioners.
 
 \subsection{Interfaces to Third-party Direct Linear Solvers}
 
 \subsection{Eigensolvers}
-\todo{Do we want that here or somewhere else?}
+\todo{Do we want that here or somewhere else? SR: Has there been any new development in Eigen solvers recently? Should we just mention they work with new stack?}
 
-\todo{CG: How about Stratimikos or Stratimikos2?}
+\todo{CG: How about Stratimikos or Stratimikos2? }
