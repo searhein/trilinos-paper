@@ -5,7 +5,7 @@ Trilinos have several linear solver capabilities that vary from direct solvers, 
 \subsection{Iterative Linear Solvers}
 
 \subsection{Krylov methods: Belos}
-\todo{JHU: it seems strange not to mention Belos.}
+\todo{JHU: it seems strange not to mention Belos. Belos paper: \cite{Bavier2012a}}
 
 \subsection{Domain Decomposition: Ifpack2}
 
@@ -83,6 +83,8 @@ MueMex allows users to setup and solve arbitrarily many problems with either Mue
 
 \subsection{Direct Linear Solvers}
 
+\todo{Amesos2~\cite{Bavier2012a}: here or in Section~\ref{sec:TPLDirectSolvers}?}
+
 \subsection{Native Direct / Hybrid Linear Solvers: ShyLU}
  The Schur complement based hybrid solver in Trilinos is implemented in ShyLU. This is a hybrid direct and iterative solver where the subdomains use a direct solver and the Schur complement is solved using an iterative approach. The preconditioner for the Schur complement solver is computed using a probing approach or using a threshold based dropping strategy. This solver was developed to address the requirements of circuit simulation applications. The solver is also hybrid in the parallel computing sense as it uses MPI+threads. This is solver algorithm is not focused on GPU architectures. As a result, we have not implemented this solver using Kokkos. This solver has been shown to be useful for circuit simulation applications.
 
@@ -91,6 +93,7 @@ MueMex allows users to setup and solve arbitrarily many problems with either Mue
  Tacho computes supernodal sparse Cholesky factorizations. This was designed for problems that are common in the mechanics applications. Tacho exploits the supernodal structure both in factorization and triangular solve phase.  Trilinos also has a templated implementation of the KLU solver called KLU2 to be used as a native coarse solver for multigrid preconditioners.
 
 \subsection{Interfaces to Third-party Direct Linear Solvers}
+\label{sec:TPLDirectSolvers}
 
 \subsection{Eigensolvers}
 \todo{Do we want that here or somewhere else? SR: Has there been any new development in Eigen solvers recently? Should we just mention they work with new stack?}
