@@ -79,7 +79,8 @@ These aggregates define a tentative projection operator.
 A final projection operator is created by applying a smoother to the tentative operator.
 
 \item \emph{Algebraic multigrid for Maxwell’s equations}:
-\todo{CG: I can write something}
+  MueLu implements specialized solvers for the solution of curl-curl problems~\cite{BochevHuEtAl2008_AlgebraicMultigridApproachBased}.
+  Scaling results on Haswell, KNL, ARM and NVIDIA V100 GPUs at full machine scale can be found in~\cite{BettencourtBrownEtAl2021_EmpirePic}.
 
 \item \emph{Multigrid for multiphysics}:
 MueLu implements a tool box to compile multi-level block preconditioners for block matrices arising from coupled multiphysics problems.
@@ -122,6 +123,18 @@ MueMex allows users to setup and solve arbitrarily many problems with either Mue
 
 \subsection{Interfaces to Third-party Direct Linear Solvers}
 \label{sec:TPLDirectSolvers}
+
+
+\subsection{Physics block operators and preconditioners: Teko}
+\label{sec:teko}
+
+The Teko library provides interfaces for operators and preconditioners that are constructed from large physics sub-blocks.
+Sub-blocks themselves can be Tpetra or Epetra matrices.
+Generic block preconditioning strategies such as Jacobi and Gauss-Seidel and commonly used approximate inverse strategies for the Navier-Stokes equation such as SIMPLEC, LSC and PCD are provided \cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
+Block preconditioners for first order formulations of Maxwell's equations are distributed with the Panzer package.
+
+
+
 
 \subsection{Eigensolvers}
 \todo{Do we want that here or somewhere else? SR: Has there been any new development in Eigen solvers recently? Should we just mention they work with new stack?}
