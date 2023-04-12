@@ -4,23 +4,23 @@
 
 \subsection{Kokkos Kernels}\label{subsec:kk}
 Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos ecosystem
-~\cite{trott2021kokkos} and provides node local implementations of mathematic kernels
+~\cite{trott2021kokkos} and provides node local implementations of mathematical kernels
 widely used across packages in Trilinos. As a member of the Kokkos
 ecosystem, Kokkos Kernels is tightly integrated on Kokkos features and aims at
 delivering performance portable algorithms across major CPU and GPU based HPC systems.
 Due to its node local nature, Kokkos Kernels does not rely on MPI or other communication
-library unlike numerous other packages in Trilinos.
+libraries unlike numerous other packages in Trilinos.
 
 The implementation of Kokkos Kernels algorithms leverage the hierarchical parallelism
 exposed by the Kokkos library~\cite{kim2017designing} and increasingly provides coverage
 for stream callable kernels. To ensure flexibility for the distributed libraries that
 might call its algorithms, Kokkos Kernels provides thread safe and asynchronous
-implementations for most its kernels. Kokkos Kernels also serves as a major point of
+implementations for most of its kernels. Kokkos Kernels also serves as a major point of
 integration for vendor optimized libraries such as cuBLAS, cuSPARSE, rocBLAS, rocSPARSE,
 MKL, ARMpl and others.
 
 The capabilities that Kokkos Kernels provides can be divided in four major categories:
-1. BLAS algorithms, 2. sparse linear algebra and preconditioners, 3. graph algorithms
+1. BLAS algorithms, 2. sparse linear algebra and preconditioners, 3. graph algorithms, and
 4. batched dense and sparse linear algebra~\cite{liegeois2023performance}. The main
 points of integration of Kokkos Kernels in Trilinos are Tpetra for the dense and sparse
 linear algebra capabilities, Ifpack2 for the preconditioners and batched algorithms,
@@ -30,6 +30,6 @@ coloring/coarsening~\cite{kelley2022parallel} and fused Jacobi-SpGEMM kernels.
 
 Similarly to the Kokkos library, Kokkos Kernels is developed in its own GitHub
 repository\footnote{https://github.com/kokkos/kokkos-kernels} outside of the Trilinos
-github repository. Every version of the library is integrated and tested in Trilinos
+GitHub repository. Every version of the library is integrated and tested in Trilinos
 as part of the Kokkos ecosystem release process. Additional information on Kokkos
 Kernels capabilities can be found here~\cite{deveci2018multithreaded,wolf2017fast}.
