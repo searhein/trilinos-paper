@@ -20,7 +20,7 @@ in turn be driven by non-intrusive analysis routines.
 
 Sacado \cite{SacadoURL,phipps2012efficient,phipps2008large} provides forward and reverse-mode operator overloading-based automatic differentiation (AD) tools within Trilinos.
 %The package provides both forward and reverse-mode AD data types. 
-Sacado forward AD tools have been integrated into Kokkos and have demonstrated good performance on GPU architecture~\cite{phipps2022automatic}.
+Sacado forward AD tools have been integrated into Kokkos and have demonstrated good performance on GPU architectures~\cite{phipps2022automatic}.
 Sacado, along with its Kokkos integration, provides high-performance derivative capabilities to numerous Office of Science and NNSA extreme scale applications, including Albany for solid mechanics and land ice modeling~\cite{Salinger2016,MPASAlbany2018}, 
 Charon for semiconductor device modeling~\cite{CharonUsersManual2020} and multiphase chemically reacting flows~\cite{Musson2009}, Drekar for computational fluid dynamics (CFD)~\cite{Sondak2021,Shadid2016}, magnetohydrodynamics~\cite{Shadid2016mhd} and 
 plasma physics~\cite{Crockatt2022,Miller2019}, Xyce for electronic circuit simulation~\cite{xyceTrilinos,xycePCE}, and SPARC for hypersonic fluid flows~\cite{SparcValidation}. 
@@ -39,7 +39,7 @@ The stochastic Galerkin implementation of Stokhos has been used in~\cite{constan
 The embedded ensemble propagation consists in propagating a subset of samples gathered into a so-called ensemble through the forward simulation at once.
 It builds on~\cite{pawlowski2012automating} for automating embedded analysis capabilities; Stokhos defines an ensemble type, a SIMD data type, that is able to store
 the values of the input, output, and state variables for every sample of an ensemble. This type can then be used in the Tpetra solver stack as a template argument for the scalar type.
-This approach allows to save computation time in four ways: the sample-independent data and computation can be reused for every samples of an ensemble, the memory access pattern is improved, 
+This approach allows to save computation time in four ways: the sample-independent data and computation can be reused for every sample of an ensemble, the memory access pattern is improved,
 the operations on the ensemble type can be vectorized efficiently, and the message passing costs are reduced by sending fewer but larger messages.
 However, the approach requires solvers and BLAS functions to be aware of the extra dimension associated to the ensemble; for example, a GMRES for ensemble types~\cite{liegeois2020gmres} needs to monitor 
 the convergence of the individual sample in order to decide when to stop based on the union of the information.

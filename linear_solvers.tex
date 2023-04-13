@@ -1,41 +1,45 @@
 \todo{Describe new linear solver packages, ShyLU, FROSch, new packages similar to old packages, new capabilities in these packages (two level DD), GPU supported features}
 
-Trilinos have several linear solver capabilities that vary from direct solvers, iterative solvers, preconditioners that are local to a compute node to scalable domain decomposition and multigrid methods. Almost all the capabilities described here are focused on the current generation Trilinos with the Tpetra stack. All of these solver capabilities are built on top of Kokkos and are GPU capable to varying degrees. We present any exception to this on the detailed description below.
+Trilinos offers several linear solver capabilities that vary from direct solvers, iterative solvers, preconditioners that are local to a compute node to scalable domain decomposition and multigrid methods. Almost all the capabilities described here are focused on the current generation Trilinos using the Tpetra stack. All of these solver capabilities are built on top of Kokkos and are GPU capable to varying degrees. We present any exception to this in the detailed descriptions below.
 
 \subsection{Iterative Linear Solvers}
 
+\subsection{Krylov methods: Belos}
+\todo{JHU: it seems strange not to mention Belos. Belos paper: \cite{Bavier2012a}}
 
 \subsection{Domain Decomposition: Ifpack2}
 
-Trilinos has domain decomposition approaches in two different packages: Ifpack2 and ShyLU (specifically the ShyLU\_DD subpackage). Ifpack2 implements overlapping additive Schwarz approach with several options for the local subdomain solves. The local subdomain solvers could vary from sequential versions of preconditioners such as ILU implemented in Ifpack2 itself or portable algorithms for incomplete facatorizations and triangular solvers implemented in Kokkos Kernels. It is possible to use direct solvers as sudomain solvers as well. There are options that exist to call node level inexact incomplete factorization preconditioners in ShyLU as well. One level preconditioners such as these are primarily used as smoothers within multigrid methods or for solving ``simpler'' problems where the cost of setup for more robust multilevel methods is  prohibitive when compared to the reduction in the number of iterations.
+Trilinos provides domain decomposition approaches in two different packages: Ifpack2 and ShyLU (specifically the ShyLU\_DD subpackage). Ifpack2 implements overlapping additive Schwarz approaches with several options for the local subdomain solves. The local subdomain solvers could vary from sequential versions of preconditioners such as ILU implemented in Ifpack2 itself or portable algorithms for incomplete facatorizations and triangular solvers implemented in Kokkos Kernels. It is possible to use direct solvers as sudomain solvers as well. There are options that exist to call node level inexact incomplete factorization preconditioners in ShyLU as well. One level preconditioners such as these are primarily used as smoothers within multigrid methods or for solving ``simpler'' problems where the cost of setup for more robust multilevel methods is  prohibitive when compared to the reduction in the number of iterations.
 \todo{Jonathan, Chris, Brian: expand / fix?}
 
 
 \subsection{Multilevel Domain Decomposition: FROSch}
 \label{ssec:frosch}
 
-FROSch (Fast and Robust Overlapping Schwarz) is a framework for the construction multilevel Schwarz domain decomposition solvers. Besides parallel scalability, FROSch focuses on a wide range of applicability and robustness for challenging problems while allowing for an algebraic construction of the Schwarz operators, that is, the construction only based on the fully assembled system matrix. This is facilitated by an algebraic construction of an overlapping domain decomposition on the first level, as in Ifpack2, as well as the use of extension-based coarse spaces, such as in the classical two-level generalized Dryja--Smith--Widlund (GDSW) preconditioner~\cite{dohrmann_domain_2008} and related variants. While the first version was still based on the Epetra linear algebra framework~\cite{heinlein_parallel_2016}, the current implementation is based on Xpetra~\cite{heinlein_frosch_2020}, which allows the use of both Epetra and Tpetra. Algorithmic variants of Schwarz methods implemented in FROSch include:
+FROSch (Fast and Robust Overlapping Schwarz) is a framework for the construction of multilevel Schwarz domain decomposition solvers. Besides parallel scalability, FROSch focuses on a wide range of applicability and robustness for challenging problems while allowing for an algebraic construction of the Schwarz operators, that is, the construction is only based on the fully assembled system matrix. This is facilitated by an algebraic construction of an overlapping domain decomposition on the first level, as in Ifpack2, as well as the use of extension-based coarse spaces, such as in the classical two-level generalized Dryja--Smith--Widlund (GDSW) preconditioner~\cite{dohrmann_domain_2008} and related variants. While the first version was still based on the Epetra linear algebra framework~\cite{heinlein_parallel_2016}, the current implementation of FROSch is based on Xpetra~\cite{heinlein_frosch_2020}, which allows the use of both Epetra and Tpetra linear algebra stacks. Algorithmic variants of Schwarz methods implemented in FROSch include:
 \begin{itemize}
 	\item \emph{Extension-based coarse spaces based on a partition of unity on the interface}, such as classical GDSW, reduced dimension GDSW (RGDSW) coarse spaces, and multiscale finite element method (MsFEM) coarse spaces.
 	\item \emph{Monolithic Schwarz preconditioners} for block systems.
 	\item \emph{Multilevel Schwarz preconditioners}, which are obtained from two-level Schwarz preconditioners by by recursively applying Schwarz preconditioners as an inexact solver for the coarse problems.
 \end{itemize}
-FROSch has been applied to various challenging application problems, including scalar elliptic and elasticity problems~\cite{heinlein_parallel_2016}, computational fluid dynamics problems~\cite{heinlein_monolithic_2019}, and coupled multiphysics problems for land ice simulations~\cite{heinlein_frosch_2022}; the latter two have been solved using monolithic preconditioning techniques. To obtain, robust convergence for heterogeneous model problems, spectral coarse spaces will be implemented shortly~\cite{heinlein_adaptive_2019}. FROSch preconditioner have scaled to more than 200\,k processor cores on the Theta Cray XC40 supercomputer at the Argonne Leadership Computing Facility (ALCF). 
+FROSch has been applied to various challenging application problems, including scalar elliptic and elasticity problems~\cite{heinlein_parallel_2016}, computational fluid dynamics problems~\cite{heinlein_monolithic_2019}, and coupled multiphysics problems for land ice simulations~\cite{heinlein_frosch_2022}; the latter two have been solved using monolithic preconditioning techniques. To obtain robust convergence for heterogeneous model problems, spectral coarse spaces will be implemented shortly~\cite{heinlein_adaptive_2019}. FROSch preconditioners have scaled to more than 200\,k processor cores on the Theta Cray XC40 supercomputer at the Argonne Leadership Computing Facility (ALCF).
 
-In the current implementation, FROSch assumes a one-to-one correspondence of subdomains and MPI ranks, however, due to an interface to the other solver packages in Trilinos, inexact subdomain solvers can be employed on subdomains. An extension to multiple subdomains per MPI rank is currently being implemented. Using Kokkos and KokkosKernels, which are available through the Tpetra linear algebra framework, FROSch has recently also been ported to GPUs~\cite{Yamazaki:2022:EST}, with performance gains performing the triangular solve or inexact solves with ILU on the GPUs.
+In the current implementation, FROSch assumes a one-to-one correspondence of subdomains and MPI ranks, however, due to an interface to the other solver packages in Trilinos, inexact subdomain solvers can be employed on subdomains. An extension to multiple subdomains per MPI rank is currently being implemented. Using Kokkos and KokkosKernels, which are available through the Tpetra linear algebra framework, FROSch has recently also been ported to GPUs~\cite{Yamazaki:2022:EST}, with performance gains for the triangular solve or inexact solves with ILU on the GPUs.
 
 A demo/tutorial for FROSch can be found at the GitHub repository~\cite{frosch_demo}.
 
 \subsection{Multigrid Methods: MueLu}
 
 MueLu is a flexible and scalable high-performance multigrid solver library.
-It provides a variety of multigrid algorithms for problems ranging from Poisson-like operators over elasticity, convection-diffusion, and Navier-Stokes to Maxwell’s equations.
+It provides a variety of multigrid algorithms for problems ranging from Poisson-like operators over elasticity, convection-diffusion, and Navier-Stokes, and Maxwell’s equations
+all the way to multigrid methods for coupled multiphysics systems.
 Besides its strong focus on aggregation-based algebraic multigrid (AMG) methods,
 MueLu comes with specialized capabilities for (semi-)structured grids to perform (semi-)coarsening along grid lines,
 yet forming the coarse operator via a Galerkin product (in contrast to classical geometric multigrid).
 MueLu is extensible and allows for the research and development of new multigrid preconditioning methods.
 Its weak and strong scalability even for vector-valued PDEs on unstructured meshes
-up to 131,000 cores of a Cray XC40 and one million cores of a Blue Gene/Q system~\cite{Lin2017a,Thomas2019a}. \todo{CG: Find some newer runs.}
+up to 131,000 cores of a Cray XC40 and one million cores of a Blue Gene/Q system have been shown in~\cite{Lin2017a,Thomas2019a}.
+\todo{CG: Find some newer runs.}
 
 \todo{Should we comment on the current state of Kokkos in MueLu? CG: Yes}
 
@@ -44,8 +48,8 @@ MueLu provides several approaches to constructing and solving the multilevel pro
 \begin{itemize}
 \item \emph{Algebraic smoothed aggregation approach}~\cite{Vanek1996a}:
 The matrix graph is colored to create aggregates (groups) of nodes.
-These aggregates define a preliminary projection operator.
-A final projection operator is created by applying a smoother to the preliminary operator.
+These aggregates define a tentative projection operator.
+A final projection operator is created by applying a smoother to the tentative operator.
 
 \item \emph{Algebraic multigrid for Maxwell’s equations}:
 \todo{CG: I can write something}
@@ -56,8 +60,7 @@ Applications range from Navier-Stokes equations
 over surface-coupling (as in fluid/structure interaction or contact mechanics~\cite{Wiesner2021a})
 to volume-coupled problems (e.g. in magneto-hydro dynamics~\cite{Ohm2022a}).
 
-
-\item \emph{Semi-coarsening algebraic multigrid approach}~\todo{Add citation}:
+\item \emph{Semi-coarsening algebraic multigrid approach}~\cite{Tuminaro2016a}:
 Specialized aggregation procedures for three-dimensional meshes generated by extrusion of a two-dimensional unstructured grid
 allow to first coarsen in the direction of extrusion to reduce the system to a two-dimensional representation and then perform classical aggregation-based AMG
 for the remaining coarsenings.
@@ -65,7 +68,7 @@ for the remaining coarsenings.
 \item \emph{AMG for (semi-)structured grids}:
 Structured aggregation allows to identify coarse points with a user-given coarsening rate and compute interpolation operators.
 The coarse operators are then formed via a Galerkin product to avoid remeshing on the coarse levels.
-This work has been extended to semi-structured grids to leverage structured-grid computational performance~\cite{Mayr2022a}.
+This work has been extended to semi-structured grids to leverage structured-grid computational performance also for globally unstructured grids~\cite{Mayr2022a}.
 
 \end{itemize}
 
@@ -75,20 +78,23 @@ The MueLu User's Guide~\cite{BergerVergiat2023a} summarizes installation instruc
 The MueLu Tutorial~\cite{Mayr2023b} introduces beginners and experts to various topics in MueLu and shows how to solve or precondition different linear systems using MueLu.
 Details on the compatibility of MueLu and its predecessor ML~\cite{Heroux2005a,Gee2006a} can be found in the MueLu User's Guide~\cite{BergerVergiat2023a}.
 
-Besides its C++ API, MueLu offers a MATLAB interface, MueMex, to provide access to MueLu's aggregation and solver routines from MATLAB
+Besides its C++ API, MueLu offers a MATLAB interface, MueMex, to provide access to MueLu's aggregation and solver routines from MATLAB.
 MueMex allows users to setup and solve arbitrarily many problems with either MueLu as a preconditioner, Belos as a solver and Epetra or Tpetra for data structures.
 
 
 \subsection{Direct Linear Solvers}
 
+\todo{Amesos2~\cite{Bavier2012a}: here or in Section~\ref{sec:TPLDirectSolvers}?}
+
 \subsection{Native Direct / Hybrid Linear Solvers: ShyLU}
- The Schur complement based hybrid solver in Trilinos is implemented in ShyLU. This is a hybrid direct and iterative solver where the subdomains use a direct solver and the Schur complement is solved using an iterative approach. The preconditioner for the Schur complement solver is computed using a probing approach or using a threshold based dropping strategy. This solver was developed to address the requirements of circuit simulation applications. The solver is also hybrid in the parallel computing sense as it uses MPI+threads. This is solver algorithm is not focused on GPU architectures. As a result, we have not implemented this solver using Kokkos. This solver has been shown to be useful for circuit simulation applications.
+ The Schur complement based hybrid solver in Trilinos is implemented in ShyLU. This is a hybrid direct and iterative solver where the subdomains use a direct solver and the Schur complement is solved using an iterative approach. The preconditioner for the Schur complement solver is computed using a probing approach or using a threshold based dropping strategy. This solver was developed to address the requirements of circuit simulation applications. The solver is also hybrid in the parallel computing sense as it uses MPI+threads. This  solver algorithm is not focused on GPU architectures. As a result, we have not implemented this solver using Kokkos. This solver has been shown to be useful for circuit simulation applications.
 
  ShyLU also has two sparse direct linear solvers. Basker is a sparse LU factorization focused on problems that have the block triangular form structure typically seen in circuit simulation applications. Basker uses these structures to factor and solve the diagonal blocks in parallel. The larger diagonal blocks can themselves be factored in parallel by discovering the parallelism available using a nested-dissection reordering. Basker is focused on the CPU architectures. However, we have still implemented the solver using Kokkos. \todo{Ichi, Nathan expand / add?}
 
  Tacho computes supernodal sparse Cholesky factorizations. This was designed for problems that are common in the mechanics applications. Tacho exploits the supernodal structure both in factorization and triangular solve phase.  Trilinos also has a templated implementation of the KLU solver called KLU2 to be used as a native coarse solver for multigrid preconditioners.
 
 \subsection{Interfaces to Third-party Direct Linear Solvers}
+\label{sec:TPLDirectSolvers}
 
 \subsection{Eigensolvers}
 \todo{Do we want that here or somewhere else? SR: Has there been any new development in Eigen solvers recently? Should we just mention they work with new stack?}
