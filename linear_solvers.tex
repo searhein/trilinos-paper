@@ -7,9 +7,36 @@ Trilinos offers several linear solver capabilities that vary from direct solvers
 \subsection{Krylov methods: Belos}
 \todo{JHU: it seems strange not to mention Belos. Belos paper: \cite{Bavier2012a}}
 
-\subsection{Domain Decomposition: Ifpack2}
+\subsection{Domain Decomposition and Basic Iterative Methods: Ifpack2}
 
-Trilinos provides domain decomposition approaches in two different packages: Ifpack2 and ShyLU (specifically the ShyLU\_DD subpackage). Ifpack2 implements overlapping additive Schwarz approaches with several options for the local subdomain solves. The local subdomain solvers may either be CPU-only versions of incomplete factorization preconditioners implemented in Ifpack2 itself, such as ILU(k) and ILUt (thresholded ILU), or architecture portable algorithms for incomplete factorizations and triangular solvers implemented in Kokkos Kernels. It is possible to use direct solvers as subdomain solvers as well. There are options to call shared-memory inexact incomplete factorization preconditioners in ShyLU as well. One-level preconditioners such as these are used as smoothers within multigrid methods, for solving ``simpler'' problems where the setup cost of a more robust multilevel methods is prohibitive when compared to the reduction in the number of iterations, or when the underlying problem is simply not amenable to multigrid methods.
+Trilinos provides domain decomposition approaches in two different
+packages: Ifpack2 and ShyLU (specifically the ShyLU\_DD
+subpackage). Ifpack2 implements overlapping additive Schwarz
+approaches with several options for the local subdomain solves. The
+local subdomain solvers may either be CPU-only versions of incomplete
+factorization preconditioners implemented in Ifpack2 itself, such as
+ILU(k) and ILUt (thresholded ILU), or architecture portable algorithms
+for incomplete factorizations and triangular solvers implemented in
+Kokkos Kernels. It is possible to use direct solvers as subdomain
+solvers as well. There are options to call shared-memory inexact
+incomplete factorization preconditioners in ShyLU as well. One-level
+preconditioners such as these are used as smoothers within multigrid
+methods, for solving ``simpler'' problems where the setup cost of a
+more robust multilevel methods is prohibitive when compared to the
+reduction in the number of iterations, or when the underlying problem
+is simply not amenable to multigrid methods. 
+
+Ifpack2 also supplies basic iterative methods, such as Jacobi
+iteration, Gauss-Seidel, a MPI-oriented hybrid of Jacobi and
+Gauss-Seidel (e.g. Jacobi between ranks and Gauss-Seidel on them) and
+Chebysev iteraton.  These are available both in point and block
+forms and can operate on CSR or BSR matrices.  In the block case,
+line relaxation is also supported, while in the point case, techniques
+like Vanka relaxation \cite{Vanka1986} can be supported.  Auxillary
+smoothing for $H(curl)$ and $H(div)$ discretizations, of the style of
+Hiptmair \cite{Hiptmair1997} are also supported.
+Local kernels for these methods are either
+implemented in Ifpack2 proper, Tpetra or called from Kokos kernels.
 \todo{Jonathan, Chris, Brian: expand / fix?}
 
 
