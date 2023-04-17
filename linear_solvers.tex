@@ -29,15 +29,15 @@ is simply not amenable to multigrid methods.
 Ifpack2 also supplies basic iterative methods, such as Jacobi
 iteration, Gauss-Seidel, a MPI-oriented hybrid of Jacobi and
 Gauss-Seidel (e.g. Jacobi between ranks and Gauss-Seidel on them) and
-Chebysev iteraton.  These are available both in point and block
+Chebyshev iteration.  These are available both in point and block
 forms and can operate on CSR or BSR matrices.  In the block case,
 line relaxation is also supported, while in the point case, techniques
-like Vanka relaxation \cite{Vanka1986} can be supported.  Auxillary
+like Vanka relaxation \cite{Vanka1986} can be supported.  Auxiliary
 smoothing for $H(curl)$ and $H(div)$ discretizations, of the style of
 Hiptmair \cite{Hiptmair1997} are also supported.
 Local kernels for these methods are either
-implemented in Ifpack2 proper, Tpetra or called from Kokos kernels.
-\todo{Jonathan, Chris, Brian: expand / fix?}
+implemented in Ifpack2 proper, Tpetra or called from Kokkos kernels.
+\todo{Jonathan, Brian: expand / fix?}
 
 
 \subsection{Multilevel Domain Decomposition Methods: FROSch}
