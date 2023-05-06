@@ -32,13 +32,12 @@ Gauss-Seidel (e.g. Jacobi between ranks and Gauss-Seidel on them) and
 Chebyshev iteration.  These are available both in point and block
 forms and can operate on CSR or BSR matrices.  In the block case,
 line relaxation is also supported, while in the point case, techniques
-like Vanka relaxation \cite{Vanka1986} can be supported.  Auxiliary
+like Vanka relaxation \cite{Vanka1986} can be supported.  Auxiliary-space
 smoothing for $H(curl)$ and $H(div)$ discretizations, of the style of
 Hiptmair \cite{Hiptmair1997} are also supported.
-Local kernels for these methods are either
-implemented in Ifpack2 proper, Tpetra or called from Kokkos kernels.
-\todo{Jonathan, Brian: expand / fix?}
-
+Local kernels for all these methods are
+implemented in Ifpack2 proper.  Additionally, Ifpack2 can call through
+to Kokkos-Kernels for algorithmic variants of Gauss-Seidel and Jacobi iterations.
 
 \subsection{Multilevel Domain Decomposition Methods: FROSch}
 \label{ssec:frosch}
@@ -77,6 +76,8 @@ MueLu provides several approaches to constructing and solving the multilevel pro
 The matrix graph is colored to create aggregates (groups) of nodes.
 These aggregates define a tentative projection operator.
 A final projection operator is created by applying a smoother to the tentative operator.
+There are a variety of deterministic and non-deterministic coloring algorithms implemented directly
+in MueLu or in Kokkos-Kernels.  For a full description, see~\cite{BergerVergiat2023a}.
 
 \item \emph{Algebraic multigrid for Maxwell’s equations}:
   MueLu implements specialized solvers for the solution of curl-curl problems~\cite{BochevHuEtAl2008_AlgebraicMultigridApproachBased}.
@@ -94,7 +95,7 @@ allow to first coarsen in the direction of extrusion to reduce the system to a t
 for the remaining coarsenings.
 
 \item \emph{AMG for (semi-)structured grids}:
-Structured aggregation allows to identify coarse points with a user-given coarsening rate and compute interpolation operators.
+MueLu has a structured aggregation capability in which the user may specify the coarsening rate used to compute interpolation operators.
 The coarse operators are then formed via a Galerkin product to avoid remeshing on the coarse levels.
 This work has been extended to semi-structured grids to leverage structured-grid computational performance also for globally unstructured grids~\cite{Mayr2022a}.
 
@@ -108,6 +109,9 @@ Details on the compatibility of MueLu and its predecessor ML~\cite{Heroux2005a,G
 
 Besides its C++ API, MueLu offers a MATLAB interface, MueMex, to provide access to MueLu's aggregation and solver routines from MATLAB.
 MueMex allows users to setup and solve arbitrarily many problems with either MueLu as a preconditioner, Belos as a solver and Epetra or Tpetra for data structures.
+
+While MueLu requires Teuchos, Tpetra, Xpetra, Kokkos, and Kokkos-Kernels, it has a strong dependence 
+on the Ifpack2 and Zoltan2 libraries
 
 
 \subsection{Direct Linear Solvers}
