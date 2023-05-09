@@ -68,6 +68,11 @@ up to 131,000 cores of a Cray XC40 and one million cores of a Blue Gene/Q system
 \todo{CG: Find some newer runs.}
 
 \todo{Should we comment on the current state of Kokkos in MueLu? CG: Yes}
+As of Trilinos 14.0, MueLu has a required dependency on Kokkos,
+and the main code routes in MueLu (e.g. smoothed aggregation, semi-coarsening, p-coarsening, structured aggregation)
+utilize Kokkos and have been shown to scale on device \todo{citeme?}.
+Some older algorithms such as energy minimization and the variable degree of freedom Laplacian have not been adapted to fully utilize Kokkos yet;
+however, they are part of ongoing efforts to use Kokkos throughout MueLu completely and to merge serial and device-capable algorithms.
 
 MueLu provides several approaches to constructing and solving the multilevel problem:
 
@@ -99,6 +104,13 @@ MueLu has a structured aggregation capability in which the user may specify the 
 The coarse operators are then formed via a Galerkin product to avoid remeshing on the coarse levels.
 This work has been extended to semi-structured grids to leverage structured-grid computational performance also for globally unstructured grids~\cite{Mayr2022a}.
 
+\item \emph{Matrix-free capabilities}:
+MueLu treats many of the objects in its hierarchy as operators instead of matrices when possible.
+This enables one to use MueLu in a matrix-free fashion through factories such as \texttt{MatrixFreeTentativePFactory},
+which only requires aggregates in order to perform a grid transfer using a tentative prolongator.
+Other grid transfers such as structured grid transfers discussed above may also be performed in a matrix-free fashion,
+and simple smoothers such as Jacobi and Chebyshev may also be performed on matrix-free operators.
+
 \end{itemize}
 
 Several resources provide insight into MueLu:
@@ -111,7 +123,10 @@ Besides its C++ API, MueLu offers a MATLAB interface, MueMex, to provide access 
 MueMex allows users to setup and solve arbitrarily many problems with either MueLu as a preconditioner, Belos as a solver and Epetra or Tpetra for data structures.
 
 While MueLu requires Teuchos, Tpetra, Xpetra, Kokkos, and Kokkos-Kernels, it has a strong dependence 
-on the Ifpack2 and Zoltan2 libraries
+on the Amesos2, Ifpack2, and Zoltan2 libraries.
+MueLu also supports interfaces to abstraction layer packages such as Stratimikos and Thyra though the MueLu adapters library.
+These interfaces are required to use MueLu with the Teko block preconditioning package.
+For more details on using MueLu with Teko, see the MueLu examples directory.
 
 
 \subsection{Direct Linear Solvers}
