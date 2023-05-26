@@ -46,3 +46,71 @@ the convergence of the individual sample in order to decide when to stop based o
 
 
 \subsection{Loca}
+
+
+\subsection{Tempus}
+
+Tempus (Latin meaning time as in “tempus fugit” -> “time flies”)
+is the Trilinos time-integration package for advanced transient
+analysis.  It includes various time integrators and embedded
+sensitivity analysis for next-generation code architectures.  Tempus
+provides “out-of-the-box” time-integration capabilities, which
+allows users to quickly and easily incorporate time-integration
+capabilities to their applications and switch between various time
+integrators depending on the simulation needs.  Additionally, Tempus
+provides “build-your-own” capabilities, which allows applications
+to incorporate various Tempus components to augment or replace
+application transient capabilities. Other capabilities include
+embedded error analysis, sensitivity analysis, transient optimization
+with ROL.
+
+Tempus provides a general infrastructure for the time evolution of
+solutions through a variety of general integration schemes.  Tempus
+provides time integrators for explicit and implicit methods and for
+first- and second-order ODEs.  It can be used from small systems of
+equations (e.g., single ODEs for the time evolution of plasticity
+models, and multiple ODEs for coupled chemical reactions) to
+large-scale transient simulations requiring exascale computing
+(e.g., flow fields around reentry vehicles and magneto-hydrodynamics).
+
+Tempus has several components that can be used in concert or
+individually, depending on the needs of the application.
+\begin{itemize}
+  \item Integrators are the time-loop structure for time integration
+  and provide several features, e.g., control the advancement of
+  the solution, selection of the next timestep size and solution
+  output.
+
+  \item Time Steppers are individual methods that advance the
+  solution from one step to the next.  A variety of time steppers
+  are available:
+  \begin{itemize}
+    \item Classic one-step methods (e.g., Forward Euler and Trapezoidal
+    Method)
+    \item Explicit Runge-Kutta methods (e.g., RK Explicit 4 Stage)
+    \item Diagonally Implicit Runge-Kutta (DIRK) Methods (e.g.,
+    general tableau DIRK and many specific DIRK/SDIRK methods)
+    \item Implicit-Explicit (IMEX) Runge-Kutta Methods (e.g., IMEX
+    RK SSP2, IMEX RK SSP3, and general tableau IMEX RK methods)
+    \item Multi-Step Methods (i.e., BDF2)
+    \item Second-order ODE Methods (e.g., Leapfrog, Newmark methods
+    and HHT-Alpha)
+    \item Steppers with subSteppers (e.g., operator-split and
+    subcycling methods)
+  \end{itemize}
+
+  \item Solution History is used to maintain the solution during
+  time-step failure, solution restart/output, interpolation of
+  solution between time steps, and to provide the solution for
+  transient adjoint sensitivities.
+
+  \item Timestep Control and Strategies provide methods to select
+  the time-step size based on user input and/or temporal error
+  control (e.g., bounding min/max time-step size, relative/absolute
+  maximum error, and timestep adjustments for output and checkpointing)
+
+\end{itemize}
+Additionally, Tempus has several mechanisms which allow users to
+insert application-specific algorithms into Tempus components (e.g.,
+through observers and creating derived classes).
+
