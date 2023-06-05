@@ -2,10 +2,21 @@
 
 Trilinos offers several linear solver capabilities that vary from direct solvers, iterative solvers, preconditioners that are local to a compute node to scalable domain decomposition and multigrid methods. Almost all the capabilities described here are focused on the current generation Trilinos using the Tpetra stack. All of these solver capabilities are built on top of Kokkos and are GPU capable to varying degrees. We present any exception to this in the detailed descriptions below.
 
-\subsection{Iterative Linear Solvers}
+\subsection{Iterative Linear Solvers and Krylov Methods: Belos}
 
-\subsection{Krylov methods: Belos}
-\todo{JHU: it seems strange not to mention Belos. Belos paper: \cite{Bavier2012a}}
+Belos~\cite{Bavier2012a} provides next-generation iterative linear solvers and a powerful linear solver developer framework for Krylov solvers.
+This framework includes the following abstract interfaces and implementations:
+\emph{Abstract interfaces to linear algebra using traits mechanisms} allow the user to leverage any existing investment in their description of matrices and vectors.
+The provided concrete linear algebra adapters enable Belos to be used anywhere where Epetra\todo{Do we still want to mention Epetra or drop it in the light of the upcoming Epetra deprecation?}, Tpetra \todo{Is this statement about Tpetra correct?} or Thyra are employed for linear algebra services.
+\emph{Abstract interfaces to orthogonalization} provide implementations of iterated classical Gram-Schmidt (ICGS), classical Gram-Schmidt with a DGKS correction step,
+and iterated modified Gram-Schmidt (IMGS).
+\emph{Abstract interfaces to iteration kernels} offer implementations of conjugate gradient (CG), block CG, block GMRES, pseudo-block GMRES,
+block flexible GMRES, and GCRO-DR iterations.
+\emph{Powerful solver managers}
+orchestrate the solution of a linear system using CG or block CG, GMRES or block GMRES with restarting,
+pseudo-block GMRES for performing single-vector GMRES simultaneously on multiple right-hand sides,
+and a single-vector recycled Krylov method (GCRO-DR).
+Finally, a basic \emph{linear problem class} is provided for the user to define a unpreconditioned or preconditioned (left, right, two-sided) linear system for Belos to solve.
 
 \subsection{Domain Decomposition and Basic Iterative Methods: Ifpack2}
 
