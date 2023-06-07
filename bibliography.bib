@@ -741,3 +741,47 @@ month = {9}
   url =
                   {https://www.sciencedirect.com/science/article/pii/S0021999111005195},
 }
+
+@techreport{Heroux2004a,
+  address = {Albuquerque, NM (USA) 87185},
+  author = {Heroux, M. A.},
+  institution = {Sandia National Laboratories},
+  number = {SAND2004-3796},
+  title = {{AztecOO User Guide}},
+  year = {2004}
+}
+
+@article{GHYSELS2014224,
+title = {Hiding global synchronization latency in the preconditioned Conjugate Gradient algorithm},
+journal = {Parallel Computing},
+volume = {40},
+number = {7},
+pages = {224-238},
+year = {2014},
+note = {7th Workshop on Parallel Matrix Algorithms and Applications},
+issn = {0167-8191},
+doi = {https://doi.org/10.1016/j.parco.2013.06.001},
+url = {https://www.sciencedirect.com/science/article/pii/S0167819113000719},
+author = {P. Ghysels and W. Vanroose},
+keywords = {Conjugate gradients, Parallelization, Global communication, Latency hiding, Conjugate residuals},
+abstract = {Scalability of Krylov subspace methods suffers from costly global synchronization steps that arise in dot-products and norm calculations on parallel machines. In this work, a modified preconditioned Conjugate Gradient (CG) method is presented that removes the costly global synchronization steps from the standard CG algorithm by only performing a single non-blocking reduction per iteration. This global communication phase can be overlapped by the matrix–vector product, which typically only requires local communication. The resulting algorithm will be referred to as pipelined CG. An alternative pipelined method, mathematically equivalent to the Conjugate Residual (CR) method that makes different trade-offs with regard to scalability and serial runtime is also considered. These methods are compared to a recently proposed asynchronous CG algorithm by Gropp. Extensive numerical experiments demonstrate the numerical stability of the methods. Moreover, it is shown that hiding the global synchronization step improves scalability on distributed memory machines using the message passing paradigm and leads to significant speedups compared to standard preconditioned CG.
+}
+
+@article{Saad1993a,
+author = {Saad, Youcef},
+title = {A Flexible Inner-Outer Preconditioned GMRES Algorithm},
+journal = {SIAM Journal on Scientific Computing},
+volume = {14},
+number = {2},
+pages = {461-469},
+year = {1993},
+doi = {10.1137/0914028}
+}
+
+@article{Parker2012SamplingGD,
+  title={Sampling Gaussian Distributions in Krylov Spaces with Conjugate Gradients},
+  author={Albert E. Parker and Colin Fox},
+  journal={SIAM J. Sci. Comput.},
+  year={2012},
+  volume={34}
+}
