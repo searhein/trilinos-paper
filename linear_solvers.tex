@@ -188,6 +188,15 @@ Block preconditioners for first order formulations of Maxwell's equations are di
 
 
 \subsection{Eigensolvers}
-\todo{Do we want that here or somewhere else? SR: Has there been any new development in Eigen solvers recently? Should we just mention they work with new stack?}
+Anasazi~\cite{Baker2009a} is an extensible and interoperable framework for large-scale eigenvalue algorithms.
+This framework provides a generic interface to a collection of algorithms that are built upon abstract interfaces
+that facilitate code reuse and extensibility.  Similar to Belos, Anasazi decouples the algorithms from the 
+implementation of the underlying linear algebra objects using traits mechanisms.  Concrete linear algebra adapters
+are provided for Tpetra and Thyra, while users can also implement their own interfaces to leverage any exisiting
+investment in their description of matrices and vectors.  Any libraries that understand Tpetra and Thyra matrices
+and vectors, like Belos and Ifpack2, may also be used in conjunction with Anasazi.  The suite of eigensolvers provided
+by Anasazi includes locally-optimal block preconditioned conjugate gradient (LOBPCG), block Davidson, Riemannian Trust-Region
+(RTR), and block Krylov-Schur.  Recently, there has been a family of trace minimization (TraceMin) methods and a
+generalized Davidson method added to the suite of eigensolvers in Anasazi. 
 
 \todo{CG: How about Stratimikos or Stratimikos2? }
