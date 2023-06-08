@@ -2,11 +2,42 @@
 
 Trilinos offers several linear solver capabilities that vary from direct solvers, iterative solvers, preconditioners that are local to a compute node to scalable domain decomposition and multigrid methods. Almost all the capabilities described here are focused on the current generation Trilinos using the Tpetra stack. All of these solver capabilities are built on top of Kokkos and are GPU capable to varying degrees. We present any exception to this in the detailed descriptions below.
 
-\subsection{Iterative Linear Solvers}
+\subsection{Iterative Linear Solvers and Krylov Methods: Belos}
 
-\subsection{Krylov methods: Belos}
-\todo{JHU: it seems strange not to mention Belos. Belos paper: \cite{Bavier2012a}}
+Belos~\cite{Bavier2012a} provides next-generation iterative linear solvers and 
+a powerful developer framework for solving linear systems and least-squares problems.
+This framework provides several abstractions that facilitate code reuse and extensibility.
+First, Belos decouples the algorithms from the implementation of the underlying linear
+algebra object using traits mechanisms.  While concrete linear algebra adapters are provided
+for Tpetra and Thyra, users can also implement their own interfaces to leverage any
+existing investment in their description of matrices and vectors.  Second, there are abstractions
+to orthogonalization to ease the integration of application or architecture-specific orthogonalization
+methods. Implementations of iterated classical Gram-Schmidt, DGKS-corrected classical Gram-Schmidt,
+and iterated modified Gram-Schmidt are provided.  Finally, powerful solver managers encapsulate the 
+strategy for solving a linear system or least-squares problem using abstract interfaces to iteration 
+kernels.  As a result, the algorithms developed using Belos abstractions can be relatively agnostic
+to data layout in memory or distributed over processors and parallel matrix/vector operations.
 
+Belos supersedes the AztecOO package~\cite{Heroux2004a} providing solver managers for single-vector 
+iterative solvers, but also extensions of these methods to block iterative methods for solving linear 
+systems with multiple right-hand sides.  Single-vector solver managers include conjugate gradient (CG),
+minimum residual (MINRES), generalized minimal residual (GMRES), stabilized biconjugate gradient (BiCGStab),
+and transpose-free QMR (TFQMR) as well as ``seed'' solvers (hybrid GMRES, PCPG), subspace recycling solvers 
+(GCRO-DR, RCG), and least-squares solvers (LSQR).  There are versions of CG, GMRES, and GCRO-DR that construct
+a block Krylov subspace to solve for one or more right-hand side.  There are also ``pseudo-block'' versions
+of CG, GMRES, and TFQMR that apply the single-vector iteration simultaneously on multiple right-hand sides,
+where matrix and preconditioner applications are aggregated to achieve better performance.  Any single-vector
+iteration can be used to solve multiple right-hand sides as well but, if a block or pseudo-block version
+is not used, the solver will sequentially solve the right-hand sides.
+
+In recent years, application or architecture-specific variants of the classic iterative methods have been 
+integrated into Belos.  Some of these variations are so minor that they are enabled through input
+parameters on the classic method.  For instance, flexible GMRES~\cite{Saad1993a} is an option for the block 
+GMRES solver, and pipelined CG~\cite{GHYSELS2014224} is an option for both the block CG and pseudo-block CG 
+solver.  Additionally, there are stand-alone solvers for a pseudo-block stochastic CG method~\cite{Parker2012SamplingGD}
+and a fixed-point iteration method.
+
+    
 \subsection{Domain Decomposition and Basic Iterative Methods: Ifpack2}
 
 Trilinos provides domain decomposition approaches in two different
@@ -157,6 +188,15 @@ Block preconditioners for first order formulations of Maxwell's equations are di
 
 
 \subsection{Eigensolvers}
-\todo{Do we want that here or somewhere else? SR: Has there been any new development in Eigen solvers recently? Should we just mention they work with new stack?}
+Anasazi~\cite{Baker2009a} is an extensible and interoperable framework for large-scale eigenvalue algorithms.
+This framework provides a generic interface to a collection of algorithms that are built upon abstract interfaces
+that facilitate code reuse and extensibility.  Similar to Belos, Anasazi decouples the algorithms from the 
+implementation of the underlying linear algebra objects using traits mechanisms.  Concrete linear algebra adapters
+are provided for Tpetra and Thyra, while users can also implement their own interfaces to leverage any exisiting
+investment in their description of matrices and vectors.  Any libraries that understand Tpetra and Thyra matrices
+and vectors, like Belos and Ifpack2, may also be used in conjunction with Anasazi.  The suite of eigensolvers provided
+by Anasazi includes locally-optimal block preconditioned conjugate gradient (LOBPCG), block Davidson, Riemannian Trust-Region
+(RTR), and block Krylov-Schur.  Recently, there has been a family of trace minimization (TraceMin) methods and a
+generalized Davidson method added to the suite of eigensolvers in Anasazi. 
 
 \todo{CG: How about Stratimikos or Stratimikos2? }
