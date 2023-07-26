@@ -163,17 +163,20 @@ For more details on using MueLu with Teko, see the MueLu examples directory.
 
 \subsection{Direct Linear Solvers}
 
-\todo{Amesos2~\cite{Bavier2012a}: here or in Section~\ref{sec:TPLDirectSolvers}?}
+Amesos2~\cite{Bavier2012a} provides a uniform interface to direct linear solvers.
+These include third-party direct solvers such as CHOLMOD, MUMPS, Pardiso\_MKL, SuperLU, SuperLU\_MT, SuperLU\_Dist, and STRUMPACK.
+These solvers may be used as the local solver for the domain decomposition preconditioner (Ifpack2 or FROSch)
+or as the coarse solver for multigrid preconditioners (MueLu).
 
-\subsection{Native Direct / Hybrid Linear Solvers: ShyLU}
- The Schur complement based hybrid solver in Trilinos is implemented in ShyLU. This is a hybrid direct and iterative solver where the subdomains use a direct solver and the Schur complement is solved using an iterative approach. The preconditioner for the Schur complement solver is computed using a probing approach or using a threshold based dropping strategy. This solver was developed to address the requirements of circuit simulation applications. The solver is also hybrid in the parallel computing sense as it uses MPI+threads. This  solver algorithm is not focused on GPU architectures. As a result, we have not implemented this solver using Kokkos. This solver has been shown to be useful for circuit simulation applications.
+Amesos2 also provides the interface to two native Trilinos on-node sparse direct solvers, Basker and Tacho implemented in ShyLU.
+Basker~\cite{Basker2017} is a sparse direct solver based on LU factorization for the problems that have the block triangular form (BTF) typically seen in circuit simulation applications. Basker uses these structures to factor and solve the diagonal blocks in parallel. The larger diagonal blocks can themselves be factored in parallel by discovering the parallelism available using a nested-dissection reordering. Basker focuses on exploiting thread-parallelism on the multi-core CPU architectures. %However, we have still implemented the solver using Kokkos.
+Amesos2 also has a templated implementation of the sequential KLU solver called KLU2, which also exploits the BTF structure.
 
- ShyLU also has two sparse direct linear solvers. Basker is a sparse LU factorization focused on problems that have the block triangular form structure typically seen in circuit simulation applications. Basker uses these structures to factor and solve the diagonal blocks in parallel. The larger diagonal blocks can themselves be factored in parallel by discovering the parallelism available using a nested-dissection reordering. Basker is focused on the CPU architectures. However, we have still implemented the solver using Kokkos. \todo{Ichi, Nathan expand / add?}
 
- Tacho computes supernodal sparse Cholesky factorizations. This was designed for problems that are common in the mechanics applications. Tacho exploits the supernodal structure both in factorization and triangular solve phase.  Trilinos also has a templated implementation of the KLU solver called KLU2 to be used as a native coarse solver for multigrid preconditioners.
+Tacho is a sparse direct solver that exploits the supernodal block structures, commonly found in the sparse direct factorization of the matrices from the mechanics applications. Tacho exploits this supernodal structure for both factorization and triangular solve phases.  It is based on Kokkos, and hence it is portable to different node architectures (including NVIDIA or AMD GPUs). Originally, Tacho implemented task-parallel Cholesky of a sparse symmetric positive definite (SPD) matrix~\cite{Tacho2018}. However, to improve its portability, it has been extended to compute the sparse factorization based on level-set scheduling. Moreover, its functionality has been extended to compute LDLt factorization of symmetric indefinite matrix and LU factorization of a general matrix with a symmetric sparsity structure.
 
-\subsection{Interfaces to Third-party Direct Linear Solvers}
-\label{sec:TPLDirectSolvers}
+
+ShyLU also implements a distributed-memory linear solver based on the Schur complement method~\cite{ShyLUCore2014}. This is a hybrid direct and iterative solver where each subdomain problem is solved using a direct solver in parallel while the Schur complement is solved using an iterative approach. The preconditioner for the Schur complement solver is computed using a probing approach or using a threshold based dropping strategy. This solver was developed to address the requirements of circuit simulation applications. The solver is also hybrid in the parallel computing sense as it uses MPI+threads. This  solver algorithm is not focused on GPU architectures. As a result, we have not implemented this solver using Kokkos. This solver has been shown to be useful for circuit simulation applications.
 
 
 \subsection{Physics block operators and preconditioners: Teko}
