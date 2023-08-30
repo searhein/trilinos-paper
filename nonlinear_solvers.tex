@@ -1,52 +1,22 @@
-\todo{Describe new nonlinear solver features}
 
-\todo{Describe new embedded analysis capabilities, discuss Sacado, Stokhos, Piro, Loca updates}
+The Nonlinear Analysis product area provides the top level algorithms for a computational simulation or design study.
+These include nonlinear solvers, time integration, bifurcation tracking, parameter continuation, optimization, and uncertainty quantification.
+A common theme of this collection is the philosophy of ``analysis beyond simulation'', which aims to automate many computational tasks that are often performed by application code users by trial-and-error or repeated simulation.
+Tasks that can be automated include performing parameter studies, sensitivity analysis, calibration, optimization, time step size control, and locating instabilities.
+This capability area additionally includes utilities for the nonlinear analysis. These include automatic differentiation tools that can provide the derivatives critical to the analysis algorithms and the abstraction layers and interfaces for application callbacks.
 
-Trilinos have several nonlinear solver capabilities that cover nonlinear system solvers, time integrators and embedded parametric computations such as continuations, 
-automatic differentiations and intrusive uncertainty quantification methods.
+\subsection{Thyra}
+\todo{Bartlett}
 
-\subsection{Piro}
+\subsection{NOX}
+NOX provides algortihms for solving large\-scale sets of nonlinear equations.
+The library contains abstractions for solvers, directions and line searches that allow users to customize their code.
+The stopping criteria has a set 
+Methods include Newton-based algorithms such as inexact Newton, matrix-free Newton-Krylov, line-search methods, trust-region methods, tensor methods, and homotopy methods.
+\todo{Pawlowski, finish this}
 
-Piro~\cite{osti_1231283} is the top-level, unifying package of the embedded nonlinear analysis capability area. 
-The main purpose of the package is to provide driver classes for the common uses of Trilinos nonlinear analysis tools. 
-These drivers all can be constructed similarly, with a \lstinline{Thyra::ModelEvaluator} and a \lstinline{Teuchos::ParameterList}, 
-to make it simple to switch between different types of analysis. 
-They also all inherit from the same base classes (response-only model evaluators) so that the resulting analysis can 
-in turn be driven by non-intrusive analysis routines.
-
-\todo{To be continued/rewritten}
-
-\subsection{Sacado}
-
-Sacado \cite{SacadoURL,phipps2012efficient,phipps2008large} provides forward and reverse-mode operator overloading-based automatic differentiation (AD) tools within Trilinos.
-%The package provides both forward and reverse-mode AD data types. 
-Sacado forward AD tools have been integrated into Kokkos and have demonstrated good performance on GPU architectures~\cite{phipps2022automatic}.
-Sacado, along with its Kokkos integration, provides high-performance derivative capabilities to numerous Office of Science and NNSA extreme scale applications, including Albany for solid mechanics and land ice modeling~\cite{Salinger2016,MPASAlbany2018}, 
-Charon for semiconductor device modeling~\cite{CharonUsersManual2020} and multiphase chemically reacting flows~\cite{Musson2009}, Drekar for computational fluid dynamics (CFD)~\cite{Sondak2021,Shadid2016}, magnetohydrodynamics~\cite{Shadid2016mhd} and 
-plasma physics~\cite{Crockatt2022,Miller2019}, Xyce for electronic circuit simulation~\cite{xyceTrilinos,xycePCE}, and SPARC for hypersonic fluid flows~\cite{SparcValidation}. 
-
-\subsection{Stokhos}
-
-Stokhos~\cite{phipps2015stokhos,Phipps2016,phipps2014exploring} provides implementations of two intrusive uncertainty quantification strategies: 
-the intrusive stochastic Galerkin uncertainty quantification method~\cite{ghanem1990polynomial,ghanem2003stochastic} and the embedded ensemble propagation~\cite{phipps2017embedded}.
-
-For the first one, Stokhos provides methods for computing intrusive stochastic Galerkin projections such as Polynomial Chaos and Generalized Polynomial Chaos, 
-interfaces for forming the resulting nonlinear systems, and linear solver methods for solving block stochastic Galerkin linear systems.
-The implementation targets GPU performances using Kokkos and by commuting the layout of the Galerkin operator to be outer-spatial and inner-stochastic~\cite{phipps2014exploring}.
-The stochastic Galerkin implementation of Stokhos has been used in~\cite{constantine2014efficient} to efficiently propagate uncertainty in multiphysics systems by reducing the full system with a nonlinear elimination method.
-
-
-The embedded ensemble propagation consists in propagating a subset of samples gathered into a so-called ensemble through the forward simulation at once.
-It builds on~\cite{pawlowski2012automating} for automating embedded analysis capabilities; Stokhos defines an ensemble type, a SIMD data type, that is able to store
-the values of the input, output, and state variables for every sample of an ensemble. This type can then be used in the Tpetra solver stack as a template argument for the scalar type.
-This approach allows to save computation time in four ways: the sample-independent data and computation can be reused for every sample of an ensemble, the memory access pattern is improved,
-the operations on the ensemble type can be vectorized efficiently, and the message passing costs are reduced by sending fewer but larger messages.
-However, the approach requires solvers and BLAS functions to be aware of the extra dimension associated to the ensemble; for example, a GMRES for ensemble types~\cite{liegeois2020gmres} needs to monitor 
-the convergence of the individual sample in order to decide when to stop based on the union of the information.
-
-
-\subsection{Loca}
-
+\subsection{LOCA}
+\todo{Phipps}
 
 \subsection{Tempus}
 
@@ -114,3 +84,43 @@ Additionally, Tempus has several mechanisms which allow users to
 insert application-specific algorithms into Tempus components (e.g.,
 through observers and creating derived classes).
 
+\subsection{Piro}
+
+Piro~\cite{osti_1231283} is the top-level, unifying package of the embedded nonlinear analysis capability area. 
+The main purpose of the package is to provide driver classes for the common uses of Trilinos nonlinear analysis tools. 
+These drivers all can be constructed similarly, with a \lstinline{Thyra::ModelEvaluator} and a \lstinline{Teuchos::ParameterList}, 
+to make it simple to switch between different types of analysis. 
+They also all inherit from the same base classes (response-only model evaluators) so that the resulting analysis can 
+in turn be driven by non-intrusive analysis routines.
+
+\todo{Perego: To be continued/rewritten}
+
+\subsection{ROL}
+\todo{Ridzal}
+
+\subsection{Sacado}
+
+Sacado \cite{SacadoURL,phipps2012efficient,phipps2008large} provides forward and reverse-mode operator overloading-based automatic differentiation (AD) tools within Trilinos.
+%The package provides both forward and reverse-mode AD data types. 
+Sacado forward AD tools have been integrated into Kokkos and have demonstrated good performance on GPU architectures~\cite{phipps2022automatic}.
+Sacado, along with its Kokkos integration, provides high-performance derivative capabilities to numerous Office of Science and NNSA extreme scale applications, including Albany for solid mechanics and land ice modeling~\cite{Salinger2016,MPASAlbany2018}, 
+Charon for semiconductor device modeling~\cite{CharonUsersManual2020} and multiphase chemically reacting flows~\cite{Musson2009}, Drekar for computational fluid dynamics (CFD)~\cite{Sondak2021,Shadid2016}, magnetohydrodynamics~\cite{Shadid2016mhd} and 
+plasma physics~\cite{Crockatt2022,Miller2019}, Xyce for electronic circuit simulation~\cite{xyceTrilinos,xycePCE}, and SPARC for hypersonic fluid flows~\cite{SparcValidation}. 
+
+\subsection{Stokhos}
+
+Stokhos~\cite{phipps2015stokhos,Phipps2016,phipps2014exploring} provides implementations of two intrusive uncertainty quantification strategies: 
+the intrusive stochastic Galerkin uncertainty quantification method~\cite{ghanem1990polynomial,ghanem2003stochastic} and the embedded ensemble propagation~\cite{phipps2017embedded}.
+
+For the first one, Stokhos provides methods for computing intrusive stochastic Galerkin projections such as Polynomial Chaos and Generalized Polynomial Chaos, 
+interfaces for forming the resulting nonlinear systems, and linear solver methods for solving block stochastic Galerkin linear systems.
+The implementation targets GPU performances using Kokkos and by commuting the layout of the Galerkin operator to be outer-spatial and inner-stochastic~\cite{phipps2014exploring}.
+The stochastic Galerkin implementation of Stokhos has been used in~\cite{constantine2014efficient} to efficiently propagate uncertainty in multiphysics systems by reducing the full system with a nonlinear elimination method.
+
+The embedded ensemble propagation consists in propagating a subset of samples gathered into a so-called ensemble through the forward simulation at once.
+It builds on~\cite{pawlowski2012automating} for automating embedded analysis capabilities; Stokhos defines an ensemble type, a SIMD data type, that is able to store
+the values of the input, output, and state variables for every sample of an ensemble. This type can then be used in the Tpetra solver stack as a template argument for the scalar type.
+This approach allows to save computation time in four ways: the sample-independent data and computation can be reused for every sample of an ensemble, the memory access pattern is improved,
+the operations on the ensemble type can be vectorized efficiently, and the message passing costs are reduced by sending fewer but larger messages.
+However, the approach requires solvers and BLAS functions to be aware of the extra dimension associated to the ensemble; for example, a GMRES for ensemble types~\cite{liegeois2020gmres} needs to monitor 
+the convergence of the individual sample in order to decide when to stop based on the union of the information.
