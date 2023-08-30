@@ -1,1 +1,20 @@
-\todo{Describe new discretization features}
+\todo{work on this after the new pruducts structure is defined}
+The discretization product contains several packages to handle discretizations of differential equations.
+
+\subsection{Intrepid2}
+\todo{Nate, let's coordinate on what to put here}
+Intrepid2 provides interoperable tools for compatible discretizations of PDEs. Intrepid2 mainly focus on local assembly of continuous and discontinuous finite elements, and provides tools for finite volume discretizations as well. The present version of Intrepid2 implements compatible finite element spaces of orders up to 10 for H(grad), H(curl), H(div) and L2 function spaces on frequently used elements such as triangles, quadrilaterals, tetrahedrons and hexahedrons. It provides both Lagrangian basis functions and Hierarchical basis functions and it implements sevral performance optimization (sum factorizations) explointing underline structure of the problem (e.g. tensor-product elements or other symmetries). Intrepid2 provides orientation tools for matching the degrees of freedom on shared edges and faces. It also provides projection tools for projecting functions in H(grad), H(curl), H(div) and L2 to the respective discrete spaces. Intrepid2 achieves performance portability using the Kokkos programming model. 
+
+\subsection{Phalanx}
+\todo{Roger, please edit/expand}
+The package is a local field evaluation kernel specifically designed for general partial differential equation solvers. The main goal of Phalanx is to decompose a complex problem into a number of simpler problems with managed dependencies to support rapid development and extensibility of the PDE code. Through the use of template metaprogramming concepts, Phalanx supports arbitrary user defined data types and evaluation types. This allows for unprecedented flexibility for direct integration with user applications and provides extensive support for embedded technology such as automatic differentiation for sensitivity analysis and uncertainty quantification.
+
+\subsection{Panzer}
+\todo{Roger, please edit/expand}
+The package provides global tools for finite element analysis. It handles continuous and discontinuous high-order compatible finite elements, as implemented in Intrepid2 on unstructured meshes. Panzer relies on Phalanx to manage with efficiency and flexibility the assembly of complex problems. Panzer also enables the solution of nonlinear problems, by interfacing with several Trlinos linear and nonlinear solvers. It computes derivatives and sensitivities through automatic differentiation (Sacado). It supports both Epetra and Tpetra data structures and achieves performance portability through the Kokkos programming model.
+
+\subsection{Compadre}
+\todo{Paul, please edit/expand}
+Compadre toolkit provides tools for the approximation of linear operators applied to a function (including point evaluation and derivatives), given samples of the function over a cloud of points. The toolkit can be used for data transfer applications as well as for meshless discretization of PDEs. The package uses generalized moving least squares for approximating functionals and we plan on implementing other meshless methods like radial basis functions. It achieves performance portability by using Kokkos programming model.
+
+
