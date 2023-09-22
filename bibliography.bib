@@ -816,8 +816,7 @@ doi = {https://doi.org/10.1016/j.parco.2013.06.001},
 url = {https://www.sciencedirect.com/science/article/pii/S0167819113000719},
 author = {P. Ghysels and W. Vanroose},
 keywords = {Conjugate gradients, Parallelization, Global communication, Latency hiding, Conjugate residuals},
-abstract = {Scalability of Krylov subspace methods suffers from costly global synchronization steps that arise in dot-products and norm calculations on parallel machines. In this work, a modified preconditioned Conjugate Gradient (CG) method is presented that removes the costly global synchronization steps from the standard CG algorithm by only performing a single non-blocking reduction per iteration. This global communication phase can be overlapped by the matrix-vector product, which typically only requires local communication. The resulting algorithm will be referred to as pipelined CG. An alternative pipelined method, mathematically equivalent to the Conjugate Residual (CR) method that makes different trade-offs with regard to scalability and serial runtime is also considered. These methods are compared to a recently proposed asynchronous CG algorithm by Gropp. Extensive numerical experiments demonstrate the numerical stability of the methods. Moreover, it is shown that hiding the global synchronization step improves scalability on distributed memory machines using the message passing paradigm and leads to significant speedups compared to standard preconditioned CG.
-}
+abstract = {Scalability of Krylov subspace methods suffers from costly global synchronization steps that arise in dot-products and norm calculations on parallel machines. In this work, a modified preconditioned Conjugate Gradient (CG) method is presented that removes the costly global synchronization steps from the standard CG algorithm by only performing a single non-blocking reduction per iteration. This global communication phase can be overlapped by the matrix-vector product, which typically only requires local communication. The resulting algorithm will be referred to as pipelined CG. An alternative pipelined method, mathematically equivalent to the Conjugate Residual (CR) method that makes different trade-offs with regard to scalability and serial runtime is also considered. These methods are compared to a recently proposed asynchronous CG algorithm by Gropp. Extensive numerical experiments demonstrate the numerical stability of the methods. Moreover, it is shown that hiding the global synchronization step improves scalability on distributed memory machines using the message passing paradigm and leads to significant speedups compared to standard preconditioned CG.}
 }
 
 @article{Saad1993a,
@@ -887,7 +886,8 @@ author = {Joshua D. Booth and Nathan D. Ellingwood and Heidi K. Thornquist and S
 }
 
 @book{wendland2004scattered,
-  title={Scattered data approximation},
+  title={
+  data approximation},
   author={Wendland, Holger},
   volume={17},
   year={2004},
@@ -1195,4 +1195,36 @@ abstract = {In this paper we introduce EMPIRE-PIC, a finite element method parti
 issn = {1991-7120},
 doi = {https://doi.org/10.4208/cicp.OA-2020-0261},
 url = {http://global-sci.org/intro/article_detail/cicp/19400.html}
+
+@article{bochev2012,
+author = {Bochev, P. and Edwards, H.C. and Kirby, R.C. and Peterson, K. and  Ridzal, D.},
+ title = {Solving PDEs with Intrepid},
+volume = {20},
+year = {2012},
+journal = {Scientific Programming},
+publisher = {IOS Press},
+doi = { 10.3233/SPR-2012-0340}
+}
+
+@article{fuentes2015,
+title = {Orientation embedded high order shape functions for the exact sequence elements of all shapes},
+journal = {Computers \& Mathematics with Applications},
+volume = {70},
+number = {4},
+pages = {353-458},
+year = {2015},
+issn = {0898-1221},
+doi = {https://doi.org/10.1016/j.camwa.2015.04.027},
+url = {https://www.sciencedirect.com/science/article/pii/S0898122115002084},
+author = {Federico Fuentes and Brendan Keith and Leszek Demkowicz and Sriram Nagaraj},
+keywords = {High order shape functions, Orientation embedding, Energy spaces, Pyramid, Hierarchical shape functions, Hybrid meshes}
+}
+
+@book{demkowicz2007,
+author = {Demkowicz, Leszek and Kurtz, Jason and Pardo, David and Paszynski, Maciej and Rachowicz, Waldemar and Zdunek, Adam},
+title = {Computing with Hp-Adaptive Finite Elements, Vol. 2: Frontiers Three Dimensional Elliptic and Maxwell Problems with Applications},
+year = {2007},
+isbn = {1584886722},
+publisher = {Chapman \& Hall/CRC},
+edition = {1st}
 }
