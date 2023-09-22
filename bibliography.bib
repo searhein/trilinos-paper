@@ -805,8 +805,7 @@ doi = {https://doi.org/10.1016/j.parco.2013.06.001},
 url = {https://www.sciencedirect.com/science/article/pii/S0167819113000719},
 author = {P. Ghysels and W. Vanroose},
 keywords = {Conjugate gradients, Parallelization, Global communication, Latency hiding, Conjugate residuals},
-abstract = {Scalability of Krylov subspace methods suffers from costly global synchronization steps that arise in dot-products and norm calculations on parallel machines. In this work, a modified preconditioned Conjugate Gradient (CG) method is presented that removes the costly global synchronization steps from the standard CG algorithm by only performing a single non-blocking reduction per iteration. This global communication phase can be overlapped by the matrix-vector product, which typically only requires local communication. The resulting algorithm will be referred to as pipelined CG. An alternative pipelined method, mathematically equivalent to the Conjugate Residual (CR) method that makes different trade-offs with regard to scalability and serial runtime is also considered. These methods are compared to a recently proposed asynchronous CG algorithm by Gropp. Extensive numerical experiments demonstrate the numerical stability of the methods. Moreover, it is shown that hiding the global synchronization step improves scalability on distributed memory machines using the message passing paradigm and leads to significant speedups compared to standard preconditioned CG.
-}
+abstract = {Scalability of Krylov subspace methods suffers from costly global synchronization steps that arise in dot-products and norm calculations on parallel machines. In this work, a modified preconditioned Conjugate Gradient (CG) method is presented that removes the costly global synchronization steps from the standard CG algorithm by only performing a single non-blocking reduction per iteration. This global communication phase can be overlapped by the matrix-vector product, which typically only requires local communication. The resulting algorithm will be referred to as pipelined CG. An alternative pipelined method, mathematically equivalent to the Conjugate Residual (CR) method that makes different trade-offs with regard to scalability and serial runtime is also considered. These methods are compared to a recently proposed asynchronous CG algorithm by Gropp. Extensive numerical experiments demonstrate the numerical stability of the methods. Moreover, it is shown that hiding the global synchronization step improves scalability on distributed memory machines using the message passing paradigm and leads to significant speedups compared to standard preconditioned CG.}
 }
 
 @article{Saad1993a,
@@ -873,6 +872,284 @@ author = {Joshua D. Booth and Nathan D. Ellingwood and Heidi K. Thornquist and S
  pages = {102--111},
  title = {A hybrid approach for parallel transistor-level full-chip circuit simulation},
  year = {2014}
+}
+
+@book{wendland2004scattered,
+  title={
+  data approximation},
+  author={Wendland, Holger},
+  volume={17},
+  year={2004},
+  publisher={Cambridge university press}
+}
+
+@article{mirzaei2012generalized,
+  title={On generalized moving least squares and diffuse derivatives},
+  author={Mirzaei, Davoud and Schaback, Robert and Dehghan, Mehdi},
+  journal={IMA Journal of Numerical Analysis},
+  volume={32},
+  number={3},
+  pages={983--1000},
+  year={2012},
+  publisher={OUP}
+}
+
+@Article{Salinger2005,
+  author =       {A.G. Salinger and E.A. Burroughs and R.P. Pawlowski and E.T. Phipps and L.A. Romero},
+  title =        {Bifurcation tracking algorithms and software for large scale applications},
+  journal =      {International Journal of Bifurcation and Chaos},
+  year =         {2005},
+  volume =       {15},
+  number =       {3}
+}
+
+@misc{rol,
+  title = {Rapid Optimization Library (ROL)},
+  howpublished = {\url{https://rol.sandia.gov}},
+  note = {Accessed: 2023-09-12}
+}
+
+@conference{ROL2022ICCOPT,
+  author = "Javeed, A. and Kouri, D.P. and Ridzal, D. and Von Winckel, G.",
+  title = "Get ROL-ing: An Introduction to Sandia’s Rapid Optimization Library",
+  booktitle = "7th International Conference on Continuous Optimization",
+  year = "2022"
+}
+
+@article{Perego2022,
+title = {{Large-scale PDE-constrained Optimization for Ice Sheet Model Initialization}},
+date = {2022-06-01},
+year = {2022},
+journal = {SIAM News},
+url = {https://sinews.siam.org/Details-Page/large-scale-pde-constrained-optimization-for-ice-sheet-model-initialization},
+urldate = {2023-09-12},
+author = {Mauro Perego},
+note = {Accessed: 2023-09-12}
+}
+
+@article{Antil2023,
+title = {Uniform flow in axisymmetric devices through permeability optimization},
+author = {Antil, Harbir and Kouri, Drew P. and Ridzal, Denis and Robinson, David B. and Salloum, Maher},
+year = {2023},
+journal = {Optimization and Engineering},
+doi = {10.1007/s11081-023-09820-0}
+}
+
+@article{Kouri2014,
+author = {Drew P. Kouri and Eric A. Shields},
+journal = {Applied Optics},
+number = {24},
+pages = {F1--F9},
+publisher = {Optica Publishing Group},
+title = {Efficient multiframe super-resolution for imagery with lateral shifts},
+volume = {53},
+month = {Aug},
+year = {2014},
+url = {https://opg.optica.org/ao/abstract.cfm?URI=ao-53-24-F1},
+doi = {10.1364/AO.53.0000F1}
+}
+
+@article{ALESQP,
+author = {Antil, Harbir and Kouri, Drew P. and Ridzal, Denis},
+title = {ALESQP: An Augmented Lagrangian Equality-Constrained SQP Method for Optimization with General Constraints},
+journal = {SIAM Journal on Optimization},
+volume = {33},
+number = {1},
+pages = {237-266},
+year = {2023},
+doi = {10.1137/20M1378399}
+}
+
+@article{Kouri2022,
+  title={A matrix-free trust-region newton algorithm for convex-constrained optimization},
+  author={Kouri, Drew P},
+  journal={Optimization Letters},
+  volume={16},
+  number={3},
+  pages={983--997},
+  year={2022},
+  publisher={Springer},
+  doi={10.1007/s11590-021-01794-1}
+}
+
+@Inbook{Kouri2018,
+author="Kouri, Drew P. and Ridzal, Denis",
+editor="Antil, Harbir and Kouri, Drew P. and Lacasse, Martin-D. and Ridzal, Denis",
+title="Inexact Trust-Region Methods for PDE-Constrained Optimization",
+bookTitle="Frontiers in PDE-Constrained Optimization",
+year="2018",
+publisher="Springer New York",
+address="New York, NY",
+pages="83--121",
+isbn="978-1-4939-8636-1",
+doi="10.1007/978-1-4939-8636-1_3"
+}
+
+@article{rvl,
+author = {Padula, Anthony D. and Scott, Shannon D. and Symes, William W.},
+title = {{A Software Framework for Abstract Expression of Coordinate-Free Linear Algebra and Optimization Algorithms}},
+year = {2009},
+issue_date = {March 2009},
+publisher = {Association for Computing Machinery},
+journal = {ACM Transactions on Mathematical Software},
+address = {New York, NY, USA},
+volume = {36},
+number = {2},
+issn = {0098-3500},
+url = {https://doi.org/10.1145/1499096.1499097},
+doi = {10.1145/1499096.1499097}
+}
+
+@article{hcl,
+title = {{Hilbert class library: A library of abstract C++ classes for optimization and inversion}},
+journal = {Computers and Mathematics with Applications},
+volume = {32},
+number = {6},
+pages = {1--13},
+year = {1996},
+issn = {0898-1221},
+doi = {10.1016/0898-1221(96)00140-X},
+url = {https://www.sciencedirect.com/science/article/pii/089812219600140X},
+author = {M.S. Gockenbach and W.W. Symes}
+}
+
+@article{rtop,
+author = {Bartlett, Roscoe A. and Waanders, Bart G. Van Bloemen and Heroux, Michael A.},
+title = {Vector Reduction/Transformation Operators},
+year = {2004},
+issue_date = {March 2004},
+journal = {ACM Transactions on Mathematical Software},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {30},
+number = {1},
+issn = {0098-3500},
+url = {https://doi.org/10.1145/974781.974785},
+doi = {10.1145/974781.974785}
+}
+
+@article{Heinkenschloss1999,
+author = {Heinkenschloss, Matthias and Vicente, Lu\'{\i}s N.},
+title = {An Interface Between Optimization and Application for the Numerical Solution of Optimal Control Problems},
+year = {1999},
+issue_date = {June 1999},
+journal = {ACM Transactions on Mathematical Software},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {25},
+number = {2},
+issn = {0098-3500},
+url = {https://doi.org/10.1145/317275.317278},
+doi = {10.1145/317275.317278}
+}
+
+@article{Pawlowski2006,
+author = { Pawlowski, Roger P. and  Shadid, John N. and  Simonis, Joseph P. and  Walker, Homer F.},
+title = {Globalization Techniques for Newton–Krylov Methods and Applications to the Fully Coupled Solution of the Navier–Stokes Equations},
+journal = {SIAM Review},
+volume = {48},
+number = {4},
+pages = {700-721},
+year = {2006},
+doi = {10.1137/S0036144504443511},
+URL = {https://doi.org/10.1137/S0036144504443511}
+}
+
+@article{Pawlowski2008,
+author = {Pawlowski, Roger P. and Simonis, Joseph P. and Walker, Homer F. and Shadid, John N.},
+title = {Inexact Newton Dogleg Methods},
+journal = {SIAM Journal on Numerical Analysis},
+volume = {46},
+number = {4},
+pages = {2112-2132},
+year = {2008},
+doi = {10.1137/050632166},
+URL = {https://doi.org/10.1137/050632166}
+}
+
+@article{Bader2005,
+author = {Bader, Brett W.},
+title = {Tensor-Krylov Methods for Solving Large-Scale Systems of Nonlinear Equations},
+journal = {SIAM Journal on Numerical Analysis},
+volume = {43},
+number = {3},
+pages = {1321-1347},
+year = {2005},
+doi = {10.1137/040607095},
+URL = {https://doi.org/10.1137/040607095}
+}
+
+@article{Coffey2003,
+author = {Coffey, Todd S. and Kelley, C. T. and Keyes, David E.},
+title = {Pseudotransient Continuation and Differential-Algebraic Equations},
+journal = {SIAM Journal on Scientific Computing},
+volume = {25},
+number = {2},
+pages = {553-569},
+year = {2003},
+doi = {10.1137/S106482750241044X},
+URL = {https://doi.org/10.1137/S106482750241044X}
+}
+
+@article{Walker2011,
+author = {Walker, Homer F. and Ni, Peng},
+title = {Anderson Acceleration for Fixed-Point Iterations},
+journal = {SIAM Journal on Numerical Analysis},
+volume = {49},
+number = {4},
+pages = {1715-1735},
+year = {2011},
+doi = {10.1137/10078356X},
+URL = {https://doi.org/10.1137/10078356X}
+}
+
+@article{pawlowski_salinger_shadid_mountziaris_2006,
+title={Bifurcation and stability analysis of laminar isothermal counterflowing jets},
+volume={551}, DOI={10.1017/S0022112005008396},
+journal={Journal of Fluid Mechanics},
+publisher={Cambridge University Press},
+author={Pawlowski, R. P. and Salinger, A. G. and Shadid, J. N. and Mountziaris, T. J.},
+year={2006},
+pages={117–139}
+}
+
+@article{Shadid20061846,
+title = {Large-scale stabilized FE computational analysis of nonlinear steady-state transport/reaction systems},
+journal = {Computer Methods in Applied Mechanics and Engineering},
+volume = {195},
+number = {13},
+pages = {1846-1871},
+year = {2006},
+note = {A Tribute to Thomas J.R. Hughes on the Occasion of his 60th Birthday},
+issn = {0045-7825},
+doi = {https://doi.org/10.1016/j.cma.2005.05.047},
+url = {https://www.sciencedirect.com/science/article/pii/S0045782505003099},
+author = {J.N. Shadid and A.G. Salinger and R.P. Pawlowski and P.T. Lin and G.L. Hennigan and R.S. Tuminaro and R.B. Lehoucq}
+}
+
+@article{Salinger2002,
+author = {Salinger, Andrew G. and Lehoucq, Richard B. and Pawlowski, Roger P. and Shadid, John N.},
+title = {Computational bifurcation and stability studies of the 8:1 thermal cavity problem},
+journal = {International Journal for Numerical Methods in Fluids},
+volume = {40},
+number = {8},
+pages = {1059-1073},
+keywords = {bifurcations, stability, eigenvalues, parallel computers, finite element, CFD},
+doi = {https://doi.org/10.1002/fld.392},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/fld.392},
+year = {2002}
+}
+
+@article{Pawlowski2001,
+author = {Pawlowski, Roger P. and Salinger, Andrew G. and Romero, Louis R. and Shadid, John N.},
+title = {Computational design and analysis of MOVPE reactors},
+journal = {Journal de Physique IV France},
+volume = {11},
+number = {PR3},
+pages = {Pr3-197-Pr3-204},
+doi = {https://doi.org/10.1051/jp4:2001325},
+url = {https://jp4.journaldephysique.org/en/articles/jp4/abs/2001/03/jp4200111PR325/jp4200111PR325.html},
+year = {2001}
 }
 
 @article{bochev2012,
