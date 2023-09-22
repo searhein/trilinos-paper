@@ -14,7 +14,42 @@ The package is a local field evaluation kernel specifically designed for general
 The package provides global tools for finite element analysis. It handles continuous and discontinuous high-order compatible finite elements, as implemented in Intrepid2 on unstructured meshes. Panzer relies on Phalanx to manage with efficiency and flexibility the assembly of complex problems. Panzer also enables the solution of nonlinear problems, by interfacing with several Trlinos linear and nonlinear solvers. It computes derivatives and sensitivities through automatic differentiation (Sacado). It supports both Epetra and Tpetra data structures and achieves performance portability through the Kokkos programming model.
 
 \subsection{Compadre}
-\todo{Paul, please edit/expand}
-Compadre toolkit provides tools for the approximation of linear operators applied to a function (including point evaluation and derivatives), given samples of the function over a cloud of points. The toolkit can be used for data transfer applications as well as for meshless discretization of PDEs. The package uses generalized moving least squares for approximating functionals and we plan on implementing other meshless methods like radial basis functions. It achieves performance portability by using Kokkos programming model.
+The Compadre package provides tools for the approximation of linear operators (including point evaluation and derivatives), given the location of samples of a function over an unstructured cloud of points. The resulting stencils, when applied directly to samples of the function at these locations, provides an approximation of the linear operator acting on the function at the point(s) queried. This is useful for meshed and meshless data transfer applications. Values of the function at the specified locations can also be viewed as unknowns, in which case the solution returned by Compadre can be used as a stencil for meshless discretization of PDEs. 
+
+The package uses generalized moving least squares (GMLS) for approximating functionals. We plan on implementing other meshless methods like radial basis functions in the future.  A brief description of GMLS follows, but technical details can be found in \cite{mirzaei2012generalized,wendland2004scattered}.
+
+Consider $\phi$ of function class $\mathbf{V}$. Consider a collection of samples $\Lambda = \left\{\lambda_i(\phi)\right\}_{i=1}^{N}$ corresponding to a quasi-uniform\cite{wendland2004scattered} collection of data sites $\mathbf{X}_h = \left\{\mathbf{x}_i\right\} \subset \mathbb{R}^d$ characterized by fill distance $h$. To approximate a given linear target functional $\tau_{\tilde{x}}$ associated with a target site $\tilde{x}$, we seek a reconstruction $p \in \mathbf{V}_h$, where $\mathbf{V}_h \subset \mathbf{V}$ is a finite dimensional space chosen to provide good approximation properties, with basis $\mathbf{P}=\left\{P\right\}_{i=1}^{dim(V_h)}$. We perform this reconstruction in the following weighted $\ell_2$ sense:
+
+\begin{equation}
+\label{gmls}
+p = \underset{{q \in \mathbf{V}_h}}\argmin \sum_{i=1}^N \left( \lambda_i(\phi) -\lambda_i(q) \right)^2 \omega(\lambda_i,\tau_{\tilde{x}})
+\end{equation}
+where $\omega$ is a locally supported positive function. Compadre offers several choices for the weighting kernel $\omega = \Phi(|\tilde{x}-\mathbf{x}_i|)$, where $|\cdot|$ denotes the Euclidean norm.
+
+With the optimal reconstruction $p$ computed, the target functional is approximated via $\tau_{\tilde{x}} (\phi) \approx \tau^h_{\tilde{x}} (\phi) := \tau_{\tilde{x}} (p)$. As an unconstrained $\ell_2$-optimization problem, this process admits the explicit form
 
 
+\begin{equation}
+\label{discreteTarget}
+\tau^h_{\tilde{x}}(\phi) = \tau_{\tilde{x}}(\mathbf{P})^\intercal \left(\Lambda(\mathbf{P})^\intercal \mathbf{W} \Lambda(\mathbf{P})\right)^{-1} \Lambda(\mathbf{P})^\intercal \mathbf{W} \Lambda(\phi),
+\end{equation}
+where we denote:
+\begin{itemize}
+  \item $\tau_{\tilde{x}}(\mathbf{P}) \in \mathbb{R}^{dim(V_h)}$ is a vector with components consisting of the target functional applied to each basis function.
+  \item $\mathbf{W} \in \mathbb{R}^{N \times N}$ is a diagonal matrix with diagonal entries consisting of $\left\{\omega(\lambda_i,\tau_{\tilde{x}})\right\}_{i=1,...,N}$.
+  \item $\Lambda(\mathbf{P}) \in \mathbb{R}^{N \times dim(V_h)}$ is a rectangular matrix whose $(i,j)$ entry corresponds to the application of the $i^{th}$ sampling functional applied to the $j^{th}$ basis function.
+  \item $\Lambda(\phi) \in \mathbb{R}^N$ is a vector consisting of the $N$ samples of the function $\phi$.
+\end{itemize}
+We note that by taking the contraction of the tensors appearing in \eqref{discreteTarget} and exploiting the compact support of $\omega$, we may interpret the output of the GMLS process as a finite difference-like stencil of the form 
+\begin{equation}
+\tau^h_{\tilde{x}}(\phi) = \sum_{\mathbf{x}_i \in B^\epsilon(\tilde{x})} \alpha_i \lambda_i(\phi),
+\end{equation}
+where $B^\epsilon(\tilde{x})$ denotes the $\epsilon$-ball neighborhood of the target site $\tilde{x}$. Therefore, GMLS admits an interpretation as an automated process for generating generalized finite difference methods on unstructured point clouds. The computational cost of solving the GMLS problem amounts to inverting a small linear system which may be assembled using only information from neighbors within the support of $\omega$, and construction of such stencils across the entire domain is embarrassingly parallel. 
+
+Compadre allows users to control the weighting kernel ($\omega$), degree of the reconstruction basis ($\mathbf{V}_h$), the sampling functionals ($ \left\{\lambda_i(\phi)\right\}_{i=1}^{N}$), and the target operator ($\tau_{\tilde{x}}$); this allows control over smoothness of the reconstruction, locality of the resulting stencil, order of accuracy of the reconstruction (assuming regularity of the function embedded in the point cloud data), choice of what the sampled data or degrees of freedom represent, and linear operator action, respectively.
+
+Selecting point evaluations for sampling functionals and target operator provides a traditional moving least squares reconstruction. As an example of a more exotic choice, it is possible to use an average vector normal integral over edges as the sampling functionals and a cell average integral as the target operator, enabling recovery of functions embedded in a Raviart-Thomas type representation and transferring them to a basis consistent with a finite-volume scheme.
+
+While Compadre supports full space reconstruction in 1-3D, there is also additional support for select sampling functionals and target operators on 1D smooth manifolds embedded in 2D or 2D smooth manifolds embedded in 3D. Reconstruction on a manifold is done through an on-the-fly PCA calculation to determine principal directions tangent to the manifold. The curvature of the manifold is calculated through a reconstruction of the tangent and normal components to the calculated tangent plane, and the final function reconstruction is performed in the local chart. Utilities in the package handle mappings between local computed charts and the ambient higher-dimensional space.
+
+Compadre's stencil generation involves independent problems to be solved in parallel at the team level with loops over the thread and vector level within each problem. This hierarchical parallelism is achieved with performance portability by using the Kokkos programming model and leveraging the batched QR with pivoting algorithm implemented in Kokkos Kernels. 
