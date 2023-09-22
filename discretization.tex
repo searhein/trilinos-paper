@@ -24,7 +24,7 @@ Consider $\phi$ of function class $\mathbf{V}$. Consider a collection of samples
 \label{gmls}
 p = \underset{{q \in \mathbf{V}_h}}\argmin \sum_{i=1}^N \left( \lambda_i(\phi) -\lambda_i(q) \right)^2 \omega(\lambda_i,\tau_{\tilde{x}})
 \end{equation}
-where $\omega$ is a locally supported positive function. Compadre offers a set of choices for to $\omega = \Phi(|\tilde{x}-\mathbf{x}_i|)$, where $|\cdot|$ denotes the Euclidean norm an
+where $\omega$ is a locally supported positive function. Compadre offers several choices for the weighting kernel $\omega = \Phi(|\tilde{x}-\mathbf{x}_i|)$, where $|\cdot|$ denotes the Euclidean norm.
 
 With the optimal reconstruction $p$ computed, the target functional is approximated via $\tau_{\tilde{x}} (\phi) \approx \tau^h_{\tilde{x}} (\phi) := \tau_{\tilde{x}} (p)$. As an unconstrained $\ell_2$-optimization problem, this process admits the explicit form
 
@@ -40,7 +40,7 @@ where we denote:
   \item $\Lambda(\mathbf{P}) \in \mathbb{R}^{N \times dim(V_h)}$ is a rectangular matrix whose $(i,j)$ entry corresponds to the application of the $i^{th}$ sampling functional applied to the $j^{th}$ basis function.
   \item $\Lambda(\phi) \in \mathbb{R}^N$ is a vector consisting of the $N$ samples of the function $\phi$.
 \end{itemize}
-We note that by taking the contraction of the tensors appearing in Equation \ref{discreteTarget} and exploiting the compact support of $\omega$, we may interpret the output of the GMLS process as a finite difference-like stencil of the form 
+We note that by taking the contraction of the tensors appearing in \eqref{discreteTarget} and exploiting the compact support of $\omega$, we may interpret the output of the GMLS process as a finite difference-like stencil of the form 
 \begin{equation}
 \tau^h_{\tilde{x}}(\phi) = \sum_{\mathbf{x}_i \in B^\epsilon(\tilde{x})} \alpha_i \lambda_i(\phi),
 \end{equation}
