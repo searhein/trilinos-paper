@@ -345,6 +345,17 @@ month = {2},
   publisher={IOS Press}
 }
 
+@article{pawlowski2012automatingpart2,
+  title={Automating embedded analysis capabilities and managing software complexity in multiphysics simulation, Part II: Application to partial differential equations},
+  author={Pawlowski, Roger P and Phipps, Eric T and Salinger, Andrew G and Owen, Steven J and Siefert, Christopher M and Staten, Matthew L},
+  journal={Scientific Programming},
+  volume={20},
+  number={3},
+  pages={327--345},
+  year={2012},
+  publisher={IOS Press}
+}
+
 @article{ghanem1990polynomial,
   title={Polynomial chaos in stochastic finite elements},
   author={Ghanem, Roger and Spanos, Pol D},
@@ -1151,6 +1162,39 @@ doi = {https://doi.org/10.1051/jp4:2001325},
 url = {https://jp4.journaldephysique.org/en/articles/jp4/abs/2001/03/jp4200111PR325/jp4200111PR325.html},
 year = {2001}
 }
+
+@article{Notz2012,
+author = {Notz, Patrick K. and Pawlowski, Roger P. and Sutherland, James C.},
+title = {Graph-Based Software Design for Managing Complexity and Enabling Concurrency in Multiphysics PDE Software},
+year = {2012},
+issue_date = {November 2012},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {39},
+number = {1},
+issn = {0098-3500},
+url = {https://doi.org/10.1145/2382585.2382586},
+doi = {10.1145/2382585.2382586},
+abstract = {Multiphysics simulation software is plagued by complexity stemming from nonlinearly coupled systems of Partial Differential Equations (PDEs). Such software typically supports many models, which may require different transport equations, constitutive laws, and equations of state. Strong coupling and a multiplicity of models leads to complex algorithms (i.e., the properly ordered sequence of steps to assemble a discretized set of coupled PDEs) and rigid software.This work presents a design strategy that shifts focus away from high-level algorithmic concerns to low-level data dependencies. Mathematical expressions are represented as software objects that directly expose data dependencies. The entire system of expressions forms a directed acyclic graph and the high-level assembly algorithm is generated automatically through standard graph algorithms. This approach makes problems with complex dependencies entirely tractable, and removes virtually all logic from the algorithm itself. Changes are highly localized, allowing developers to implement models without detailed understanding of any algorithms (i.e., the overall assembly process). Furthermore, this approach complements existing MPI-based frameworks and can be implemented within them easily.Finally, this approach enables algorithmic parallelization via threads. By exposing dependencies in the algorithm explicitly, thread-based parallelism is implemented through algorithm decomposition, providing a basis for exploiting parallelism independent from domain decomposition approaches.},
+journal = {ACM Trans. Math. Softw.},
+month = {nov},
+articleno = {1},
+numpages = {21},
+keywords = {task graph, object-oriented design, Scientific computing, multiphysics}
+}
+
+@Article{Bettencourt2021,
+author = {T. Bettencourt , MatthewA. S. Brown , DominicL. Cartwright , KeithC. Cyr , EricA. Glusa , ChristianT. Lin , PaulG. Moore , StanA. O. McGregor , DuncanPawlowski , Roger P.Phillips , Edward G.Roberts , Nathan V.Wright , Steven A.Maheswaran , SatheeshJones , John P. and A. Jarvis , Stephen},
+title = {EMPIRE-PIC: A Performance Portable Unstructured Particle-in-Cell Code},
+journal = {Communications in Computational Physics},
+year = {2021},
+volume = {30},
+number = {4},
+pages = {1232--1268},
+abstract = {In this paper we introduce EMPIRE-PIC, a finite element method particle-in-cell (FEM-PIC) application developed at Sandia National Laboratories. The code has been developed in C++ using the Trilinos library and the Kokkos Performance Portability Framework to enable running on multiple modern compute architectures while only requiring maintenance of a single codebase. EMPIRE-PIC is capable of solving both electrostatic and electromagnetic problems in two- and three-dimensions to second-order accuracy in space and time. In this paper we validate the code against three benchmark problems — a simple electron orbit, an electrostatic Langmuir wave, and a transverse electromagnetic wave propagating through a plasma. We demonstrate the performance of EMPIRE-PIC on four different architectures: Intel Haswell CPUs, Intel's Xeon Phi Knights Landing, ARM Thunder-X2 CPUs, and NVIDIA Tesla V100 GPUs attached to IBM POWER9 processors. This analysis demonstrates scalability of the code up to more than two thousand GPUs, and greater than one hundred thousand CPUs.},
+issn = {1991-7120},
+doi = {https://doi.org/10.4208/cicp.OA-2020-0261},
+url = {http://global-sci.org/intro/article_detail/cicp/19400.html}
 
 @article{bochev2012,
 author = {Bochev, P. and Edwards, H.C. and Kirby, R.C. and Peterson, K. and  Ridzal, D.},
