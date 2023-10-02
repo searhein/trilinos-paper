@@ -105,8 +105,9 @@ analog accelerators.
 ROL has been used with great success for optimal control, optimal design,
 inverse problems, image processing and mesh optimization, in application
 areas including geophysics, climate science \cite{Perego2022}, structural
-dynamics, fluid dynamics \cite{Antil2023}, electromagnetics, quantum
-computing, hypersonics and geospatial imaging \cite{Kouri2014}.
+dynamics \cite{AQUINO2019323,BUNTING2021107295}, fluid dynamics
+\cite{Antil2023}, electromagnetics, quantum computing, hypersonics and
+geospatial imaging \cite{Kouri2014}.
 
 The key design, performance and algorithmic features of ROL can be
 summarized as follows:
@@ -116,12 +117,12 @@ summarized as follows:
 \emph{Vector abstractions and matrix-free interface for universal applicability}.
 Similar to other Trilinos packages that implement abstract numerical
 algorithms, ROL's design is centered around an abstract linear algebra
-interface, through the ROL::Vector class, which enables the use of any
-ROL~algorithm with any data type, such as the C++ std::vector, MPI-parallel
+interface, through the {\tt ROL::Vector} class, which enables the use of any
+ROL~algorithm with any data type, such as the C++ {\tt std::vector}, MPI-parallel
 data structures (e.g., Epetra, Tpetra, PETSc, HYPRE vectors), GPU-supporting data
-structures (e.g., Kokkos, ArrayFire), etc.  The abstract linear algebra
-interface further enables the definition of custom vector dot products,
-which are critical for performance in large-scale applications.
+structures (e.g., Kokkos, ArrayFire \cite{Yalamanchili2015}), etc.  The abstract
+linear algebra interface further enables the definition of custom vector dot
+products, which are critical for performance in large-scale applications.
 Finally, all ROL algorithms are matrix-free and rely on user-defined
 applications of linear and nonlinear operators.  ROL's vector class design is
 inspired by the Hilbert Class Library \cite{hcl}, the Rice Vector Library \cite{rvl}
@@ -142,8 +143,30 @@ matrix-free trust-region methods for convex-constrained
 optimization \cite{Kouri2022}.
 \item
 \emph{Easy-to-use methods for stochastic and risk-aware optimization}.
+ROL contains specialized interfaces and algorithms for stochastic optimization.
+Optimization problems with stochastic and uncertain problem data pose challenges
+in problem formulation and efficient numerical solution methods.  ROL's interface
+for stochastic optimization enables the use of numerous modern risk measures,
+probabilistic functions and robust problem formulations. To approximate
+risk-averse problems \cite{shapiro2021lectures}, ROL includes sample-based
+approaches such as sample average approximation, stochastic approximation, and
+adaptive sparse-grid quadrature \cite{kouri2013trust,kouri2014inexact}. ROL
+also includes specialized algorithms such as progressive hedging
+\cite{rockafellar1991scenarios} and the primal-dual risk minimization algorithm
+\cite{kouri2022primal}.
 \item
 \emph{Fast and robust algorithms for nonsmooth optimization}.
+ROL includes specialized algrithms to minimize the sum of a smooth function
+and a nonsmooth, convex function.  This class of problems is ubiquitous in
+computational science.  For example, nonsmooth sparsifying regularizers such as
+the $\ell^1$-norm are common in data science and machine learning.  These
+algorithms can be used to solve convex constrained optimization problems.
+ROL's methods for this class of problems are built on the proximity operator
+and include proximal gradient and Newton methods
+\cite{beck2017first,kanzow2021globalized,ochs2014iPiano}.
+As discussed in the subsequent bullet, ROL can also incorporate inexact
+values and gradients for the smooth objective function term using trust regions
+\cite{baraldi2023proximal}.
 \item
 \emph{Trust-region methods for inexact and adaptive computations}.
 ROL controls inexact function evaluations and exploits adaptive computations
