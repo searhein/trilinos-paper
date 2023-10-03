@@ -345,6 +345,17 @@ month = {2},
   publisher={IOS Press}
 }
 
+@article{pawlowski2012automatingpart2,
+  title={Automating embedded analysis capabilities and managing software complexity in multiphysics simulation, Part II: Application to partial differential equations},
+  author={Pawlowski, Roger P and Phipps, Eric T and Salinger, Andrew G and Owen, Steven J and Siefert, Christopher M and Staten, Matthew L},
+  journal={Scientific Programming},
+  volume={20},
+  number={3},
+  pages={327--345},
+  year={2012},
+  publisher={IOS Press}
+}
+
 @article{ghanem1990polynomial,
   title={Polynomial chaos in stochastic finite elements},
   author={Ghanem, Roger and Spanos, Pol D},
@@ -805,8 +816,7 @@ doi = {https://doi.org/10.1016/j.parco.2013.06.001},
 url = {https://www.sciencedirect.com/science/article/pii/S0167819113000719},
 author = {P. Ghysels and W. Vanroose},
 keywords = {Conjugate gradients, Parallelization, Global communication, Latency hiding, Conjugate residuals},
-abstract = {Scalability of Krylov subspace methods suffers from costly global synchronization steps that arise in dot-products and norm calculations on parallel machines. In this work, a modified preconditioned Conjugate Gradient (CG) method is presented that removes the costly global synchronization steps from the standard CG algorithm by only performing a single non-blocking reduction per iteration. This global communication phase can be overlapped by the matrix-vector product, which typically only requires local communication. The resulting algorithm will be referred to as pipelined CG. An alternative pipelined method, mathematically equivalent to the Conjugate Residual (CR) method that makes different trade-offs with regard to scalability and serial runtime is also considered. These methods are compared to a recently proposed asynchronous CG algorithm by Gropp. Extensive numerical experiments demonstrate the numerical stability of the methods. Moreover, it is shown that hiding the global synchronization step improves scalability on distributed memory machines using the message passing paradigm and leads to significant speedups compared to standard preconditioned CG.
-}
+abstract = {Scalability of Krylov subspace methods suffers from costly global synchronization steps that arise in dot-products and norm calculations on parallel machines. In this work, a modified preconditioned Conjugate Gradient (CG) method is presented that removes the costly global synchronization steps from the standard CG algorithm by only performing a single non-blocking reduction per iteration. This global communication phase can be overlapped by the matrix-vector product, which typically only requires local communication. The resulting algorithm will be referred to as pipelined CG. An alternative pipelined method, mathematically equivalent to the Conjugate Residual (CR) method that makes different trade-offs with regard to scalability and serial runtime is also considered. These methods are compared to a recently proposed asynchronous CG algorithm by Gropp. Extensive numerical experiments demonstrate the numerical stability of the methods. Moreover, it is shown that hiding the global synchronization step improves scalability on distributed memory machines using the message passing paradigm and leads to significant speedups compared to standard preconditioned CG.}
 }
 
 @article{Saad1993a,
@@ -873,6 +883,35 @@ author = {Joshua D. Booth and Nathan D. Ellingwood and Heidi K. Thornquist and S
  pages = {102--111},
  title = {A hybrid approach for parallel transistor-level full-chip circuit simulation},
  year = {2014}
+}
+
+@book{wendland2004scattered,
+  title={
+  data approximation},
+  author={Wendland, Holger},
+  volume={17},
+  year={2004},
+  publisher={Cambridge university press}
+}
+
+@article{mirzaei2012generalized,
+  title={On generalized moving least squares and diffuse derivatives},
+  author={Mirzaei, Davoud and Schaback, Robert and Dehghan, Mehdi},
+  journal={IMA Journal of Numerical Analysis},
+  volume={32},
+  number={3},
+  pages={983--1000},
+  year={2012},
+  publisher={OUP}
+}
+
+@Article{Salinger2005,
+  author =       {A.G. Salinger and E.A. Burroughs and R.P. Pawlowski and E.T. Phipps and L.A. Romero},
+  title =        {Bifurcation tracking algorithms and software for large scale applications},
+  journal =      {International Journal of Bifurcation and Chaos},
+  year =         {2005},
+  volume =       {15},
+  number =       {3}
 }
 
 @misc{rol,
@@ -1148,4 +1187,178 @@ number = {1},
 pages = {121-152},
 year = {1992},
 doi = {10.1137/0802008}
+
+@article{Pawlowski2006,
+author = { Pawlowski, Roger P. and  Shadid, John N. and  Simonis, Joseph P. and  Walker, Homer F.},
+title = {Globalization Techniques for Newton–Krylov Methods and Applications to the Fully Coupled Solution of the Navier–Stokes Equations},
+journal = {SIAM Review},
+volume = {48},
+number = {4},
+pages = {700-721},
+year = {2006},
+doi = {10.1137/S0036144504443511},
+URL = {https://doi.org/10.1137/S0036144504443511}
+}
+
+@article{Pawlowski2008,
+author = {Pawlowski, Roger P. and Simonis, Joseph P. and Walker, Homer F. and Shadid, John N.},
+title = {Inexact Newton Dogleg Methods},
+journal = {SIAM Journal on Numerical Analysis},
+volume = {46},
+number = {4},
+pages = {2112-2132},
+year = {2008},
+doi = {10.1137/050632166},
+URL = {https://doi.org/10.1137/050632166}
+}
+
+@article{Bader2005,
+author = {Bader, Brett W.},
+title = {Tensor-Krylov Methods for Solving Large-Scale Systems of Nonlinear Equations},
+journal = {SIAM Journal on Numerical Analysis},
+volume = {43},
+number = {3},
+pages = {1321-1347},
+year = {2005},
+doi = {10.1137/040607095},
+URL = {https://doi.org/10.1137/040607095}
+}
+
+@article{Coffey2003,
+author = {Coffey, Todd S. and Kelley, C. T. and Keyes, David E.},
+title = {Pseudotransient Continuation and Differential-Algebraic Equations},
+journal = {SIAM Journal on Scientific Computing},
+volume = {25},
+number = {2},
+pages = {553-569},
+year = {2003},
+doi = {10.1137/S106482750241044X},
+URL = {https://doi.org/10.1137/S106482750241044X}
+}
+
+@article{Walker2011,
+author = {Walker, Homer F. and Ni, Peng},
+title = {Anderson Acceleration for Fixed-Point Iterations},
+journal = {SIAM Journal on Numerical Analysis},
+volume = {49},
+number = {4},
+pages = {1715-1735},
+year = {2011},
+doi = {10.1137/10078356X},
+URL = {https://doi.org/10.1137/10078356X}
+}
+
+@article{pawlowski_salinger_shadid_mountziaris_2006,
+title={Bifurcation and stability analysis of laminar isothermal counterflowing jets},
+volume={551}, DOI={10.1017/S0022112005008396},
+journal={Journal of Fluid Mechanics},
+publisher={Cambridge University Press},
+author={Pawlowski, R. P. and Salinger, A. G. and Shadid, J. N. and Mountziaris, T. J.},
+year={2006},
+pages={117–139}
+}
+
+@article{Shadid20061846,
+title = {Large-scale stabilized FE computational analysis of nonlinear steady-state transport/reaction systems},
+journal = {Computer Methods in Applied Mechanics and Engineering},
+volume = {195},
+number = {13},
+pages = {1846-1871},
+year = {2006},
+note = {A Tribute to Thomas J.R. Hughes on the Occasion of his 60th Birthday},
+issn = {0045-7825},
+doi = {https://doi.org/10.1016/j.cma.2005.05.047},
+url = {https://www.sciencedirect.com/science/article/pii/S0045782505003099},
+author = {J.N. Shadid and A.G. Salinger and R.P. Pawlowski and P.T. Lin and G.L. Hennigan and R.S. Tuminaro and R.B. Lehoucq}
+}
+
+@article{Salinger2002,
+author = {Salinger, Andrew G. and Lehoucq, Richard B. and Pawlowski, Roger P. and Shadid, John N.},
+title = {Computational bifurcation and stability studies of the 8:1 thermal cavity problem},
+journal = {International Journal for Numerical Methods in Fluids},
+volume = {40},
+number = {8},
+pages = {1059-1073},
+keywords = {bifurcations, stability, eigenvalues, parallel computers, finite element, CFD},
+doi = {https://doi.org/10.1002/fld.392},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/fld.392},
+year = {2002}
+}
+
+@article{Pawlowski2001,
+author = {Pawlowski, Roger P. and Salinger, Andrew G. and Romero, Louis R. and Shadid, John N.},
+title = {Computational design and analysis of MOVPE reactors},
+journal = {Journal de Physique IV France},
+volume = {11},
+number = {PR3},
+pages = {Pr3-197-Pr3-204},
+doi = {https://doi.org/10.1051/jp4:2001325},
+url = {https://jp4.journaldephysique.org/en/articles/jp4/abs/2001/03/jp4200111PR325/jp4200111PR325.html},
+year = {2001}
+}
+
+@article{Notz2012,
+author = {Notz, Patrick K. and Pawlowski, Roger P. and Sutherland, James C.},
+title = {Graph-Based Software Design for Managing Complexity and Enabling Concurrency in Multiphysics PDE Software},
+year = {2012},
+issue_date = {November 2012},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {39},
+number = {1},
+issn = {0098-3500},
+url = {https://doi.org/10.1145/2382585.2382586},
+doi = {10.1145/2382585.2382586},
+abstract = {Multiphysics simulation software is plagued by complexity stemming from nonlinearly coupled systems of Partial Differential Equations (PDEs). Such software typically supports many models, which may require different transport equations, constitutive laws, and equations of state. Strong coupling and a multiplicity of models leads to complex algorithms (i.e., the properly ordered sequence of steps to assemble a discretized set of coupled PDEs) and rigid software.This work presents a design strategy that shifts focus away from high-level algorithmic concerns to low-level data dependencies. Mathematical expressions are represented as software objects that directly expose data dependencies. The entire system of expressions forms a directed acyclic graph and the high-level assembly algorithm is generated automatically through standard graph algorithms. This approach makes problems with complex dependencies entirely tractable, and removes virtually all logic from the algorithm itself. Changes are highly localized, allowing developers to implement models without detailed understanding of any algorithms (i.e., the overall assembly process). Furthermore, this approach complements existing MPI-based frameworks and can be implemented within them easily.Finally, this approach enables algorithmic parallelization via threads. By exposing dependencies in the algorithm explicitly, thread-based parallelism is implemented through algorithm decomposition, providing a basis for exploiting parallelism independent from domain decomposition approaches.},
+journal = {ACM Trans. Math. Softw.},
+month = {nov},
+articleno = {1},
+numpages = {21},
+keywords = {task graph, object-oriented design, Scientific computing, multiphysics}
+}
+
+@Article{Bettencourt2021,
+author = {T. Bettencourt , MatthewA. S. Brown , DominicL. Cartwright , KeithC. Cyr , EricA. Glusa , ChristianT. Lin , PaulG. Moore , StanA. O. McGregor , DuncanPawlowski , Roger P.Phillips , Edward G.Roberts , Nathan V.Wright , Steven A.Maheswaran , SatheeshJones , John P. and A. Jarvis , Stephen},
+title = {EMPIRE-PIC: A Performance Portable Unstructured Particle-in-Cell Code},
+journal = {Communications in Computational Physics},
+year = {2021},
+volume = {30},
+number = {4},
+pages = {1232--1268},
+abstract = {In this paper we introduce EMPIRE-PIC, a finite element method particle-in-cell (FEM-PIC) application developed at Sandia National Laboratories. The code has been developed in C++ using the Trilinos library and the Kokkos Performance Portability Framework to enable running on multiple modern compute architectures while only requiring maintenance of a single codebase. EMPIRE-PIC is capable of solving both electrostatic and electromagnetic problems in two- and three-dimensions to second-order accuracy in space and time. In this paper we validate the code against three benchmark problems — a simple electron orbit, an electrostatic Langmuir wave, and a transverse electromagnetic wave propagating through a plasma. We demonstrate the performance of EMPIRE-PIC on four different architectures: Intel Haswell CPUs, Intel's Xeon Phi Knights Landing, ARM Thunder-X2 CPUs, and NVIDIA Tesla V100 GPUs attached to IBM POWER9 processors. This analysis demonstrates scalability of the code up to more than two thousand GPUs, and greater than one hundred thousand CPUs.},
+issn = {1991-7120},
+doi = {https://doi.org/10.4208/cicp.OA-2020-0261},
+url = {http://global-sci.org/intro/article_detail/cicp/19400.html}
+
+@article{bochev2012,
+author = {Bochev, P. and Edwards, H.C. and Kirby, R.C. and Peterson, K. and  Ridzal, D.},
+ title = {Solving PDEs with Intrepid},
+volume = {20},
+year = {2012},
+journal = {Scientific Programming},
+publisher = {IOS Press},
+doi = { 10.3233/SPR-2012-0340}
+}
+
+@article{fuentes2015,
+title = {Orientation embedded high order shape functions for the exact sequence elements of all shapes},
+journal = {Computers \& Mathematics with Applications},
+volume = {70},
+number = {4},
+pages = {353-458},
+year = {2015},
+issn = {0898-1221},
+doi = {https://doi.org/10.1016/j.camwa.2015.04.027},
+url = {https://www.sciencedirect.com/science/article/pii/S0898122115002084},
+author = {Federico Fuentes and Brendan Keith and Leszek Demkowicz and Sriram Nagaraj},
+keywords = {High order shape functions, Orientation embedding, Energy spaces, Pyramid, Hierarchical shape functions, Hybrid meshes}
+}
+
+@book{demkowicz2007,
+author = {Demkowicz, Leszek and Kurtz, Jason and Pardo, David and Paszynski, Maciej and Rachowicz, Waldemar and Zdunek, Adam},
+title = {Computing with Hp-Adaptive Finite Elements, Vol. 2: Frontiers Three Dimensional Elliptic and Maxwell Problems with Applications},
+year = {2007},
+isbn = {1584886722},
+publisher = {Chapman \& Hall/CRC},
+edition = {1st}
 }

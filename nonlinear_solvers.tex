@@ -1,6 +1,6 @@
 
 The Nonlinear Analysis product area provides the top level algorithms for a computational simulation or design study.
-These include nonlinear solvers, time integration, bifurcation tracking, parameter continuation, optimization, and uncertainty quantification.
+These include nonlinear solvers, time integration, bifurcation tracking, stability analysis, parameter continuation, optimization, and uncertainty quantification.
 A common theme of this collection is the philosophy of ``analysis beyond simulation'', which aims to automate many computational tasks that are often performed by application code users by trial-and-error or repeated simulation.
 Tasks that can be automated include performing parameter studies, sensitivity analysis, calibration, optimization, time step size control, and locating instabilities.
 This capability area additionally includes utilities for the nonlinear analysis. These include automatic differentiation tools that can provide the derivatives critical to the analysis algorithms and the abstraction layers and interfaces for application callbacks.
@@ -9,14 +9,18 @@ This capability area additionally includes utilities for the nonlinear analysis.
 \todo{Bartlett}
 
 \subsection{NOX}
-NOX provides algortihms for solving large\-scale sets of nonlinear equations.
-The library contains abstractions for solvers, directions and line searches that allow users to customize their code.
-The stopping criteria has a set 
-Methods include Newton-based algorithms such as inexact Newton, matrix-free Newton-Krylov, line-search methods, trust-region methods, tensor methods, and homotopy methods.
-\todo{Pawlowski, finish this}
+NOX, short for Nonlinear Object-oriented Solutions, provides robust and efficient algorithms for solving sets of nonlinear equations.
+NOX implements a number of Newton-based globalization techniques including line search \cite{Pawlowski2006}, trust region \cite{Pawlowski2006,Pawlowski2008} and homotopy algorithms \cite{Coffey2003}.
+Additionally, it provides lower and higher order models including Broyden, Anderson acceleration \cite{Walker2011} and tensor methods \cite{Bader2005}.
+The algorithms have been designed for large scale parallel inexact linear solvers using Krylov methods and supports Jacobian-free Newton-Krylov variants.
+The library interacts with application codes through the Thyra model evaluator interface.
+NOX provides linear algrebra abstractions for applications to use custom implementations with the algorithms.
+The library additionally contains abstractions for solvers, directions and line searches that allow users to further customize the algorithms.
+NOX provides various stopping criteria including absolute, relative and weighted root mean square norms, as well as stagnation and NaN detection.
+Applications can build custom stopping criteria within a tree-based logical structure and provide addtional criteria through the StatusTest abstraction.
 
 \subsection{LOCA}
-\todo{Phipps}
+LOCA~\cite{Salinger2005}, short for the Library of Continuation Algorithms, provides techniques for computing families of solutions to nonlinear equations as well as methods for investigating their stability when these nonlinear equations define equilibria of dynamical systems.  It builds on the NOX nonlinear solver package to track solutions to sets of nonlinear equations as a function of one or more parameters (continuation).  Given an interface to NOX defining the nonlinear equations, all users must additionally provide is an ability to set the parameter values that are being varied.  LOCA provides several continuation methods, including pseudo-arclength continuation which allows tracking solution curves around turning points/folds.  Furthermore, LOCA has hooks to call the Anasazi eigensolver package to estimate leading eigenvalues of the linearization at each point along the continuation curve for linear stability analysis, including various spectral transformations highlighting eigenvalues in different regimes (e.g., largest magnitude, largest real, ...).  Finally, LOCA implements equations augmenting the original nonlinear equations to locate and track bifurcation points where linear stability changes (e.g., turning point, pitchfork, and Hopf bifurcations) as a function of additional parameters. Examples of using LOCA for stability and bifurcation analysis include stability of a differentially heated cavity \cite{Salinger2002}, design of chemical vapor deposition reactors \cite{Pawlowski2001}, flow instabilities in counterflowing jets \cite{pawlowski_salinger_shadid_mountziaris_2006} and ignition in laminar diffusion flames \cite{Shadid20061846}.
 
 \subsection{Tempus}
 
@@ -85,15 +89,21 @@ insert application-specific algorithms into Tempus components (e.g.,
 through observers and creating derived classes).
 
 \subsection{Piro}
+%Piro~\cite{osti_1231283} is the top-level, unifying package for nonlinear analysis. 
+%The main purpose of the package is to provide driver classes for the common uses of Trilinos nonlinear analysis tools. 
+%These drivers all can be constructed similarly, with a \lstinline{Thyra::ModelEvaluator} and a \lstinline{Teuchos::ParameterList}, to make it simple to switch between different types of analysis. 
+%They also all inherit from the same base classes (response-only model evaluators) so that the resulting analysis can in turn be driven by non-intrusive analysis routines.
+%The Piro library is a new package that is part of the Trilinos framework. Piro is a convenience package provides a simple and unified interface to many of the solver and analysis packages in Trilinos. The Piro package wraps many of the common usages of other existing Trilinos packages (e.g. NOX, Rythmos, TriKota) and provides a simple interface. In this way, a computer simulation code that wants to use Trilinos analysis tools can access them with just and handful of lines of Piro code. This saves much effort in interfacing their code to each of the other codes one at a time.
+Piro~\cite{osti_1231283} provides a simple and unified interface to nonlinear analysis tools in Trilinos, providing capabilities for computing sensitivities, performing parameter continuation and bifurcation analysis, and solving constrained optimization problems.
+%The main purpose of the package is to provide driver classes for the common uses of Trilinos nonlinear analysis tools.
+In particular, Piro implements main driver classes for:
+\begin{itemize}
+	\item \emph{Linear/nonlinear solvers and sensitivity analysis} for transient and nontransient problems. As an example, this capability can be used to compute the discrete solution $u$ of a partial differential equation depending on some parameter $p$, and compute the sensitivity of a quantity of interest of the solution with respect to the parameter $p$. Sensitivities can be computed in a forward or adjoint fashion, the latter being preferable in presence of high-dimensional parameters. This capability relies on NOX for the solution of nonlinear problems and Tempus for transient problems.
+	\item \emph{Constrained optimization problems} with linear/nonlinear equality constraints. Piro provide tools for transient and nontransient (snapshot) optimizations, featuring gradient-based reduced-space and full-space methods. This capability is used by applications such as Albany, to perform large-scale PDE-constrained optimization problems \cite{Perego2022}. Piro interfaces with ROL for algorithms to solve constrained optimization problems.
+\item \emph{Parameter Continuation and Bifurcation analysis}. This capability is provided through the package LOCA.
+\end{itemize}
+These driver classes share a similar interface based on the \texttt{Thyra::ModelEvaluator} and the \texttt{Teuchos::ParameterList} classes. Applications define the problems to be targeted (e.g., the equations to be solved, the parameters, the quantities of interests) by providing a concrete implementations of the \texttt{Thyra::ModelEvaluator}, see \cite{pawlowski2012automating,pawlowski2012automatingpart2}.
 
-Piro~\cite{osti_1231283} is the top-level, unifying package of the embedded nonlinear analysis capability area. 
-The main purpose of the package is to provide driver classes for the common uses of Trilinos nonlinear analysis tools. 
-These drivers all can be constructed similarly, with a \lstinline{Thyra::ModelEvaluator} and a \lstinline{Teuchos::ParameterList}, 
-to make it simple to switch between different types of analysis. 
-They also all inherit from the same base classes (response-only model evaluators) so that the resulting analysis can 
-in turn be driven by non-intrusive analysis routines.
-
-\todo{Perego: To be continued/rewritten}
 
 \subsection{ROL}
 Rapid Optimization Library (ROL) \cite{rol,ROL2022ICCOPT} is the
