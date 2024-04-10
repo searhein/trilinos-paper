@@ -2,7 +2,7 @@
 %
 %\todo{@Siva/Alexander: do this!}
 
-Trilinos offers several linear solver capabilities that vary from direct solvers, iterative solvers, preconditioners that are local to a compute node to scalable domain decomposition and multigrid methods. Almost all the capabilities described here are focused on the current generation Trilinos using the Tpetra stack. All of these solver capabilities are built on top of Kokkos and are GPU capable to varying degrees. We present any exception to this in the detailed descriptions below.
+Trilinos offers many linear solver capabilities: dense and sparse direct solvers, iterative solvers, shared-memory preconditioners local to a compute node, and scalable distributed memory domain decomposition and multigrid methods. The capabilities described in this section are focused on using the Tpetra software stack. All of these solver capabilities are built on top of Kokkos and are GPU capable to varying degrees. We present any exception to this in the detailed descriptions below.
 
 \subsection{Iterative Linear Solvers and Krylov Methods: Belos}
 
@@ -59,18 +59,17 @@ more robust multilevel methods is prohibitive when compared to the
 reduction in the number of iterations, or when the underlying problem
 is simply not amenable to multigrid methods. 
 
-Ifpack2 also supplies basic iterative methods, such as Jacobi
-iteration, Gauss-Seidel, a MPI-oriented hybrid of Jacobi and
-Gauss-Seidel (e.g. Jacobi between ranks and Gauss-Seidel on them) and
-Chebyshev iteration.  These are available both in point and block
+Ifpack2 also supplies classic iterative methods based on matrix-splitting techniques, such as Jacobi
+iteration, Gauss-Seidel, and an MPI-oriented hybrid of Jacobi and
+Gauss-Seidel (e.g. Jacobi between ranks and Gauss-Seidel on them).  Ifpack also has preconditioners
+based on Chebyshev iteration.  The aforementioned preconditioners are available both in point and block
 forms and can operate on CSR or BSR matrices.  In the block case,
 line relaxation is also supported, while in the point case, techniques
-like Vanka relaxation \cite{Vanka1986} can be supported.  Auxiliary-space
+like Vanka relaxation \cite{Vanka1986} are possible.  Auxiliary-space
 smoothing for $H(curl)$ and $H(div)$ discretizations, of the style of
 Hiptmair \cite{Hiptmair1997} are also supported.
-Local kernels for all these methods are
-implemented in Ifpack2 proper.  Additionally, Ifpack2 can call through
-to Kokkos-Kernels for algorithmic variants of Gauss-Seidel and Jacobi iterations.
+While local kernels are implemented in Ifpack2 proper, it's also possible to call through
+to Kokkos-Kernels for portable share-memory algorithmic variants of Gauss-Seidel and Jacobi iterations.
 
 \subsection{Multilevel Domain Decomposition Methods: FROSch}
 \label{ssec:frosch}
@@ -94,18 +93,17 @@ MueLu is a flexible and scalable high-performance multigrid solver library.
 It provides a variety of multigrid algorithms for problems ranging from Poisson-like operators over elasticity, convection-diffusion, and Navier-Stokes, and Maxwell’s equations
 all the way to multigrid methods for coupled multiphysics systems.
 Besides its strong focus on aggregation-based algebraic multigrid (AMG) methods,
-MueLu comes with specialized capabilities for (semi-)structured grids to perform (semi-)coarsening along grid lines,
+MueLu comes with specialized capabilities for (semi-)structured grids to perform semi-coarsening along grid lines,
 yet forming the coarse operator via a Galerkin product (in contrast to classical geometric multigrid).
 MueLu is extensible and allows for the research and development of new multigrid preconditioning methods.
 Its weak and strong scalability even for vector-valued PDEs on unstructured meshes
 up to 131,000 cores of a Cray XC40 and one million cores of a Blue Gene/Q system have been shown in~\cite{Lin2017a,Thomas2019a}.
 \todo{CG: Find some newer runs.}
 
-\todo{Should we comment on the current state of Kokkos in MueLu? CG: Yes}
 As of Trilinos 14.0, MueLu has a required dependency on Kokkos,
 and the main code routes in MueLu (e.g. smoothed aggregation, semi-coarsening, p-coarsening, structured aggregation)
 utilize Kokkos and have been shown to scale on device \todo{citeme?}.
-Some older algorithms such as energy minimization and the variable degree of freedom Laplacian have not been adapted to fully utilize Kokkos yet;
+Some older algorithms such as energy minimization and the variable degree-of-freedom Laplacian have not been adapted to fully utilize Kokkos yet;
 however, they are part of ongoing efforts to use Kokkos throughout MueLu completely and to merge serial and device-capable algorithms.
 
 MueLu provides several approaches to constructing and solving the multilevel problem:
