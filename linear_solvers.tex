@@ -26,7 +26,7 @@ systems with multiple right-hand sides.  Single-vector solver managers include c
 minimum residual (MINRES), generalized minimal residual (GMRES), stabilized biconjugate gradient (BiCGStab),
 and transpose-free QMR (TFQMR) as well as ``seed'' solvers (hybrid GMRES, PCPG), subspace recycling solvers 
 (GCRO-DR, RCG), and least-squares solvers (LSQR).  There are versions of CG, GMRES, and GCRO-DR that construct
-a block Krylov subspace to solve for one or more right-hand side.  There are also ``pseudo-block'' versions
+a block Krylov subspace to solve for one or more right-hand sides.  There are also ``pseudo-block'' versions
 of CG, GMRES, and TFQMR that apply the single-vector iteration simultaneously on multiple right-hand sides,
 where matrix and preconditioner applications are aggregated to achieve better performance.  Any single-vector
 iteration can be used to solve multiple right-hand sides as well but, if a block or pseudo-block version
