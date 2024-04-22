@@ -102,7 +102,7 @@ up to 131,000 cores of a Cray XC40 and one million cores of a Blue Gene/Q system
 
 As of Trilinos 14.0, MueLu has a required dependency on Kokkos,
 and the main code routes in MueLu (e.g. smoothed aggregation, semi-coarsening, p-coarsening, structured aggregation)
-utilize Kokkos and have been shown to scale on device \todo{citeme?}.
+utilize Kokkos and have been shown to scale on device \todo{citeme? \cite{BettencourtBrownEtAl2021_EmpirePic}?}.
 Some older algorithms such as energy minimization and the variable degree-of-freedom Laplacian have not been adapted to fully utilize Kokkos yet;
 however, they are part of ongoing efforts to use Kokkos throughout MueLu completely and to merge serial and device-capable algorithms.
 
