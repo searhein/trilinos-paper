@@ -183,7 +183,7 @@ ShyLU also implements a distributed-memory linear solver based on the Schur comp
 \subsection{Physics block operators and preconditioners: Teko}
 \label{sec:teko}
 
-The Teko library provides interfaces for operators and preconditioners that are constructed from large physics sub-blocks.
+The Teko library~\cite{Cyr2016a} provides interfaces for operators and preconditioners that are constructed from large physics sub-blocks.
 Sub-blocks themselves can be Tpetra or Epetra matrices.
 Generic block preconditioning strategies such as Jacobi and Gauss-Seidel and commonly used approximate inverse strategies for the Navier-Stokes equation such as SIMPLEC, LSC and PCD are provided \cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
 Block preconditioners for first order formulations of Maxwell's equations are distributed with the Panzer package.
