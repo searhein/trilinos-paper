@@ -36,6 +36,15 @@ GitHub repository. Every version of the library is integrated and tested in Tril
 as part of the Kokkos ecosystem release process. Additional information on Kokkos
 Kernels capabilities can be found here~\cite{deveci2018multithreaded,wolf2017fast}.
 
+\todo{I'm not sure if we want to include Teuchos, but it might be necessary since it is omnipresent in the use of Trilinos.  We probably should expand this a bit more.}
+
+% MMW I don't think Teuchos should be under framework.  I think we want to stick to logical groupings versus load-balanced ones.
+\subsection{Teuchos}
+
+Teuchos provides a suite of common tools for many Trilinos packages. These tools include memory management classes~\cite{bartlett2010} such as ``smart'' pointers and arrays, ``parameter lists'' for communicating hierarchical lists of parameters between library or application layers, templated wrappers for the BLAS and LAPACK, XML parsers, and other utilities. They provide a unified ``look and feel'' across Trilinos packages, and help avoid common programming mistakes.
+
+
+
 \subsection{Tpetra}\label{subsec:tpetra}
 Tpetra \cite{hoemmen2015tpetra} provides the distributed-memory
 infrastructure for sparse linear algebra computations.  It implements
