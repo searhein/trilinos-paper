@@ -1,7 +1,5 @@
-\todo{Describe the modern framework, packages like pyTrilinos}
-\todo{CG: PyTrilinos has currently no developer.}
 
-\todo{@Kim: Do you want to describe PyTrilinos2 instead of PyTrilinos?}
+\todo{@Kim: Do you want to describe PyTrilinos2 instead of PyTrilinos?  Not sure if this should go in framework or in core}
 
 The Trilinos Framework Product provides supporting infrastructure for Trilinos users and developers. This infrastructure is largely not what Trilinos is well-known for, but is essential for supporting all Trilinos capabilities.
 
@@ -27,12 +25,12 @@ The Framework is also responsible for maintaining the general infrastructure for
 
 Teuchos provides a suite of common tools for many Trilinos packages. These tools include memory management classes~\cite{bartlett2010} such as ``smart'' pointers and arrays, ``parameter lists'' for communicating hierarchical lists of parameters between library or application layers, templated wrappers for the BLAS and LAPACK, XML parsers, and other utilities. They provide a unified ``look and feel'' across Trilinos packages, and help avoid common programming mistakes.
 
-\subsection{PyTrilinos}
+%\subsection{PyTrilinos}
 
-PyTrilinos is a set of python wrappers for selected Trilinos packages~\cite{PyTrilinos}. A python programmer can dynamically import Trilinos packages into a python script or the python command-line interpreter, allowing the creation and manipulation of Trilinos objects and the execution of Trilinos algorithms, without the need to constantly recompile.
+%PyTrilinos is a set of python wrappers for selected Trilinos packages~\cite{PyTrilinos}. A python programmer can dynamically import Trilinos packages into a python script or the python command-line interpreter, allowing the creation and manipulation of Trilinos objects and the execution of Trilinos algorithms, without the need to constantly recompile.
 
-PyTrilinos enables Trilinos users to immediately run sanity tests. Developers can add additional unit tests quickly within the python unit testing framework. Building on top of PyTrilinos, full-fledged applications can be developed using python. The PyTrilinos package is nearing the end of its lifecycle, but a second-generation
-PyTrilinos is nearing completion.
+%PyTrilinos enables Trilinos users to immediately run sanity tests. Developers can add additional unit tests quickly within the python unit testing framework. Building on top of PyTrilinos, full-fledged applications can be developed using python. The PyTrilinos package is nearing the end of its lifecycle, but a second-generation
+%PyTrilinos is nearing completion.
 
 
 % LocalWords:  scalably
