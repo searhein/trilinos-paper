@@ -1,5 +1,6 @@
 
-%\todo{Add introduction here. Add a subsection on Trilinos organization as a set of five products.}
+
+\todo{MMW: I think it might be worth iterating with Mike Heroux on this introductory session.}
 
 Trilinos is a community-developed, open source software framework that facilitates building large-scale, complex, multiscale, multiphysics engineering and scientific problems. While Trilinos can run on small workstations to large supercomputers, the typical use of Trilinos is on the leadership class systems with new or emerging hardware architectures.
 
@@ -10,11 +11,14 @@ Trilinos was originally conceived as framework of three packages for distributed
 This article is an attempt to capture a snapshot of where Trilinos is today as opposed to eighteen and eleven years ago when the original Trilinos articles were written. We will focus on the major developments within Trilinos in the last decade, new features and functionality that has been added to enable scientific and engineering applications. This article will be an overview of the features and we refer to the extensive reference list for the details of these features. We are also cognizant of the fact that as a software that is actively developed this article could become outdated even before its publication. Hence, we will focus on the high level features and project that we expect to remain stable for several years.
 
 
-\todo{MMW: I think this should be reworked to better represent the current products. I'm also not sure that we should structure this by products.  In particular, I think we should consider removing "data services" and replacing it with a core or building blocks section. }
 
-\todo{@Christian, Mauro, Roger: Can you help do this re-organization?}
+\subsection{Modern Trilinos}
 
-\todo{I took a first stab at this. It's not 1to1 with our current products. }
+\todo{MMW: I think we should spend some time in this section outlining the motivation for our Kokkos approach, explaining the proliferation of node architectures, the Kokkos revolution, and what this has meant for Trilinos.  I think this is worth its own subsection. }
+
+
+
+\subsection{Trilinos Functionality}
 
 %Product and package structure
 The functionalities in Trilinos are organized in two levels. The first one is \textit{package}. A package in Trilinos has a well-defined set of unique capabilities that is important for a scientific or an engineering application. Packages also have a set of expectations such as having a responsible point of contact or a package lead, software engineering expectations such as documentation, continuous integration testing, clearly defined dependencies, using the Trilinos infrastructure for building and installation etc. The packages are then aggregated into \emph{products} for organizational ease. We curently have these collections: Core, Linear Solvers and Preconditioners, Nonlinear Solvers and Analysis Tools, Discretization Tools, and Framework. These products are collections of packages that share a common objective (e.g., solving a linear system), a sub-community within Trilinos, and in some cases common interfaces. We briefly describe these areas here.
