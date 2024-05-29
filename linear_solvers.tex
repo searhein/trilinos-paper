@@ -40,7 +40,7 @@ solver.  Additionally, there are stand-alone solvers for a pseudo-block stochast
 and a fixed-point iteration method.
 
     
-\subsection{Domain Decomposition and Basic Iterative Methods: Ifpack2}
+\subsection{Onelevel Domain Decomposition and Basic Iterative Methods: Ifpack2}
 
 Trilinos provides domain decomposition approaches in two different
 packages: Ifpack2 and ShyLU (specifically the ShyLU\_DD
@@ -98,11 +98,10 @@ yet forming the coarse operator via a Galerkin product (in contrast to classical
 MueLu is extensible and allows for the research and development of new multigrid preconditioning methods.
 Its weak and strong scalability even for vector-valued PDEs on unstructured meshes
 up to 131,000 cores of a Cray XC40 and one million cores of a Blue Gene/Q system have been shown in~\cite{Lin2017a,Thomas2019a}.
-\todo{CG: Find some newer runs.}
 
-As of Trilinos 14.0, MueLu has a required dependency on Kokkos,
+MueLu has a required dependency on Kokkos,
 and the main code routes in MueLu (e.g. smoothed aggregation, semi-coarsening, p-coarsening, structured aggregation)
-utilize Kokkos and have been shown to scale on device \todo{citeme? \cite{BettencourtBrownEtAl2021_EmpirePic}?}.
+utilize Kokkos and have been shown to scale on device \cite{BettencourtBrownEtAl2021_EmpirePic}.
 Some older algorithms such as energy minimization and the variable degree-of-freedom Laplacian have not been adapted to fully utilize Kokkos yet;
 however, they are part of ongoing efforts to use Kokkos throughout MueLu completely and to merge serial and device-capable algorithms.
 
@@ -137,12 +136,13 @@ MueLu has a structured aggregation capability in which the user may specify the 
 The coarse operators are then formed via a Galerkin product to avoid remeshing on the coarse levels.
 This work has been extended to semi-structured grids to leverage structured-grid computational performance also for globally unstructured grids~\cite{Mayr2022a}.
 
-\item \emph{Matrix-free capabilities}:
+\item \emph{Geometric multigrid / matrix-free capabilities}:
 MueLu treats many of the objects in its hierarchy as operators instead of matrices when possible.
-This enables one to use MueLu in a matrix-free fashion through factories such as \texttt{MatrixFreeTentativePFactory},
-which only requires aggregates in order to perform a grid transfer using a tentative prolongator.
-Other grid transfers such as structured grid transfers discussed above may also be performed in a matrix-free fashion,
-and simple smoothers such as Jacobi and Chebyshev may also be performed on matrix-free operators.
+This enables one to use MueLu in a matrix-free fashion provided the user can supply their own grid transfers and coarse operators.
+% through factories such as \texttt{MatrixFreeTentativePFactory},
+% which only requires aggregates in order to perform a grid transfer using a tentative prolongator.
+% Other grid transfers such as structured grid transfers discussed above may also be performed in a matrix-free fashion,
+% and simple smoothers such as Jacobi and Chebyshev may also be performed on matrix-free operators.
 
 \end{itemize}
 
@@ -162,7 +162,7 @@ These interfaces are required to use MueLu with the Teko block preconditioning p
 For more details on using MueLu with Teko, see the MueLu examples directory in the Trilinos source code repository.
 
 
-\subsection{Direct Linear Solvers}
+\subsection{Direct Linear Solvers: Amesos2, ShyLU}
 
 Amesos2~\cite{Bavier2012a} provides a uniform interface to direct linear solvers.
 These include third-party direct solvers such as CHOLMOD, MUMPS, Pardiso\_MKL, SuperLU, SuperLU\_MT, SuperLU\_Dist, and STRUMPACK.
@@ -186,12 +186,12 @@ ShyLU also implements a distributed-memory linear solver based on the Schur comp
 The Teko library~\cite{Cyr2016a} provides interfaces for operators and preconditioners that are constructed from large physics sub-blocks.
 Sub-blocks themselves can be Tpetra or Epetra matrices.
 Generic block preconditioning strategies such as Jacobi and Gauss-Seidel and commonly used approximate inverse strategies for the Navier-Stokes equation such as SIMPLEC, LSC and PCD are provided \cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
-Block preconditioners for first order formulations of Maxwell's equations are distributed with the Panzer package.
+Block preconditioners for first order formulations of Maxwell's equations and Darcy flow are distributed with the Panzer package.
 
 
 
 
-\subsection{Eigensolvers}
+\subsection{Eigensolvers: Anasazi}
 Anasazi~\cite{Baker2009a} is an extensible and interoperable framework for large-scale eigenvalue algorithms.
 This framework provides a generic interface to a collection of algorithms that are built upon abstract interfaces
 that facilitate code reuse and extensibility.  Similar to Belos, Anasazi decouples the algorithms from the 
@@ -203,6 +203,11 @@ by Anasazi includes locally-optimal block preconditioned conjugate gradient (LOB
 (RTR), and block Krylov-Schur.  Recently, there has been a family of trace minimization (TraceMin) methods and a
 generalized Davidson method added to the suite of eigensolvers in Anasazi. 
 
-\todo{CG: How about Stratimikos or Stratimikos2? }
-\todo{Siva: Let us skip this?}
-\todo{mayrmt: I'd not skip Stratimikos. It is the unified entry point to solvers, so it is important to all solver users.}
+
+\subsection{Unified solver interface: Stratimikos}
+
+The Stratimikos package provides a unified interface to linear solvers and preconditioners in Trilinos (e.g. from Belos, Amesos2, Ifpack2, , MueLu, FROSch).
+The linear system as well as right-hand side and solution vectors are required to support the Thyra interface.
+Wrappers for Tpetra linear algebra are provided by Thyra.
+Solver and preconditioner parameters are specified via a Teuchos parameter list.
+Additional solver and preconditioner factories can easily be added via adapters (see \texttt{packages/stratimikos/adapters} for examples).
