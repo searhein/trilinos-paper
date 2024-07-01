@@ -6,20 +6,19 @@
 
 \subsection{Kokkos Kernels}\label{subsec:kk}
 Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos ecosystem
-~\cite{trott2021kokkos} and provides node local implementations of mathematical kernels
-widely used across packages in Trilinos. As a member of the Kokkos
-ecosystem, Kokkos Kernels is tightly integrated on Kokkos features and aims at
+~\cite{trott2021kokkos} and provides abstractions and implementations of node local mathematical 
+kernels widely used across packages in Trilinos. As a member of the Kokkos
+ecosystem, Kokkos Kernels is tightly integrated with Kokkos features and aims at
 delivering performance portable algorithms across major CPU and GPU based HPC systems.
-Due to its node local nature, Kokkos Kernels does not rely on MPI or other communication
-libraries unlike numerous other packages in Trilinos.
+Kokkos Kernels serves as a major point of integration for vendor optimized libraries
+such as cuBLAS, cuSPARSE, rocBLAS, rocSPARSE, MKL, ARMpl and others.
 
-The implementation of Kokkos Kernels algorithms leverage the hierarchical parallelism
+The implementation of Kokkos Kernels algorithms leverages the hierarchical parallelism
 exposed by the Kokkos library~\cite{kim2017designing} and increasingly provides coverage
 for stream callable kernels. To ensure flexibility for the distributed libraries that
-might call its algorithms, Kokkos Kernels provides thread safe and asynchronous
-implementations for most of its kernels. Kokkos Kernels also serves as a major point of
-integration for vendor optimized libraries such as cuBLAS, cuSPARSE, rocBLAS, rocSPARSE,
-MKL, ARMpl and others.
+call its algorithms, Kokkos Kernels provides thread safe and asynchronous
+implementations for most of its kernels. Due to its node local nature, Kokkos Kernels does 
+not rely on MPI or other communication libraries unlike numerous other packages in Trilinos.
 
 The capabilities that Kokkos Kernels provides can be divided in four major categories:
 1. BLAS algorithms, 2. sparse linear algebra and preconditioners, 3. graph algorithms, and
