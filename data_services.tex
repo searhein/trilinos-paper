@@ -4,6 +4,30 @@
 
 \todo{@Siva: do this!}
 
+\subsection{Kokkos}\label{subsec:kokkos}
+Kokkos is a programming model designed to allow performance portability across multiple
+hardware architectures such as CPU and GPU architectures. It was created in ahead of the
+diversification of compute hardware that was required to reach exascale computing
+platforms. It is targeting all major HPC platforms.
+
+To achieve this goal, Kokkos provides two abstractions, one for the parallel execution
+of code and one for the management of data. The parallel execution abstraction introduces
+\texttt{execution spaces} to specify where an algorithm should run, \texttt{execution
+policies} to indicate how the algorithm should be run in terms of hardware resources and
+\texttt{execution patterns} to designate what pattern among \texttt{for, reduce, scan}
+will be used by the algorithms. The data management abstraction provides multiple data
+containers that specify where the underlying memory is allocated, how it is to be
+accessed and what objects are contained. The most prevalent containers of the Kokkos
+programming model is the Kokkos View.
+
+The Kokkos programming model is implemented in the Kokkos library and is developed in a
+separate GitHub repository\footnote{https://github.com/kokkos/kokkos}. Ahead of each
+release of the Kokkos ecosystem~\ref{trott2021kokkos}, the library is snapshoted in the
+Trilinos repository and integration with the other packages is performed. Additionally
+it is possible to build Trilinos against an externally installed Kokkos. In that case
+care needs to be taken to select a version of Kokkos that is compatible with the rest
+of Trilinos, in particular with the Tpetra package.
+
 \subsection{Kokkos Kernels}\label{subsec:kk}
 Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos ecosystem
 ~\cite{trott2021kokkos} and provides node local implementations of mathematical kernels
