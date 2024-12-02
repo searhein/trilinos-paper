@@ -4,18 +4,6 @@
 
 \todo{@Siva: do this!}
 
-One of the primary goals of Trilinos is to provide a performance portable stack of
-reusable scientific libraries. To that end todays iteration of Trilinos packages are
-leveraging the Kokkos Ecosystem to write harware agnostic code, that can efficiently
-execute on all major HPC architectures. While the Kokkos Ecosystem~\cite{trott2021kokkos}
-started as native Trilinos packages Kokkos and Kokkos Kernels, it split off a decade ago
-into a standalone project hosted at \url{https://github.com/kokkos}.
-However, Trilinos provides snapshots of the two primary Kokkos subprojects which reflect
-the latest release of Kokkos. Trilinos can also be build against version-compatible
-external installs of Kokkos - a capability required for interoperability with other
-Kokkos based libraries.
- 
-
 \subsection{Kokkos Core}\label{subsec:kokkos}
 Kokkos Core\footnote{For historical reasons the package name is "Kokkos" since it precedes the
 creation of other Kokkos subprojects such as Kokkos Kernels.} is a programming model

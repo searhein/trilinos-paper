@@ -16,7 +16,32 @@ This article is an attempt to capture a snapshot of where Trilinos is today as o
 
 \todo{MMW: I think we should spend some time in this section outlining the motivation for our Kokkos approach, explaining the proliferation of node architectures, the Kokkos revolution, and what this has meant for Trilinos.  I think this is worth its own subsection. }
 
+One of the primary goals of modern Trilinos is to provide a performance portable stack of
+reusable scientific libraries, which enable users to write applications that are highly
+efficient on all modern High Performance Computing (HPC) hardware architectures.
 
+This goal emerged when the HPC architecture landscape started diversifying with the
+introduction of GPU acceleration for scientific software. Today 9 of the top 10 systems
+in the Top500 use GPUs, with only a single system being CPUs only.
+A complication in this shift is the diversification of vendor provided programming models.
+The aforementioned 10 system actually have four different preferred programming models:
+CUDA, HIP and OneAPI SYCL for the GPU based systems and OpenMP for the CPU system.
+
+To avoid the necessity of diverging code paths Trilinos is leveraging the Kokkos Ecosystem~\cite{trott2021kokkos}
+to write harware agnostic code. The Kokkos Ecosystem started as native Trilinos packages
+Kokkos and Kokkos Kernels but split off a decade ago into a standalone project hosted at \url{https://github.com/kokkos}.
+However, Trilinos provides snapshots of the two primary Kokkos subprojects which reflect
+the latest release of Kokkos. Trilinos can also be build against version-compatible
+external installs of Kokkos - a capability required for interoperability with other
+Kokkos based libraries.
+
+Kokkos enables Trilinos developers to write single source implementations of their packages,
+that perform well on all major HPC hardware architectures.
+Some of its design principles are also reflected in Trilinos API designs. In particular the
+use of \texttt{execution} and \texttt{memory spaces} as parameters of data structures and
+algorithms is a common thread through many packages.
+This design characteristic enables Trilinos users to manage the heterogenity of modern architectures
+and its impact of Trilinos data structures.
 
 \subsection{Trilinos Functionality}
 
