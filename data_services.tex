@@ -4,32 +4,40 @@
 
 \todo{@Siva: do this!}
 
-\subsection{Kokkos}\label{subsec:kokkos}
-Kokkos is a programming model designed to allow performance portability across multiple
-hardware architectures such as CPU and GPU architectures. It was created in ahead of the
-diversification of compute hardware that was required to reach exascale computing
-platforms. It is targeting all major HPC platforms.
+One of the primary goals of Trilinos is to provide a performance portable stack of
+reusable scientific libraries. To that end todays iteration of Trilinos packages are
+leveraging the Kokkos Ecosystem to write harware agnostic code, that can efficiently
+execute on all major HPC architectures. While the Kokkos Ecosystem~\cite{trott2021kokkos}
+started as native Trilinos packages Kokkos and Kokkos Kernels, it split off a decade ago
+into a standalone project hosted at \url{https://github.com/kokkos}.
+However, Trilinos provides snapshots of the two primary Kokkos subprojects which reflect
+the latest release of Kokkos. Trilinos can also be build against version-compatible
+external installs of Kokkos - a capability required for interoperability with other
+Kokkos based libraries.
+ 
 
-To achieve this goal, Kokkos provides two abstractions, one for the parallel execution
-of code and one for the management of data. The parallel execution abstraction introduces
+\subsection{Kokkos Core}\label{subsec:kokkos}
+Kokkos Core\footnote{For historical reasons the package name is "Kokkos" since it precedes the
+creation of other Kokkos subprojects such as Kokkos Kernels.} is a programming model
+designed for performance portability across hardware architectures such as CPUs and GPUs.
+Two primary insights into achieving performance portability shaped Kokkos's development:
+i) abstractions for both parallel execution and data structures are required, and
+ii) the fundamental programming model must be descriptibe not prescriptive.
+
+The parallel execution include
 \texttt{execution spaces} to specify where an algorithm should run, \texttt{execution
 policies} to indicate how the algorithm should be run in terms of hardware resources and
 \texttt{execution patterns} to designate what pattern among \texttt{for, reduce, scan}
-will be used by the algorithms. The data management abstraction provides multiple data
-containers that specify where the underlying memory is allocated, how it is to be
-accessed and what objects are contained. The most prevalent containers of the Kokkos
-programming model is the Kokkos View.
-
-The Kokkos programming model is implemented in the Kokkos library and is developed in a
-separate GitHub repository\footnote{https://github.com/kokkos/kokkos}. Ahead of each
-release of the Kokkos ecosystem~\ref{trott2021kokkos}, the library is snapshoted in the
-Trilinos repository and integration with the other packages is performed. Additionally
-it is possible to build Trilinos against an externally installed Kokkos. In that case
-care needs to be taken to select a version of Kokkos that is compatible with the rest
-of Trilinos, in particular with the Tpetra package.
+will be used by the algorithms. The data structure abstractions are build around the
+concepts of \texttt{memory space} to indicate where memory is allocated,
+\texttt{memory layouts} to specify how data is layed out in memory, and \texttt{memory traits}
+that enable customizations of how data is accessed. The primary data structure incorporating
+these concepts is \texttt{Kokkos::View} - a multidimensional array abstractions that inspired
+the ISO C++23 \texttt{mdspan} class. Detailed descriptions of Kokkos Core can be found
+in~\cite{edwards2014} and \cite{trott2022kokkos}.
 
 \subsection{Kokkos Kernels}\label{subsec:kk}
-Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos ecosystem
+Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos Ecosystem
 ~\cite{trott2021kokkos} and provides node local implementations of mathematical kernels
 widely used across packages in Trilinos. As a member of the Kokkos
 ecosystem, Kokkos Kernels is tightly integrated on Kokkos features and aims at
