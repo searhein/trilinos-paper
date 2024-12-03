@@ -14,47 +14,47 @@ The parallel execution include
 \texttt{execution spaces} to specify where an algorithm should run, \texttt{execution
 policies} to indicate how the algorithm should be run in terms of hardware resources and
 \texttt{execution patterns} to designate what pattern among \texttt{for, reduce, scan}
-will be used by the algorithms. The data structure abstractions are built around the
+will be used by the algorithm. The data structure abstractions are built around the
 concepts of \texttt{memory space} to indicate where memory is allocated,
 \texttt{memory layouts} to specify how data is laid out in memory, and \texttt{memory traits}
 that enable customizations of how data is accessed. The primary data structure incorporating
-these concepts is \texttt{Kokkos::View} - a multidimensional array abstraction that inspired
+these concepts is \texttt{Kokkos::View}, a multidimensional array abstraction that inspired
 the ISO C++23 \texttt{mdspan} class. Detailed descriptions of Kokkos Core can be found
 in~\cite{edwards2014} and \cite{trott2022kokkos}.
 
 \subsection{Kokkos Kernels}\label{subsec:kk}
-Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos Ecosystem
-~\cite{trott2021kokkos} and provides node local implementations of mathematical kernels
+Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos ecosystem
+~\cite{trott2021kokkos} and provides node-local implementations of mathematical kernels
 widely used across packages in Trilinos. As a member of the Kokkos
-ecosystem, Kokkos Kernels is tightly integrated on Kokkos features and aims at
-delivering performance portable algorithms across major CPU and GPU based HPC systems.
-Due to its node local nature, Kokkos Kernels does not rely on MPI or other communication
+ecosystem, Kokkos Kernels is tightly integrated into Kokkos features and aims at
+delivering performance-portable algorithms across major CPU- and GPU-based HPC systems.
+Due to its node-local nature, Kokkos Kernels does not rely on MPI or other communication
 libraries unlike numerous other packages in Trilinos.
 
-The implementation of Kokkos Kernels algorithms leverage the hierarchical parallelism
-exposed by the Kokkos library~\cite{kim2017designing} and increasingly provides coverage
-for stream callable kernels. To ensure flexibility for the distributed libraries that
-might call its algorithms, Kokkos Kernels provides thread safe and asynchronous
+The implementations of Kokkos Kernels algorithms leverage the hierarchical parallelism
+exposed by the Kokkos library~\cite{kim2017designing} and increasingly provide coverage
+for stream-callable kernels. To ensure flexibility for the distributed libraries that
+might call its algorithms, Kokkos Kernels provides thread-safe and asynchronous
 implementations for most of its kernels. Kokkos Kernels also serves as a major point of
 integration for vendor optimized libraries such as cuBLAS, cuSPARSE, rocBLAS, rocSPARSE,
 MKL, ARMpl and others.
 
-The capabilities that Kokkos Kernels provides can be divided in four major categories:
+The capabilities provided by Kokkos Kernels can be divided into four major categories:
 1. BLAS algorithms, 2. sparse linear algebra and preconditioners, 3. graph algorithms, and
 4. batched dense and sparse linear algebra~\cite{liegeois2023performance}. The main
 points of integration of Kokkos Kernels in Trilinos are Tpetra for the dense and sparse
 linear algebra capabilities, Ifpack2 for the preconditioners and batched algorithms,
 the multigrid package MueLu that relies on these features both directly and indirectly
 as well as on some specialized algorithms such as graph
-coloring/coarsening~\cite{kelley2022parallel} and fused Jacobi-SpGEMM (generalized sparse matrix matrix multiply) kernels.
+coloring/coarsening~\cite{kelley2022parallel} and fused Jacobi-SpGEMM (generalized sparse matrix-matrix multiply) kernels.
 
 Similarly to the Kokkos library, Kokkos Kernels is developed in its own GitHub
 repository\footnote{https://github.com/kokkos/kokkos-kernels} outside of the Trilinos
 GitHub repository. Every version of the library is integrated and tested in Trilinos
 as part of the Kokkos ecosystem release process. Additional information on Kokkos
-Kernels capabilities can be found here~\cite{deveci2018multithreaded,wolf2017fast}.
+Kernels' capabilities can be found here~\cite{deveci2018multithreaded,wolf2017fast}.
 
-\todo{I'm not sure if we want to include Teuchos, but it might be necessary since it is omnipresent in the use of Trilinos.  We probably should expand this a bit more.}
+%\todo{I'm not sure if we want to include Teuchos, but it might be necessary since it is omnipresent in the use of Trilinos.  We probably should expand this a bit more.}
 
 % MMW I don't think Teuchos should be under framework.  I think we want to stick to logical groupings versus load-balanced ones.
 \subsection{Teuchos}
@@ -95,13 +95,13 @@ Frobenius norm calculation, and row/column scaling.
 \todo{@Brian/Chris: do you want to expand this a bit?}
 
 \subsection{Thyra}
-The Thyra library provides abstractions for use in writing high level abstract numerical algorithms (ANAs). Thyra is used by other Trilinos packages for implementing ANAs such as solvers for linear equations, nonlinear equations, bifurcation and stability analysis, optimization and uncertainty quantification. The abstractions hide concrete linear algebra and solver implementations so that the algorithms can be written once and reused across many application codes. For example, one could write a Krylov solver and it could be used with multiple concrete linear algebra implementations such as Tpetra in Trilinos, Epetra in Trilinos or the vector/matrix objects in PETSc.
+The Thyra package provides abstractions for use in writing high-level abstract numerical algorithms (ANAs). Thyra is used by other Trilinos packages for implementing ANAs such as solvers for linear equations, nonlinear equations, bifurcation and stability analysis, optimization and uncertainty quantification. The abstractions hide concrete linear algebra and solver implementations so that the algorithms can be written once and reused across many application codes. For example, one could write a Krylov solver and it could be used with multiple concrete linear algebra implementations such as Tpetra in Trilinos, Epetra in Trilinos or the vector/matrix objects in PETSc.
 
-Thyra is organized into three sets of abstractions depending on the type of operation required. All are templated on the scalar type. The sets are:
+Thyra is organized into three sets of abstractions depending on the type of operation required. All are templated on the scalar type. These sets are:
 \begin{itemize}
 \item \emph{Vector/Operator Interfaces:} The first level is an abstraction for vectors and operators \cite{Bartlett2007}. This set includes abstractions for vector spaces, vectors, multivectors and linear operators. Thyra provides a default set of vector/vector and vector-operator operations for standard linear algebra tasks such ad AXPY from BLAS. Defining an extensible interface such that users can add arbitrary vector/matrix operations and maintain performance can be difficult. A general tool to achieve this is the Trilinos utility package called RTOp \cite{rtop}. RTOp provides an interface for users to add new Thyra operations. RTOp accepts a vector of Thyra input objects and a vector of Thyra output objects along with a functor. The RTOp will apply the functor to each element of the data.
 
-\item \emph{Operator Solve Interfaces:} The second set of abstractions supply abstract linear solvers that can be attached to operators. The interfaces include base classes for preconditioners, preconditioner factories, linear operators with a solver, and factories for linear operators with a solver. The factories build and update the preconditioners and linear solvers as needed. The solver interfaces allow one to wrap any concrete linear solver or preconditioner for use with the ANAs. Trilinos provides a separate library named Stratimikos that wraps all of the Trilinos preconditioners and linear solvers in Thyra abstractions. This library is driven by the Teuchos::ParameterList options.
+\item \emph{Operator Solve Interfaces:} The second set of abstractions supply abstract linear solvers that can be attached to operators. The interfaces include base classes for preconditioners, preconditioner factories, linear operators with a solver, and factories for linear operators with a solver. The factories build and update the preconditioners and linear solvers as needed. The solver interfaces allow one to wrap any concrete linear solver or preconditioner for use with the ANAs. Trilinos provides a separate library named Stratimikos that wraps all of the Trilinos preconditioners and linear solvers in Thyra abstractions. This library is driven by Teuchos::ParameterList options.
 
 \item \emph{Nonlinear Interfaces:} The final set of abstractions support nonlinear operations. Thyra provides an interface that wraps nonlinear solvers. Implicit time integration and optimization solvers typically require nonlinear solves and can abstract away the concrete implementation via Thyra. The NOX package in Trilinos provides a concrete implementation of this interface. The final interface in Thyra is for querying a physics application for common objects required by high level Newton-based solvers. The Thyra::ModelEvaluator interface allows codes to ask the application to evaluate residuals, Jacobians, parametric sensitivities, Hessians and post processed quantities/derivatives of interest. The interface is designed to be stateless (i.e. consecutive calls with the same inputs should produce the same outputs). This design was chosen to avoid pitfalls in complex application codes interacting with general nonlinear algorithms. The design does not preclude its use in stateful applications that have a ``memory'' between time steps, but rather forces the explicit use of the stateful information in the interface.
 \end{itemize}
