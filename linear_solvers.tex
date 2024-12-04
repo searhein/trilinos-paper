@@ -54,8 +54,10 @@ ILU(k) and ILUt (thresholded ILU), or architecture portable algorithms
 for incomplete factorizations and triangular solvers implemented in
 Kokkos Kernels. It is possible to use direct solvers as subdomain
 solvers as well. There are options to call shared-memory inexact
-incomplete factorization preconditioners in ShyLU as well. One-level
-preconditioners such as these are used as smoothers within multigrid
+incomplete factorization preconditioners in ShyLU as well.
+%
+Such one-level
+preconditioners can be used as smoothers within multigrid
 methods, for solving ``simpler'' problems where the setup cost of a
 more robust multilevel methods is prohibitive when compared to the
 reduction in the number of iterations, or when the underlying problem
@@ -64,28 +66,29 @@ is simply not amenable to multigrid methods.
 Ifpack2 also supplies classic iterative methods based on matrix-splitting techniques, such as Jacobi
 iteration, Gauss-Seidel, and an MPI-oriented hybrid of Jacobi and
 Gauss-Seidel (e.g. Jacobi between ranks and Gauss-Seidel on them).  Ifpack also has preconditioners
-based on Chebyshev iteration.  The aforementioned preconditioners are available both in point and block
+based on Chebyshev iterations.  The aforementioned preconditioners are available both in point and block
 forms and can operate on CSR or BSR matrices.  In the block case,
 line relaxation is also supported, while in the point case, techniques
 like Vanka relaxation \cite{Vanka1986} are possible.  Auxiliary-space
-smoothing for $H(curl)$ and $H(div)$ discretizations, of the style of
+smoothing for $H(curl)$ and $H(div)$ discretizations of the style of
 Hiptmair \cite{Hiptmair1997} are also supported.
-While local kernels are implemented in Ifpack2 proper, it's also possible to call through
-to Kokkos-Kernels for portable share-memory algorithmic variants of Gauss-Seidel and Jacobi iterations.
+Local kernels are either implemented in Ifpack2 itslef,
+but can also be called from Kokkos-Kernels for portable shared-memory algorithmic variants of Gauss-Seidel and Jacobi iterations.
 
 \subsection{Multilevel Domain Decomposition Methods: FROSch}
 \label{ssec:frosch}
 
-FROSch (Fast and Robust Overlapping Schwarz) is a framework for the construction of multilevel Schwarz domain decomposition solvers. Besides parallel scalability, FROSch focuses on a wide range of applicability and robustness for challenging problems while allowing for an algebraic construction of the Schwarz operators, that is, the construction is only based on the fully assembled system matrix. This is facilitated by an algebraic construction of an overlapping domain decomposition on the first level, as in Ifpack2, as well as the use of extension-based coarse spaces, such as in the classical two-level generalized Dryja--Smith--Widlund (GDSW) preconditioner~\cite{dohrmann_domain_2008} and related variants. While the first version was still based on the Epetra linear algebra framework~\cite{heinlein_parallel_2016}, the current implementation of FROSch is based on Xpetra~\cite{heinlein_frosch_2020}, which allows the use of both Epetra and Tpetra linear algebra stacks. Algorithmic variants of Schwarz methods implemented in FROSch include:
+FROSch (Fast and Robust Overlapping Schwarz) is a framework for the construction of multilevel Schwarz domain decomposition solvers.
+Besides parallel scalability, FROSch focuses on applicability and robustness for a wide range of challenging problems while allowing for an algebraic construction of the Schwarz operators, that is, the construction is only based on the fully assembled system matrix. This is facilitated by an algebraic construction of an overlapping domain decomposition on the first level, as in Ifpack2, as well as the use of extension-based coarse spaces, such as in the classical two-level generalized Dryja--Smith--Widlund (GDSW) preconditioner~\cite{dohrmann_domain_2008} and related variants. While the first version was still based on the Epetra linear algebra framework~\cite{heinlein_parallel_2016}, the current implementation of FROSch is based on Xpetra~\cite{heinlein_frosch_2020}, which allows the use of both Epetra and Tpetra linear algebra stacks. Algorithmic variants of Schwarz methods implemented in FROSch include:
 \begin{itemize}
 	\item \emph{Extension-based coarse spaces based on a partition of unity on the interface}, such as classical GDSW, reduced dimension GDSW (RGDSW) coarse spaces, and multiscale finite element method (MsFEM) coarse spaces; cf.~\cite{heinlein_parallel_2016,heinlein_improving_2018}; 
 	\item \emph{Monolithic Schwarz preconditioners} for block systems; cf.~\cite{heinlein_monolithic_2019}.
-	\item \emph{Multilevel Schwarz preconditioners}, which are obtained from two-level Schwarz preconditioners by by recursively applying Schwarz preconditioners as an inexact solver for the coarse problems; cf.~\cite{heinlein_parallel_2022}.
+	\item \emph{Multilevel Schwarz preconditioners}, which are obtained from two-level Schwarz preconditioners by recursively applying Schwarz preconditioners as an inexact solver for the coarse problems; cf.~\cite{heinlein_parallel_2022}.
 \end{itemize}
 
-FROSch has been applied to various challenging application problems, including scalar elliptic and elasticity problems~\cite{heinlein_parallel_2016}, computational fluid dynamics problems~\cite{heinlein_monolithic_2019}, pharmaco-mechanical interaction in arterial walls~\cite{balzani_computational_nodate}, and coupled multiphysics problems for land ice simulations~\cite{heinlein_frosch_2022}; the latter two have been solved using monolithic preconditioning techniques. To obtain robust convergence for heterogeneous model problems, spectral coarse spaces will be implemented shortly~\cite{heinlein_adaptive_2019}. FROSch preconditioners have scaled to more than 200\,k processor cores on the Theta Cray XC40 supercomputer at the Argonne Leadership Computing Facility (ALCF); cf.~\cite{heinlein_parallel_2022}.
+FROSch has been applied to various challenging application problems, including scalar elliptic and elasticity problems~\cite{heinlein_parallel_2016}, computational fluid dynamics problems~\cite{heinlein_monolithic_2019}, pharmaco-mechanical interactions in arterial walls~\cite{balzani_computational_nodate}, and coupled multiphysics problems for land ice simulations~\cite{heinlein_frosch_2022}; the latter two have been solved using monolithic preconditioning techniques. To obtain robust convergence for heterogeneous model problems, spectral coarse spaces will be implemented shortly~\cite{heinlein_adaptive_2019}. FROSch preconditioners have scaled to more than 200$k$ cores on the Theta Cray XC40 supercomputer at the Argonne Leadership Computing Facility (ALCF); cf.~\cite{heinlein_parallel_2022}.
 
-In the current implementation, FROSch assumes a one-to-one correspondence of subdomains and MPI ranks, however, due to an interface to the other solver packages in Trilinos, inexact subdomain solvers can be employed on subdomains. An extension to multiple subdomains per MPI rank is currently being implemented. Using Kokkos and KokkosKernels, which are available through the Tpetra linear algebra framework, FROSch has recently also been ported to GPUs~\cite{Yamazaki:2022:EST}, with performance gains for the triangular solve or inexact solves with ILU on the GPUs.
+In its current implementation, FROSch assumes a one-to-one correspondence of subdomains and MPI ranks, however, due to an interface to the other solver packages in Trilinos, inexact subdomain solvers can be employed on subdomains. An extension to multiple subdomains per MPI rank is currently being implemented. Using Kokkos and Kokkos Kernels, FROSch has recently also been ported to GPUs~\cite{Yamazaki:2022:EST} with performance gains for the triangular solve or inexact solves with ILU on GPUs.
 
 A demo/tutorial for FROSch can be found at the GitHub repository~\cite{frosch_demo}.
 
