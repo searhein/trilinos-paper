@@ -6,7 +6,7 @@ The Trilinos Framework Product provides supporting infrastructure for Trilinos u
 
 The primary focus of the Trilinos Framework Product relates building, testing, and releases of Trilinos. This effort includes setting up and maintaining the general infrastructure for structured building of subsets of packages, automated testing, maintaining and adding to the various testing configurations.
 
-The Trilinos Framework infrastructure is built on top of the Tribal Build, Integration, and Test System (TriBITS~\cite{Bartlett2014}) which is built on top of the open-source tools CMake and CTest.
+The Trilinos Framework infrastructure is built on top of the Tribal Build, Integration, and Test System (TriBITS~\cite{Bartlett2014}) which is built on top of the open-source tools CMake and CTest\footnote{\url{https://cmake.org}}.
 The TriBITS framework allows building arbitrary subgraphs of dependent (Trilinos) CMake packages in one or more individual aggregated CMake projects (in any arrangement desired).
 Each Trilinos/TriBITS package lists its direct (required and optional) dependent upstream packages which forms a package dependency graph.
 The TriBITS framework uses this package dependency graph to automatically determine what indirect dependent internal packages must be enabled and processed (and built) and what external packages must be found.
