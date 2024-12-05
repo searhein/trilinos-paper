@@ -73,7 +73,7 @@ like Vanka relaxation \cite{Vanka1986} are possible.  Auxiliary-space
 smoothing for $H(curl)$ and $H(div)$ discretizations of the style of
 Hiptmair \cite{Hiptmair1997} are also supported.
 Local kernels are either implemented in Ifpack2 itslef,
-but can also be called from Kokkos-Kernels for portable shared-memory algorithmic variants of Gauss-Seidel and Jacobi iterations.
+but can also be called from Kokkos Kernels for portable shared-memory algorithmic variants of Gauss-Seidel and Jacobi iterations.
 
 \subsection{Multilevel Domain Decomposition Methods: FROSch}
 \label{ssec:frosch}
@@ -112,7 +112,7 @@ The matrix graph is colored to create aggregates (groups) of nodes.
 These aggregates define a tentative projection operator.
 A final projection operator is created by applying a smoother to the tentative operator.
 There are a variety of deterministic and non-deterministic coloring algorithms implemented directly
-in MueLu or in Kokkos-Kernels.  For a full description, see~\cite{BergerVergiat2023a}.
+in MueLu or in Kokkos Kernels.  For a full description, see~\cite{BergerVergiat2023a}.
 
 \item \emph{Algebraic multigrid for Maxwell’s equations}:
   MueLu implements specialized solvers for the solution of curl-curl problems~\cite{BochevHuEtAl2008_AlgebraicMultigridApproachBased}.
@@ -159,9 +159,9 @@ Details on the compatibility of MueLu and its predecessor ML~\cite{Heroux2005a,G
 Besides its C++ API, MueLu offers a MATLAB interface, MueMex, to provide access to MueLu's aggregation and solver routines from MATLAB.
 MueMex allows users to setup and solve arbitrarily many problems with either MueLu as a preconditioner, Belos as a solver and Epetra or Tpetra for data structures.
 
-While MueLu requires Teuchos, Tpetra, Xpetra, Kokkos, and Kokkos-Kernels, it has a strong dependence 
+While MueLu requires Teuchos, Tpetra, Xpetra, Kokkos, and Kokkos Kernels, it has a strong dependence
 on the Amesos2, Ifpack2, and Zoltan2 libraries.
-MueLu also supports interfaces to abstraction layer packages such as Stratimikos and Thyra though the MueLu adapters library.
+MueLu also supports interfaces to abstraction layer packages such as Stratimikos and Thyra through the MueLu adapters library.
 These interfaces are required to use MueLu with the Teko block preconditioning package.
 For more details on using MueLu with Teko, see the MueLu examples directory in the Trilinos source code repository.
 
@@ -212,6 +212,6 @@ generalized Davidson method added to the suite of eigensolvers in Anasazi.
 The Stratimikos package provides a unified interface to linear solvers and preconditioners in Trilinos (e.g., from Amesos2, Belos, FROSch, Ifpack2, MueLu).
 The linear system as well as right-hand side and solution vectors are required to support the Thyra interface.
 Wrappers for Tpetra linear algebra are provided by Thyra.
-Solver and preconditioner parameters are specified via a Teuchos::ParameterList,
+Solver and preconditioner parameters are specified via a \code{Teuchos::ParameterList},
 which users can easily populate from an xml file.
 Additional solver and preconditioner factories can easily be added via adapters (see \texttt{packages/stratimikos/adapters} for examples).
