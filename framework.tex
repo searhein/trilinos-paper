@@ -1,10 +1,10 @@
 % !TEX root = main.tex
 
-The Trilinos Framework Product provides supporting infrastructure for Trilinos users and developers. This infrastructure is largely not what Trilinos is well-known for, but is essential for supporting all Trilinos capabilities.
+The Trilinos Framework product provides supporting infrastructure for Trilinos users and developers. This infrastructure is largely not what Trilinos is well-known for but is essential for supporting all Trilinos capabilities.
 
 \subsection{Build and Test Infrastructure}
 
-The primary focus of the Trilinos Framework Product relates building, testing, and releases of Trilinos. This effort includes setting up and maintaining the general infrastructure for structured building of subsets of packages, automated testing, maintaining and adding to the various testing configurations.
+The primary focus of the Trilinos Framework product relates to building, testing, and releases of Trilinos. This effort includes setting up and maintaining the general infrastructure for structured building of subsets of packages, automated testing, maintaining and adding to the various testing configurations.
 
 The Trilinos Framework infrastructure is built on top of the Tribal Build, Integration, and Test System (TriBITS~\cite{Bartlett2014}) which is built on top of the open-source tools CMake and CTest\footnote{\url{https://cmake.org}}.
 The TriBITS framework allows building arbitrary subgraphs of dependent (Trilinos) CMake packages in one or more individual aggregated CMake projects (in any arrangement desired).
@@ -18,10 +18,10 @@ The TriBITS framework has allowed Trilinos to scalably grow in the number of pac
 
 \subsection{Documentation Infrastructure}
 
-The Framework is also responsible for maintaining the general infrastructure for the Trilinos web site, wiki, and Doxygen documentation. The Framework owns some of the documented workflows on these sites, such as the process for reproducing testing failures, but the Trilinos package developers own all of the documentation associated with their associated packages.
+The Trilinos Framework product is also responsible for maintaining the general infrastructure for the Trilinos website, wiki, and Doxygen documentation. It owns some of the documented workflows on these sites, such as the process for reproducing testing failures, but the Trilinos package developers own all of the documentation associated with their associated packages.
 
 
-\subsection{PyTrilinos2}
+\subsection{Python Wrappers: PyTrilinos2}
 
 PyTrilinos2 is a set of automatically generated Python wrappers for selected Trilinos packages including Tpetra, Teuchos, and some MueLu capabilities. In the future, the list of wrapped packages will be enlarged to provide users with more features and to enable efficient prototyping of new algorithms for developers.
 

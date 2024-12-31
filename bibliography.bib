@@ -271,10 +271,21 @@ doi = {10.1155/2012/408130}
   pages = {S173--S198}
 }
 
-@techreport{Yamazaki:2022:EST,
-  author = {Yamazaki, Ichitaro and Heinlein, Alexander and Rajamanickam, Sivasankaran},
-  title = {An Experimental Study of Two-level Schwarz Domain-Decomposition Preconditioners on GPUs},
-  note = {Accepted for publication in the IPDPS’23 proceedings. December 2022}
+
+@inproceedings{yamazaki_experimental_2023,
+	title = {An {Experimental} {Study} of {Two}-level {Schwarz} {Domain}-{Decomposition} {Preconditioners} on {GPUs}},
+	isbn = {9798350337662},
+	url = {https://www.computer.org/csdl/proceedings-article/ipdps/2023/376600a680/1OSI79WG8c8},
+	doi = {10.1109/IPDPS54959.2023.00073},
+	abstract = {The generalized Dryja–Smith–Widlund (GDSW) preconditioner is a two-level overlapping Schwarz domain decomposition (DD) preconditioner that couples a classical one-level overlapping Schwarz preconditioner with an energy-minimizing coarse space. When used to accelerate the convergence rate of Krylov subspace iterative methods, the GDSW preconditioner provides robustness and scalability for the solution of sparse linear systems arising from the discretization of a wide range of partial different equations. In this paper, we present FROSch (Fast and Robust Schwarz), a domain decomposition solver package which implements GDSW-type preconditioners for both CPU and GPU clusters. To improve the solver performance on GPUs, we use a novel decomposition to run multiple MPI processes on each GPU, reducing both solver’s computational and storage costs and potentially improving the convergence rate. This allowed us to obtain competitive or faster performance using GPUs compared to using CPUs alone. We demonstrate the performance of FROSch on the Summit supercomputer with NVIDIA V100 GPUs, where we used NVIDIA Multi-Process Service (MPS) to implement our decomposition strategy.The solver has a wide variety of algorithmic and implementation choices, which poses both opportunities and challenges for its GPU implementation. We conduct a thorough experimental study with different solver options including the exact or inexact solution of the local overlapping subdomain problems on a GPU. We also discuss the effect of using the iterative variant of the incomplete LU factorization and sparse-triangular solve as the approximate local solver, and using lower precision for computing the whole FROSch preconditioner. Overall, the solve time was reduced by factors of about 2× using GPUs, while the GPU acceleration of the numerical setup time depend on the solver options and the local matrix sizes.},
+	language = {English},
+	urldate = {2023-11-01},
+	publisher = {IEEE Computer Society},
+	author = {Yamazaki, Ichitaro and Heinlein, Alexander and Rajamanickam, Sivasankaran},
+	month = may,
+	year = {2023},
+	pages = {680--689},
+	file = {Submitted Version:/home/alexander/work/documents/literature/zotero/storage/P69K25XR/Yamazaki et al. - 2023 - An Experimental Study of Two-level Schwarz Domain-.pdf:application/pdf},
 }
 
 @article{heinlein_adaptive_2019,
@@ -1514,4 +1525,24 @@ url = {https://www.sciencedirect.com/science/article/pii/S0021999120301145},
 author = {B.J. Gross and N. Trask and P. Kuberry and P.J. Atzberger},
 keywords = {Meshfree methods, High order numerical methods, Generalized Moving Least Squares, Manifolds, Exterior calculus, Curved fluid interfaces, Fluid mechanics},
 abstract = {We utilize generalized moving least squares (GMLS) to develop meshfree techniques for discretizing hydrodynamic flow problems on manifolds. We use exterior calculus to formulate incompressible hydrodynamic equations in the Stokesian regime and handle the divergence-free constraints via a generalized vector potential. This provides less coordinate-centric descriptions and enables the development of efficient numerical methods and splitting schemes for the fourth-order governing equations in terms of a system of second-order elliptic operators. Using a Hodge decomposition, we develop methods for manifolds having spherical topology. We show the methods exhibit high-order convergence rates for solving hydrodynamic flows on curved surfaces. The methods also provide general high-order approximations for the metric, curvature, and other geometric quantities of the manifold and associated exterior calculus operators. The approaches also can be utilized to develop high-order solvers for other scalar-valued and vector-valued problems on manifolds.}
+}
+
+@misc{heinlein2024couplingdealiifroschsustainable,
+	title={Coupling deal.II and FROSch: A Sustainable and Accessible (O)RAS Preconditioner}, 
+	author={Alexander Heinlein and Sebastian Kinnewig and Thomas Wick},
+	year={2024},
+	eprint={2410.22871},
+	archivePrefix={arXiv},
+	primaryClass={math.NA},
+	url={https://arxiv.org/abs/2410.22871}, 
+}
+
+@misc{alves2024computationalstudyalgebraiccoarse,
+	title={A computational study of algebraic coarse spaces for two-level overlapping additive Schwarz preconditioners}, 
+	author={Filipe A. C. S. Alves and Alexander Heinlein and Hadi Hajibeygi},
+	year={2024},
+	eprint={2408.08187},
+	archivePrefix={arXiv},
+	primaryClass={math.NA},
+	url={https://arxiv.org/abs/2408.08187}, 
 }

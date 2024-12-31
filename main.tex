@@ -64,8 +64,13 @@
 \acmDOI{XXXXXXX.XXXXXXX}
 
 \usepackage{color}
+\usepackage{todonotes}
+\let\oldtodo\todo
+\renewcommand{\todo}[1]{
+	\oldtodo[inline]{#1}
+}
 
-\newcommand{\todo}[1]{\textcolor{orange}{TODO: #1}}
+%\newcommand{\todo}[1]{\textcolor{orange}{TODO: #1}}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 
 \newcommand{\code}[1]{\texttt{#1}}
@@ -188,26 +193,6 @@
   \postcode{87123}
 }
 
-\author{Romin Tomasetti}
-\email{romin.tomasetti@uliege.be}
-%\affiliation{%
-%  \institution{University of Liege}
-%  \streetaddress{Quartier Polytech 1, allée de la Découverte 9}
-%  \postcode{4000}
-%  \city{Liege}
-%  \country{Belgium}
-%}
-
-\author{Maarten Arnst}
-\email{maarten.arnst@uliege.be}
-\affiliation{%
-  \institution{University of Liege}
-  \streetaddress{Quartier Polytech 1, allée de la Découverte 9}
-  \postcode{4000}
-  \city{Liege}
-  \country{Belgium}
-}
-
 \author{Alexander Heinlein}
 \affiliation{%
   \institution{Delft University of Technology}
@@ -227,6 +212,26 @@
   \country{Germany}}
 \email{matthias.mayr@unibw.de}
 \orcid{0000-0002-2780-1233}
+
+\author{Romin Tomasetti}
+\email{romin.tomasetti@uliege.be}
+%\affiliation{%
+	%  \institution{University of Liege}
+	%  \streetaddress{Quartier Polytech 1, allée de la Découverte 9}
+	%  \postcode{4000}
+	%  \city{Liege}
+	%  \country{Belgium}
+	%}
+
+\author{Maarten Arnst}
+\email{maarten.arnst@uliege.be}
+\affiliation{%
+	\institution{University of Liege}
+	\streetaddress{Quartier Polytech 1, allée de la Découverte 9}
+	\postcode{4000}
+	\city{Liege}
+	\country{Belgium}
+}
 
 \author{New Non Sandia Author}
 \affiliation{%
@@ -342,6 +347,7 @@ Notes on the Trilinos community and possibilities to contribute aim at onboardin
 
 \section{Acknowledgment}
 
+\todo{Do we need Acknowledgments?}
 
 %%
 %% The next two lines define the bibliography style to be used, and
