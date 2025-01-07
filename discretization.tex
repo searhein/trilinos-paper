@@ -106,8 +106,8 @@ It provides the local indexing used during assembly as well. The DOF manager con
 \item \emph{Linear Object Factory:} Panzer provides a linear object factory and linear object container designed to support parallel distributed assembly. 
 %It supports both Epetra and Tpetra objects. 
 The returned containers hold the linear algebra objects for either a uniquely owned DOF map used for solving the linear system or a ghosted version of the linear objects that can be used for assembly. The containers support export and import operations between the unique and ghosted containers. These are used to simplify the assembly process and abstract the underlying Tpetra linear algebra objects. %(i.e., Epetra or Tpetra). 
-The linear object factory can also create DOF gather and scatter functors for the corresponding (and possibly blocked) matrices. The gather and scatter operations are specialized on the assembly types, including residuals, Jacobians, Tangents and Hessians. Hessians are only supported for Epetra at the moment but will be expanded to Tpetra as needed. 
-\todo{I have removed ``Epetra'' everywhere. What about the Hessians?}
+The linear object factory can also create DOF gather and scatter functors for the corresponding (and possibly blocked) matrices. The gather and scatter operations are specialized on the assembly types, including residuals, Jacobians, and Tangents.
+Support for Hessians will be implemented as needed.
 The capability is found in the disc-fe subpackage.
 
 \item \emph{Worksets:} The Panzer assembly process provides workset containers to hold static data that can be reused in finite element computations. For example, when using a static mesh, these containers could hold the Jacobian, Jacobian inverse and all finite element basis values at the quadrature points. The workset concept breaks the local elements on an MPI process into smaller blocks of uniform computations that can be dispatched to a CPU or GPU. The workset helps to control total memory use for temporaries in the Phalanx directed acyclic graph. This capability is part of the disc-fe subpackage.
