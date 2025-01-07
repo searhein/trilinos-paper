@@ -48,7 +48,7 @@ line relaxation is also supported, while in the point case, techniques
 like Vanka relaxation \cite{Vanka1986} are possible.  Auxiliary-space
 smoothing for $H(curl)$ and $H(div)$ discretizations of the style of
 Hiptmair \cite{Hiptmair1997} are also supported.
-Local kernels are either implemented in Ifpack2 itslef
+Local kernels are either implemented in Ifpack2 itself
 but can also be called from Kokkos Kernels for portable shared-memory algorithmic variants of Gauss-Seidel and Jacobi iterations.
 
 \subsection{Multilevel Domain Decomposition Methods: FROSch}
@@ -151,7 +151,7 @@ Amesos2 also has a templated implementation of the sequential KLU solver called 
 
 Tacho is a sparse direct solver that exploits the supernodal block structures, commonly found in the sparse direct factorization of the matrices from mechanics applications. Tacho exploits this supernodal structure for both factorization and triangular solve phases.  It is based on Kokkos, and hence it is portable to different node architectures (including NVIDIA or AMD GPUs). Originally, Tacho implemented task-parallel Cholesky of a sparse symmetric positive definite (SPD) matrix~\cite{Tacho2018}. However, to improve its portability, it has been extended to compute the sparse factorization based on level-set scheduling. Moreover, its functionality has been extended to compute LDLt factorization of symmetric indefinite matrix and LU factorization of a general matrix with a symmetric sparsity structure.
 
-In addition to their stand-alone use, the aforemention node-level solvers may be used as the local solvers for domain decomposition preconditioners (Ifpack2 or FROSch) or as the coarse solvers for multilevel preconditioners (MueLu or FROSch).
+In addition to their stand-alone use, the aforementioned node-level solvers may be used as the local solvers for domain decomposition preconditioners (Ifpack2 or FROSch) or as the coarse solvers for multilevel preconditioners (MueLu or FROSch).
 
 ShyLU also implements a distributed-memory linear solver based on the Schur complement method~\cite{ShyLUCore2014}. This is a hybrid direct and iterative solver where each subdomain problem is solved using a direct solver in parallel while the Schur complement is solved using an iterative approach. The preconditioner for the Schur complement solver is computed using a probing approach or using a threshold-based dropping strategy. This solver was developed to address the requirements of circuit simulation applications. The solver is also hybrid in the parallel computing sense as it uses MPI+threads. This  solver algorithm is not focused on GPU architectures. As a result, we have not implemented this solver using Kokkos. % This solver has been shown to be useful for circuit simulation applications.
 
