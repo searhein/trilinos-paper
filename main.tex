@@ -113,6 +113,14 @@
 %% "author year" style.
 %%
 
+\usepackage{amsthm}
+\theoremstyle{definition}
+%\newtheorem{remark}{Remark}[chapter]
+\newtheoremstyle{remarkstyle} % https://latex.org/forum/viewtopic.php?t=18631
+  {}{}{}{}{\bfseries}{.}{.5em}{{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+\theoremstyle{remarkstyle}
+\newtheorem{remark}{Remark}[section]
+
 
 %%
 %% end of the preamble, start of the body of the document source.
