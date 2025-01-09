@@ -1,15 +1,19 @@
 % !TEX root = main.tex
 
-\todo{MMW: I think it might be worth iterating with Mike Heroux on this introductory session.}
 Trilinos is a community-driven, open-source C++ software framework and collection of reusable scientific libraries designed to enable the development of scalable, high-performance algorithms for solving complex, multiscale, and multiphysics engineering and scientific problems on advanced computing architectures.
 While Trilinos can run on a variety of hardware ranging from small workstations to large supercomputers, the typical use of Trilinos is on the leadership-class systems with new or emerging hardware architectures.
 
 % History
 Trilinos was originally conceived as a framework of three packages for distributed memory systems. The original Trilinos publication~\cite{Heroux2005a} describes the motivation, philosophy, and capabilities of Trilinos at that time. A few years later, the second Trilinos overview publication~\cite{Heroux2012} introduced the expanded set of capabilities then included in Trilinos as well as the strategic goals for Trilinos. Trilinos today is similar to the Trilinos that was envisioned two decades ago in some aspects. However, it is also very different in several other aspects. These changes were necessitated by the changes in programming models, application needs, hardware architectures, and algorithms. Trilinos has grown from a library of three packages to a library with more than fifty packages with functionality and features supporting a wide range of applications.
-\todo{Check how many packages?}
-
+Older packages rely heavily on the linear algebra classes provided by Epetra.
+Epetra does not support larger problems (2B+ unknowns), nor does it allow for accelerator offload.
+Since the packages of the old Epetra stack are scheduled to be archived and removed from the main Trilinos repository on Github by the end of 2025 we limit ourselves to only describe the modern Trilinos software stack.
 % Purpose
-This article is an attempt to capture a snapshot of where Trilinos is today as opposed to twenty and thirteen years ago when the original Trilinos articles were written. Therefore it will focus on the major developments within Trilinos in the last decade as well as new features and functionality that have been added to advance scientific and engineering applications. It will only give an overview of the features, and we refer to the extensive list of references for the details of these features. We are also cognizant of the fact that this article describes software that is actively developed and constantly evolving.  Hence, we will focus on the high level features and concepts that we expect to remain stable for several years.
+This article is an attempt to capture a snapshot of where Trilinos is today as opposed to twenty and thirteen years ago when the original Trilinos articles were written.
+Therefore it will focus on the major developments within Trilinos in the last decade as well as new features and functionality that have been added to advance scientific and engineering applications.
+It will only give an overview of the features, and we refer to the extensive list of references for the details of these features.
+We are also cognizant of the fact that this article describes software that is actively developed and constantly evolving.
+Hence, we will focus on the high level features and concepts that we expect to remain stable for several years.
 
 
 
@@ -18,7 +22,7 @@ This article is an attempt to capture a snapshot of where Trilinos is today as o
 
 A key goal of modern Trilinos is to offer a performance-portable collection of reusable scientific libraries, allowing users to develop applications that achieve high efficiency across all modern High Performance Computing (HPC) hardware architectures.
 This goal emerged when the HPC architecture landscape started diversifying with the
-introduction of GPU acceleration for scientific software. Today nine of the top ten systems in the Top500\footnote{https://top500.org} use GPUs, with only a single system being CPUs only. A complication in this shift is the diversification of vendor-provided programming models.  
+introduction of GPU acceleration for scientific software. Today nine of the top ten systems in the Top500\footnote{https://top500.org} use GPUs, with only a single system being CPUs only. A complication in this shift is the diversification of vendor-provided programming models.
 The aforementioned ten systems actually have four different vendor-preferred programming models: CUDA, HIP and OneAPI SYCL for the GPU based systems and OpenMP for the CPU system.
 \todo{MMW:  We should verify these programming models... I think these are right but I'm not sure for Fugakyu }
 
@@ -28,10 +32,6 @@ Now, Trilinos provides snapshots of the two primary Kokkos subprojects (Core and
 Kokkos enables Trilinos developers to write single source implementations of their packages that perform well on all major HPC hardware architectures. Some of its design principles are also reflected in Trilinos API designs. In particular, the
 use of \texttt{execution} and \texttt{memory spaces} as parameters of data structures and algorithms is a common thread throughout Trilinos. This design characteristic enables Trilinos users to manage the heterogeneity of modern architectures and its impact on Trilinos data structures.
 
-\begin{remark}[Deprecation of the Epetra stack]
-\todo{@Curt, let's add the remark on the deprecation of the Epetra stack here.}
-\end{remark}
-
 
 \subsection{Trilinos Functionality}
 
@@ -40,11 +40,11 @@ use of \texttt{execution} and \texttt{memory spaces} as parameters of data struc
 
 The features and capabilities of Trilinos are divided into several software units called \textit{packages}.
 Each Trilinos package has a well-defined set of unique capabilities that is important for scientific or engineering applications. Packages are semi-autonomous, often having their own development team, users, and set of requirements and development principles.  However, packages also follow a general set of Trilinos expectations such as having a designated point-of-contact and following the software quality expectations (e.g., sufficient documentation, continuous integration testing, clearly defined dependences, and using the Trilinos infrastructure for building and installation).
- 
+
 In the following sections of this paper, we group the Trilinos packages that share common objectives (e.g., solving linear systems) together into five \textit{product areas}:  Core, Linear Solvers and Preconditioners, Nonlinear Solvers and Analysis Tools, Discretization Tools, and Framework Infrastructure.  These product areas we briefly described below.
 
 \paragraph{Core} Core packages cover all aspects of creating, distributing or mapping data to processing elements (cores, threads, nodes), load balancing, and redistributing data. They also include Trilinos abstractions for linear algebra data structures and algorithms and concrete implementations such as Tpetra linear algebra data structures. On a modern accelerator-based compute node, the abstractions provided by the Kokkos library become critical for Tpetra. These capabilities are described in detail in Section~\ref{sec:data_services}.
- 
+
 \paragraph{Linear Solvers and Preconditioners} The wide variety of applications that use Trilinos need a diverse set of linear solvers. Trilinos has support for both iterative and direct linear solvers, including interfaces to external solver packages. There are a number of preconditioner options from multithreaded or performance portable node-level preconditioners to scalable multilevel domain decomposition or multigrid preconditioners. The preconditioners and solvers use the data abstractions from the core packages. Section \ref{sec:lin_solve} provides a detailed description of these features.
 
 \paragraph{Nonlinear Solvers and Analysis Tools} These packages provide high level algorithms for computational simulation and design. Capabilities include solvers for nonlinear equations, parameter continuation, bifurcation tracking, optimization, and uncertainty quantification. Trilinos also provides lower level utility packages to evaluate quantities of interest required by the analysis algorithms. Capabilities include automatic differentiation technology to evaluate derivatives and embedded ensemble propagation for uncertainty quantification. These packages/capabilities will be discussed further in Section~\ref{sec:nonlin_solve}.
@@ -55,4 +55,3 @@ In the following sections of this paper, we group the Trilinos packages that sha
 
 
 \vspace{2.0ex} This article describes Trilinos's features and capabilities with a focus towards providing an overview of recent developments. We also briefly touch upon the Trilinos community (Section~\ref{sec:community}) and software engineering issues with respect to Trilinos.
-
