@@ -1,13 +1,12 @@
 % !TEX root = main.tex
 
 % MMW: I'd order these subsections roughly in order of the software stack... most fundamental to most complex
-The Core product area provides essential tools for managing and distributing data across processing elements in parallel computing environments, addressing challenges such as load balancing and data redistribution. Key components discussed here include the Kokkos performance portability framework, Teuchos tools, Tpetra distributed-memory linear algebra, and Thyra abstractions for high-level formulations of numerical algorithms. 
+The Core product area provides essential tools for managing and distributing data across processing elements in parallel computing environments, addressing challenges such as load balancing and data redistribution. Key components discussed here include the Kokkos performance portability framework, Teuchos tools, Tpetra distributed-memory linear algebra, and Thyra abstractions for high-level formulations of numerical algorithms.
 
 \subsection{Performance Portability: Kokkos Core}\label{subsec:kokkos}
 Kokkos Core\footnote{For historical reasons the package name is ``Kokkos'' since it precedes the creation of other Kokkos subprojects such as Kokkos Kernels.} is a programming model designed for performance portability across hardware architectures such as CPUs and GPUs. Two primary insights into achieving performance portability shaped Kokkos's development are:
-i) abstractions for both parallel execution and data structures are required, and 
-ii) the fundamental programming model must be descriptible not prescriptive.
-\todo{descriptive?}
+i) abstractions for both parallel execution and data structures are required, and
+ii) the fundamental programming model must be descriptive not prescriptive.
 
 The parallel execution includes \texttt{execution spaces} to specify where an algorithm should run, \texttt{execution policies} to indicate how the algorithm should be run in terms of hardware resources, and \texttt{execution patterns} to designate what pattern among \texttt{for, reduce, scan} will be used by the algorithm. The data structure abstractions are built around the concepts of \texttt{memory spaces} to indicate where memory is allocated, \texttt{memory layouts} to specify how data is laid out in memory, and \texttt{memory traits} that enable customizations of how data is accessed. The primary data structure incorporating
 these concepts is \texttt{Kokkos::View}, a multidimensional array abstraction that inspired
@@ -49,7 +48,8 @@ Tpetra \cite{hoemmen2015tpetra} provides the distributed-memory
 infrastructure for sparse linear algebra computations.  It implements
 distributed-memory linear algebra objects, such as sparse graphs,
 sparse matrices, and dense vectors, where Kokkos is employed for local data
-storage. Distributed-memory sparse linear algebra operations, such as
+storage. The provided objects are templated on scalar type (e.g. \texttt{double}, \texttt{float}, or a Sacado type), local index type, global index type and Kokkos backend and memory space.
+Distributed-memory sparse linear algebra operations, such as
 a sparse matrix-vector product, are implemented through on-node calls
 to Kokkos Kernels and inter-node MPI communication. Tpetra features
 include:
@@ -73,10 +73,8 @@ multiplication (SPGEMM) and triple-product, sparse matrix-matrix addition, spars
 Frobenius norm calculation, and row/column scaling.
 \end{itemize}
 
-\todo{@Brian/Chris: do you want to expand this a bit? Seems a bit short compared to, e.g., Thyra. Thyra also mentions template parameters etc. Shouldn't we add a few comments on this in Tpetra?}
-
 \subsection{Abstract Numerical Algorithms: Thyra}
-The Thyra package provides abstractions for implementing high-level abstract numerical algorithms (ANAs). Thyra is used by other Trilinos packages for implementing ANAs such as solvers for linear equations, nonlinear equations, bifurcation and stability analysis, optimization, and uncertainty quantification. The abstractions hide concrete linear algebra and solver implementations so that the algorithms can be written once and reused across many application codes. For example, one could write a Krylov solver and use it with multiple concrete linear algebra implementations such as Tpetra in Trilinos %, Epetra in Trilinos 
+The Thyra package provides abstractions for implementing high-level abstract numerical algorithms (ANAs). Thyra is used by other Trilinos packages for implementing ANAs such as solvers for linear equations, nonlinear equations, bifurcation and stability analysis, optimization, and uncertainty quantification. The abstractions hide concrete linear algebra and solver implementations so that the algorithms can be written once and reused across many application codes. For example, one could write a Krylov solver and use it with multiple concrete linear algebra implementations such as Tpetra in Trilinos %, Epetra in Trilinos
 or the vector/matrix objects in PETSc.
 
 Thyra is organized into three sets of abstractions depending on the type of operation required. All are templated on the scalar type. These sets are:
@@ -87,6 +85,3 @@ Thyra is organized into three sets of abstractions depending on the type of oper
 
 \item \emph{Nonlinear Interfaces:} The final set of abstractions support nonlinear operations. Thyra provides an interface that wraps nonlinear solvers. Implicit time integration and optimization solvers typically require nonlinear solves and can abstract away the concrete implementation via Thyra. The NOX package in Trilinos (described in Section~\ref{sec:nox}) provides a concrete implementation of this interface. The final interface in Thyra is for querying a physics application for common objects required by high-level Newton-based solvers. The \code{Thyra::ModelEvaluator} interface allows codes to ask the application to evaluate residuals, Jacobians, parametric sensitivities, Hessians, and post-processed quantities/derivatives of interest. The interface is designed to be stateless (i.e., consecutive calls with the same inputs should produce the same outputs). This design was chosen to avoid pitfalls in complex application codes interacting with general nonlinear algorithms. The design does not preclude its use in stateful applications that have a ``memory'' between time steps, but rather forces the explicit use of the stateful information in the interface.
 \end{itemize}
-
-
-
