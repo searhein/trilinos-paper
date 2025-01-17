@@ -16,7 +16,7 @@ in~\cite{edwards2014} and \cite{trott2022kokkos}.
 \subsection{Performance Portable Kernels: Kokkos Kernels}\label{subsec:kk}
 Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos ecosystem~\cite{trott2021kokkos} and provides node-local implementations of mathematical kernels widely used across packages in Trilinos. As a member of the Kokkos ecosystem, Kokkos Kernels is tightly integrated into Kokkos features and aims at delivering performance-portable algorithms across major CPU- and GPU-based HPC systems. Due to its node-local nature, Kokkos Kernels does not rely on MPI or other communication libraries unlike numerous other packages in Trilinos.
 
-The implementations of Kokkos Kernels algorithms leverage the hierarchical parallelism exposed by the Kokkos library~\cite{kim2017designing} and increasingly provide coverage for stream-callable kernels. To ensure flexibility for the distributed libraries that might call its algorithms, Kokkos Kernels provides thread-safe and asynchronous implementations for most of its kernels. Kokkos Kernels also serves as a major point of integration for vendor optimized libraries such as cuBLAS, cuSPARSE, rocBLAS, rocSPARSE, MKL, ARMpl and others.
+The implementations of Kokkos Kernels algorithms leverage the hierarchical parallelism exposed by the Kokkos library~\cite{kim2017designing}. To ensure flexibility for the distributed libraries that might call its algorithms, Kokkos Kernels provides thread-safe implementations for most of its kernels, with increasing coverage for asynchronous implementations that allow an execution space instance to be passed when calling a kernel. Kokkos Kernels also serves as a major point of integration for vendor optimized libraries such as cuBLAS, cuSPARSE, rocBLAS, rocSPARSE, MKL, ARMpl and others.
 
 The capabilities provided by Kokkos Kernels can be divided into four major categories:
 1. BLAS algorithms, 2. sparse linear algebra and preconditioners, 3. graph algorithms, and
@@ -39,16 +39,16 @@ Kernels' capabilities can be found here~\cite{deveci2018multithreaded,wolf2017fa
 
 \subsection{Tools: Teuchos}
 
-Teuchos provides a suite of common tools for many Trilinos packages. These tools include memory management classes~\cite{bartlett2010} such as ``smart'' pointers and arrays, ``parameter lists'' for communicating hierarchical lists of parameters between library or application layers, templated wrappers for the BLAS and LAPACK, XML parsers, and other utilities. They provide a unified ``look and feel'' across Trilinos packages, and help avoid common programming mistakes.
+Teuchos provides a suite of common tools for many Trilinos packages. These tools include memory management classes~\cite{bartlett2010} such as smart pointers and arrays, parameter lists for communicating hierarchical lists of parameters between library or application layers, templated wrappers for BLAS and LAPACK, XML parsers, MPI, and other utilities. They provide a unified ``look and feel'' across Trilinos packages, and help avoid common programming mistakes.
 
 
 
 \subsection{Distributed-Memory Linear Algebra: Tpetra}\label{subsec:tpetra}
 Tpetra \cite{hoemmen2015tpetra} provides the distributed-memory
-infrastructure for sparse linear algebra computations.  It implements
-distributed-memory linear algebra objects, such as sparse graphs,
-sparse matrices, and dense vectors, where Kokkos is employed for local data
-storage. The provided objects are templated on scalar type (e.g. \texttt{double}, \texttt{float}, or a Sacado type), local index type, global index type and Kokkos backend and memory space.
+infrastructure for sparse linear algebra objects, such as sparse graphs,
+sparse matrices, and dense vectors.  The implementation of these
+distributed-memory linear algebra objects uses Kokkos Core and Kokkos Kernels linear algebra objects locally on a compute node.
+The provided objects are templated on scalar type (e.g. \texttt{double}, \texttt{float}, or a Sacado or Stokhos type), local index type, global index type and Kokkos device (pair of execution and memory spaces).
 Distributed-memory sparse linear algebra operations, such as
 a sparse matrix-vector product, are implemented through on-node calls
 to Kokkos Kernels and inter-node MPI communication. Tpetra features
@@ -59,7 +59,7 @@ include:
 vectors (multivectors) and associated BLAS-1 like kernels (e.g., dot
 products, norms, scaling, vector addition, pointwise vector
 multiplication) as well as tall skinny QR (TSQR)  factorization for multivectors.
-\item \emph{Import/export:} moving vector, graph, and matrix data
+\item \emph{Import/export:} communicating vector, graph, and matrix data
 between different distributions (maps). This is key for performing
 halo/boundary exchanges as well as other kernels such as
 sparse matrix-matrix multiplication.

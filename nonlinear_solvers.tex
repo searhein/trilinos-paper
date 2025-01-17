@@ -1,23 +1,23 @@
 % !TEX root = main.tex
 
-The packages included in this section provides the top level algorithms for a computational simulation or design study.
-These include nonlinear solvers, bifurcation tracking, stability analysis, parameter continuation, optimization, and uncertainty quantification.
-A common theme of this collection is the philosophy of ``analysis beyond simulation'', which aims to automate many computational tasks that are often performed by application code users by trial-and-error or repeated simulation. Tasks that can be automated include performing parameter studies, sensitivity analysis, calibration, optimization, and locating instabilities.
-Additionally, utilities for the nonlinear analysis include automatic differentiation tools that can provide the derivatives critical to the analysis algorithms and the abstraction layers and interfaces for application callbacks.
+The packages included in this section provide the top-level algorithms for computational simulations and design studies.
+These include nonlinear solvers, as well as bifurcation tracking, stability analysis, parameter continuation, optimization, and uncertainty quantification methods.
+A common theme of this collection is the philosophy of ``analysis beyond simulation'', which aims to automate many computational tasks that are often performed by application code users by trial-and-error or repeated simulation. Tasks that can be automated include performing parameter studies, sensitivity analysis, calibration, optimization, and the task of locating instabilities.
+Additionally, utilities for nonlinear analysis include abstraction layers and interfaces for application callbacks, as well as automatic differentiation tools that can provide the derivatives critical to analysis algorithms.
 
 \subsection{Nonlinear Solvers: NOX, LOCA} \label{sec:nox}
 %\paragraph{NOX} 
 %Short for , 
-NOX (Nonlinear Object-oriented Solutions) provides robust and efficient algorithms for solving sets of nonlinear equations.
+NOX (Nonlinear Object-oriented Solutions) provides robust and efficient algorithms for solving systems of nonlinear equations.
 NOX implements a number of Newton-based globalization techniques including line search \cite{Pawlowski2006}, trust region \cite{Pawlowski2006,Pawlowski2008} and homotopy algorithms \cite{Coffey2003}.
 Additionally, it provides lower- and higher-order models including Broyden, Anderson acceleration \cite{Walker2011}, and tensor methods \cite{Bader2005}.
-The algorithms have been designed for large-scale parallel inexact linear solvers using Krylov methods and supports Jacobian-free Newton-Krylov variants.
+The algorithms have been designed for large-scale parallel inexact linear solvers using Krylov methods and support Jacobian-free Newton-Krylov variants.
 The library interacts with application codes through the Thyra model evaluator interface.
 NOX provides linear algebra abstractions for applications to use custom implementations with the algorithms.
 The library additionally contains abstractions for solvers, directions and line searches that allow users to further customize the algorithms.
 NOX provides various stopping criteria including absolute, relative, and weighted root mean square norms, as well as stagnation and NaN detection.
 Applications can build custom stopping criteria within a tree-based logical structure and provide additional criteria through the StatusTest abstraction.
-Nox also provide capabilities for continuation and stability analysis through the subpackage LOCA.
+Nox also provides capabilities for continuation and stability analysis through the subpackage LOCA.
 
 %Short for the 
 LOCA (Library of Continuation Algorithms)~\cite{Salinger2005}
@@ -30,7 +30,7 @@ LOCA provides several continuation methods, including pseudo-arclength continuat
 
 \subsection{Numerical Optimization: ROL}
 Rapid Optimization Library (ROL) \cite{rol,ROL2022ICCOPT} is the
-Trilinos library for numerical optimization. ROL brings an extensive
+Trilinos package for numerical optimization. ROL brings an extensive
 collection of state-of-the-art optimization algorithms to virtually
 any application. Its programming interface supports any computational
 hardware, including heterogeneous many-core systems with digital and
@@ -127,9 +127,9 @@ a mesh element; PDE-OPT automates all remaining steps.
 
 \subsection{Automatic Differentiation: Sacado} \label{sec:sacado}
 
-Sacado \cite{SacadoURL,phipps2012efficient,phipps2008large} provides forward and reverse-mode operator overloading-based automatic differentiation (AD) tools within Trilinos.
+Sacado \cite{SacadoURL,phipps2012efficient,phipps2008large} provides forward and reverse-mode operator-overloading-based automatic differentiation (AD) tools within Trilinos.
 %The package provides both forward and reverse-mode AD data types. 
-Sacado's forward AD tools have been integrated into Kokkos and have demonstrated good performance on GPU architectures~\cite{phipps2022automatic}.
+Sacado's forward AD tools have been integrated with Kokkos and have demonstrated good performance on GPU architectures~\cite{phipps2022automatic}.
 Sacado, along with its Kokkos integration, provides high-performance derivative capabilities to numerous Office of Science and NNSA extreme scale applications, including Albany for solid mechanics and land ice modeling~\cite{Salinger2016,MPASAlbany2018}, 
 Charon for semiconductor device modeling~\cite{CharonUsersManual2020} and multiphase chemically reacting flows~\cite{Musson2009}, Drekar for computational fluid dynamics (CFD)~\cite{Sondak2021,Shadid2016}, magnetohydrodynamics~\cite{Shadid2016mhd} and 
 plasma physics~\cite{Crockatt2022,Miller2019}, Xyce for electronic circuit simulation~\cite{xyceTrilinos,xycePCE}, and SPARC for hypersonic fluid flows~\cite{SparcValidation}. 
@@ -137,20 +137,20 @@ plasma physics~\cite{Crockatt2022,Miller2019}, Xyce for electronic circuit simul
 \subsection{Uncertainty Quantification: Stokhos}
 
 Stokhos~\cite{phipps2015stokhos,Phipps2016,phipps2014exploring} provides implementations of two intrusive uncertainty quantification strategies: 
-the intrusive stochastic Galerkin uncertainty quantification method~\cite{ghanem1990polynomial,ghanem2003stochastic} and the embedded ensemble propagation~\cite{phipps2017embedded}.
+the intrusive stochastic Galerkin uncertainty quantification method~\cite{ghanem1990polynomial,ghanem2003stochastic} and the embedded ensemble propagation method~\cite{phipps2017embedded}.
 
-For the first one, Stokhos provides methods for computing intrusive stochastic Galerkin projections such as Polynomial Chaos and Generalized Polynomial Chaos, 
-interfaces for forming the resulting nonlinear systems, and linear solver methods for solving block stochastic Galerkin linear systems.
-The implementation targets GPU performances using Kokkos and by commuting the layout of the Galerkin operator to be outer-spatial and inner-stochastic~\cite{phipps2014exploring}.
-The stochastic Galerkin implementation of Stokhos has been used in~\cite{constantine2014efficient} to efficiently propagate uncertainty in multiphysics systems by reducing the full system with a nonlinear elimination method.
+Stokhos's implementation of the intrusive stochastic Galerkin uncertainty quantification method allows stochastic projections to be computed, such as Polynomial Chaos and Generalized Polynomial Chaos expansions.
+The implementation includes interfaces for forming the linear and/or nonlinear systems that follow from the stochastic Galerkin projection, as well as linear solver methods that can exploit block structure of these systems.
+GPU performance is targeted by using Kokkos and by commuting the layout of the Galerkin operator to be outer-spatial and inner-stochastic~\cite{phipps2014exploring}.
+The implementation has been used in~\cite{constantine2014efficient} to efficiently propagate uncertainty in multiphysics systems by reducing the full system with a nonlinear elimination method.
 
 The embedded ensemble propagation consists in propagating a subset of samples gathered into a so-called ensemble through the forward simulation at once.
-It builds on~\cite{pawlowski2012automating} for automating embedded analysis capabilities; Stokhos defines an ensemble type, a SIMD data type, that is able to store
-the values of the input, output, and state variables for every sample of an ensemble. This type can then be used in the Tpetra solver stack as a template argument for the scalar type.
+It builds on~\cite{pawlowski2012automating} for automating embedded analysis capabilities. Stokhos defines an ensemble type, a SIMD data type, that is able to store
+the values of input, output, and state variables for every sample of an ensemble. This type can then be used in the Tpetra solver stack as a template argument for the scalar type.
 This approach allows to save computation time in four ways: the sample-independent data and computation can be reused for every sample of an ensemble, the memory access pattern is improved,
 the operations on the ensemble type can be vectorized efficiently, and the message passing costs are reduced by sending fewer but larger messages.
 However, the approach requires solvers and BLAS functions to be aware of the extra dimension associated to the ensemble; for example, a GMRES for ensemble types~\cite{liegeois2020gmres} needs to monitor 
-the convergence of the individual sample in order to decide when to stop based on the union of the information.
+the convergence of the individual samples in order to decide when to stop based on the union of the information.
 
 \subsection{Nonlinear Analysis Tools: Piro}
 %Piro~\cite{osti_1231283} is the top-level, unifying package for nonlinear analysis. 
@@ -162,8 +162,8 @@ Piro~\cite{osti_1231283} provides a simple and unified interface to nonlinear an
 %The main purpose of the package is to provide driver classes for the common uses of Trilinos nonlinear analysis tools.
 In particular, Piro implements main driver classes for:
 \begin{itemize}
-	\item \emph{Linear/nonlinear solvers and sensitivity analysis} for transient and nontransient problems. As an example, this capability can be used to compute the discrete solution $u$ of a partial differential equation depending on some parameter $p$, and compute the sensitivity of a quantity of interest of the solution with respect to the parameter $p$. Sensitivities can be computed in a forward or adjoint fashion, the latter being preferable in presence of high-dimensional parameters. This capability relies on NOX for the solution of nonlinear problems and Tempus for transient problems.
-	\item \emph{Constrained optimization problems} with linear/nonlinear equality constraints: Piro provides tools for transient and nontransient (snapshot) optimizations, featuring gradient-based reduced-space and full-space methods. This capability is used by applications such as Albany to perform large-scale PDE-constrained optimization problems \cite{Perego2022}. Piro interfaces with ROL for algorithms to solve constrained optimization problems.
+	\item \emph{Linear/nonlinear solvers and sensitivity analysis} for transient and nontransient problems. As an example, this capability can be used to compute the discrete solution of a partial differential equation depending on a parameter and the sensitivity of a quantity of interest with respect to this parameter. Sensitivities can be computed in a forward or adjoint fashion, the latter being preferable in the presence of high-dimensional parameters. This capability relies on NOX for the solution of nonlinear problems and Tempus for transient problems.
+	\item \emph{Constrained optimization problems} with linear/nonlinear equality constraints: Piro provides tools for transient and nontransient (snapshot) optimizations, featuring gradient-based reduced-space and full-space methods. This capability is used by applications such as Albany to solve large-scale PDE-constrained optimization problems \cite{Perego2022}. Piro interfaces with ROL for algorithms to solve constrained optimization problems.
 \item \emph{Parameter Continuation and Bifurcation analysis:} this capability is provided through the package LOCA.
 \end{itemize}
 These driver classes share a similar interface based on the \code{Thyra::ModelEvaluator} and the \code{Teuchos::ParameterList} classes. Applications define the problems to be targeted (e.g., the equations to be solved, the parameters, the quantities of interests) by providing a concrete implementations of the \code{Thyra::ModelEvaluator}; see \cite{pawlowski2012automating,pawlowski2012automatingpart2}.
