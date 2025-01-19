@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 
 The packages included in this section provide the top-level algorithms for computational simulations and design studies.
-These include nonlinear solvers, as well as bifurcation tracking, stability analysis, parameter continuation, optimization, and uncertainty quantification methods.
+These include nonlinear solvers, bifurcation tracking, stability analysis, parameter continuation, optimization, and uncertainty quantification.
 A common theme of this collection is the philosophy of ``analysis beyond simulation'', which aims to automate many computational tasks that are often performed by application code users by trial-and-error or repeated simulation. Tasks that can be automated include performing parameter studies, sensitivity analysis, calibration, optimization, and the task of locating instabilities.
 Additionally, utilities for nonlinear analysis include abstraction layers and interfaces for application callbacks, as well as automatic differentiation tools that can provide the derivatives critical to analysis algorithms.
 
@@ -17,7 +17,7 @@ NOX provides linear algebra abstractions for applications to use custom implemen
 The library additionally contains abstractions for solvers, directions and line searches that allow users to further customize the algorithms.
 NOX provides various stopping criteria including absolute, relative, and weighted root mean square norms, as well as stagnation and NaN detection.
 Applications can build custom stopping criteria within a tree-based logical structure and provide additional criteria through the StatusTest abstraction.
-Nox also provides capabilities for continuation and stability analysis through the subpackage LOCA.
+NOX also provides capabilities for continuation and stability analysis through the subpackage LOCA.
 
 %Short for the 
 LOCA (Library of Continuation Algorithms)~\cite{Salinger2005}
@@ -140,7 +140,7 @@ Stokhos~\cite{phipps2015stokhos,Phipps2016,phipps2014exploring} provides impleme
 the intrusive stochastic Galerkin uncertainty quantification method~\cite{ghanem1990polynomial,ghanem2003stochastic} and the embedded ensemble propagation method~\cite{phipps2017embedded}.
 
 Stokhos's implementation of the intrusive stochastic Galerkin uncertainty quantification method allows stochastic projections to be computed, such as Polynomial Chaos and Generalized Polynomial Chaos expansions.
-The implementation includes interfaces for forming the linear and/or nonlinear systems that follow from the stochastic Galerkin projection, as well as linear solver methods that can exploit block structure of these systems.
+The implementation includes interfaces for forming the linear and/or nonlinear systems that follow from the stochastic Galerkin projection, as well as linear solver methods that can exploit the block structure of these systems.
 GPU performance is targeted by using Kokkos and by commuting the layout of the Galerkin operator to be outer-spatial and inner-stochastic~\cite{phipps2014exploring}.
 The implementation has been used in~\cite{constantine2014efficient} to efficiently propagate uncertainty in multiphysics systems by reducing the full system with a nonlinear elimination method.
 

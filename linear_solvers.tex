@@ -4,7 +4,7 @@
 %
 %\todo{@Siva/Alexander: do this!}
 
-Trilinos offers many linear solver capabilities: dense and sparse direct solvers, iterative solvers, shared-memory preconditioners local to a compute node, and scalable distributed memory domain decomposition and multigrid methods. Furthermore, interfaces to several third-party direct solvers are provided. The capabilities described in this section are focused on using the modern (Tpetra) Trilinos software stack. All of the native solver capabilities are built on top of Kokkos and are GPU capable to varying degrees; any exceptions are noted in the detailed descriptions below.
+Trilinos offers many linear solver capabilities: dense and sparse direct solvers, iterative solvers, shared-memory preconditioners local to a compute node, and scalable distributed memory domain decomposition and multigrid methods. Furthermore, interfaces to several third-party direct solvers are provided. All of the native solver capabilities are built on top of Kokkos and are GPU capable to varying degrees; any exceptions are noted in the detailed descriptions below.
 
 
 
@@ -162,9 +162,9 @@ ShyLU also implements a distributed-memory linear solver based on the Schur comp
 The Teko library~\cite{Cyr2016a} provides interfaces for operators and preconditioners that are constructed from large physics-based sub-blocks.
 The sub-blocks are Thyra operators which are themselves often implemented using Tpetra matrices.
 Generic block preconditioning strategies, such as the Jacobi and Gauss-Seidel strategies, as well as commonly used approximate inverse strategies for the Navier-Stokes equation such as SIMPLEC, LSC and PCD, are provided \cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
-More complicated multilevel hierarchies of block solvers can be generated via Teuchos ParameterLists.
-Block preconditioners for first-order formulations of Maxwell's equations and Darcy flow are distributed with the Panzer package. \todo{It is not completely clear what is meant with ``distributed'' in the previous sentence.}
-Teko's solvers can be registered in the Stratimikos interface for entirely ParameterList-driven usage.
+More complicated multilevel hierarchies of block solvers can be generated via \code{Teuchos::ParameterList} objects.
+Block preconditioners for first-order formulations of Maxwell's equations and Darcy flow are implemented in the Panzer package.
+Teko's solvers can be registered in the Stratimikos interface for usage entirely driven by \code{Teuchos::ParameterList} objects.
 
 
 \subsection{Eigensolvers: Anasazi}
@@ -172,7 +172,8 @@ Anasazi~\cite{Baker2009a} is an extensible and interoperable framework for large
 This framework provides a generic interface to a collection of algorithms that are built upon abstract interfaces
 that facilitate code reuse and extensibility.  Similar to Belos, Anasazi decouples the algorithms from the
 implementation of the underlying linear algebra objects using traits mechanisms.  Concrete linear algebra adapters
-are provided for Tpetra and Thyra.  Any libraries that understand Tpetra and Thyra matrices
+are provided for Tpetra and Thyra, while users can also implement their own interfaces to leverage any existing
+investment in their description of matrices and vectors.  Any libraries that understand Tpetra and Thyra matrices
 and vectors, like Belos and Ifpack2, may also be used in conjunction with Anasazi.  The suite of eigensolvers provided
 by Anasazi includes locally optimal block preconditioned conjugate gradient (LOBPCG), block Davidson, Riemannian Trust-Region
 (RTR), and block Krylov-Schur.  Recently, there has been a family of trace minimization (TraceMin) methods and a
@@ -181,9 +182,9 @@ generalized Davidson method added to the suite of eigensolvers in Anasazi.
 
 \subsection{Unified Solver Interface: Stratimikos}
 
-The Stratimikos package provides a unified interface to linear solvers and preconditioners in Trilinos (e.g., from Amesos2, Belos, FROSch, Ifpack2, MueLu, and Teko).
+The Stratimikos package provides a unified interface to linear solvers and preconditioners in Trilinos (e.g., to Amesos2, Belos, FROSch, Ifpack2, MueLu, and Teko).
 The matrix as well as the right-hand side and the solution vectors are required to support the Thyra interface.
 Wrappers for Tpetra linear algebra are provided by Thyra.
-Solver and preconditioner parameters are specified via a \code{ParameterList},
+Solver and preconditioner parameters are specified via a \code{Teuchos::ParameterList},
 which users can easily populate from an xml file.
 Additional solver and preconditioner factories can easily be added via adapters (see \texttt{packages/stratimikos/adapters} for examples).
