@@ -4,7 +4,7 @@
 %
 %\todo{@Siva/Alexander: do this!}
 
-Trilinos offers many linear solver capabilities: dense and sparse direct solvers, iterative solvers, shared-memory preconditioners local to a compute node, and scalable distributed memory domain decomposition and multigrid methods. Furthermore, interfaces to several third-party direct solvers are provided. The capabilities described in this section are focused on using the Tpetra software stack. All of the native solver capabilities are built on top of Kokkos and are GPU capable to varying degrees; any exceptions are noted in the detailed descriptions below.
+Trilinos offers many linear solver capabilities: dense and sparse direct solvers, iterative solvers, shared-memory preconditioners local to a compute node, and scalable distributed memory domain decomposition and multigrid methods. Furthermore, interfaces to several third-party direct solvers are provided. All of the native solver capabilities are built on top of Kokkos and are GPU capable to varying degrees; any exceptions are noted in the detailed descriptions below.
 
 
 
@@ -27,7 +27,7 @@ Trilinos provides domain decomposition approaches in two different
 packages: Ifpack2 and ShyLU (specifically the ShyLU\_DD
 subpackage). Ifpack2 implements overlapping additive Schwarz
 approaches with several options for the local subdomain solves. The
-local subdomain solvers may either be CPU-only versions of incomplete
+local subdomain solvers may be either CPU-only versions of incomplete
 factorization preconditioners implemented in Ifpack2 itself, such as
 ILU(k) and ILUt (thresholded ILU), or architecture portable algorithms
 for incomplete factorizations and triangular solvers implemented in
@@ -41,9 +41,9 @@ more robust multilevel methods is prohibitive when compared to the
 reduction in the number of iterations, or when the underlying problem
 is simply not amenable to multilevel methods.
 
-Ifpack2 also supplies classic iterative methods based on matrix-splitting techniques, such as Jacobi iteration, Gauss-Seidel, and an MPI-oriented hybrid of Jacobi and Gauss-Seidel (e.g., Jacobi between ranks and Gauss-Seidel on them). Ifpack also provides preconditioners
+Ifpack2 also supplies classic iterative methods based on matrix-splitting techniques, such as Jacobi iteration, Gauss-Seidel, and an MPI-oriented hybrid of Jacobi and Gauss-Seidel (e.g., Jacobi between ranks and Gauss-Seidel on them). Ifpack2 also provides preconditioners
 based on Chebyshev iterations. The aforementioned preconditioners are available both in point and block
-forms and can operate on CSR or BSR matrices. In the block case,
+forms and can operate on CSR and BSR matrices. In the block case,
 line relaxation is also supported, while in the point case, techniques
 like Vanka relaxation \cite{Vanka1986} are possible.  Auxiliary-space
 smoothing for $H(curl)$ and $H(div)$ discretizations of the style of
@@ -55,7 +55,7 @@ but can also be called from Kokkos Kernels for portable shared-memory algorithmi
 \label{ssec:frosch}
 
 FROSch (Fast and Robust Overlapping Schwarz) is a framework for the construction of multilevel Schwarz domain decomposition preconditioners. Besides parallel scalability, FROSch emphasizes applicability and robustness across a wide range of challenging problems, while supporting an algebraic construction. Specifically, most preconditioners can be built using only the fully assembled system matrix, though some variants can take advantage of additional geometric inputs. The algebraic construction is enabled by the creation of an overlapping domain decomposition on the first level based on the sparsity pattern of the system matrix, similar to Ifpack2, along with the incorporation of extension-based coarse spaces, such as in the classical two-level generalized Dryja--Smith--Widlund (GDSW) preconditioner~\cite{dohrmann_domain_2008} and related variants.
-While the initial version of FROSch~\cite{heinlein_parallel_2016} was based on the outdated Epetra linear algebra framework, the current implementation~\cite{heinlein_frosch_2020} leverages Xpetra. Over the years, Xpetra facilitated compatibility with both the Epetra and Tpetra linear algebra stacks via a lightweight interface but now exclusively provides access to the Tpetra stack. Algorithmic variants of Schwarz methods implemented in FROSch include:
+While the initial version of FROSch~\cite{heinlein_parallel_2016} was based on the outdated Epetra linear algebra framework, the current implementation~\cite{heinlein_frosch_2020} leverages Xpetra. Originally designed as a lightweight wrapper around Epetra and Tpetra, the Xpetra package facilitated over the years compatibility with both the Epetra and Tpetra stacks. Now that the Epetra stack is phased out, it provides access to only the Tpetra stack. Algorithmic variants of Schwarz methods implemented in FROSch include:
 \begin{itemize}
 	\item \emph{Extension-based coarse spaces based on a partition of unity on the interface}, such as classical GDSW, reduced dimension GDSW (RGDSW) coarse spaces, and multiscale finite element method (MsFEM) coarse spaces; cf.~\cite{heinlein_parallel_2016,heinlein_improving_2018};
 	\item \emph{Monolithic Schwarz preconditioners} for block systems; cf.~\cite{heinlein_monolithic_2019}.
@@ -64,21 +64,21 @@ While the initial version of FROSch~\cite{heinlein_parallel_2016} was based on t
 
 FROSch has been applied to various challenging application problems, including scalar elliptic and elasticity problems~\cite{heinlein_parallel_2016}, possibly with heterogeneities~\cite{alves2024computationalstudyalgebraiccoarse}, computational fluid dynamics problems~\cite{heinlein_monolithic_2019}, time-harmonic Maxwell's and fluid-structure interaction problems~\cite{heinlein2024couplingdealiifroschsustainable}, pharmaco-mechanical interactions in arterial walls~\cite{balzani_computational_nodate}, and coupled multiphysics problems for land ice simulations~\cite{heinlein_frosch_2022}; the latter three have been solved using monolithic preconditioning techniques. To extend robustness for heterogeneous model problems, an implementation of spectral coarse spaces~\cite{heinlein_adaptive_2019} is currently under development. FROSch preconditioners have scaled to more than 200$k$ cores on the Theta Cray XC40 supercomputer at the Argonne Leadership Computing Facility (ALCF); cf.~\cite{heinlein_parallel_2022}.
 
-In its current implementation, FROSch assumes a one-to-one correspondence of subdomains and MPI ranks, however, due to an interface to the other solver packages in Trilinos, inexact subdomain solvers can be employed on subdomains. An extension to multiple subdomains per MPI rank is currently being implemented. Using Kokkos and Kokkos Kernels, FROSch has recently also been ported to GPUs~\cite{yamazaki_experimental_2023} with performance gains for the triangular solve or inexact solves with ILU on GPUs.
+In its current implementation, FROSch assumes a one-to-one correspondence of subdomains and MPI ranks. Using an interface to the other solver packages in Trilinos, inexact subdomain solvers can be employed on subdomains. An extension to multiple subdomains per MPI rank is currently being implemented. Using Kokkos and Kokkos Kernels, FROSch has recently also been ported to GPUs~\cite{yamazaki_experimental_2023} with performance gains for the triangular solve or inexact solves with ILU on GPUs.
 
 A demo/tutorial for FROSch can be found at the GitHub repository~\cite{frosch_demo}.
 
 \subsection{Multigrid Methods: MueLu}
 
 MueLu is a flexible and scalable high-performance multigrid solver library.
-It provides a variety of multigrid algorithms for problems ranging from Poisson-like operators over elasticity, convection-diffusion, and Navier-Stokes, and Maxwell’s equations
+It provides a variety of multigrid algorithms for problems ranging from Poisson-like operators, over elasticity, convection-diffusion, and Navier-Stokes, and Maxwell’s equations,
 all the way to multigrid methods for coupled multiphysics systems.
 Besides its strong focus on aggregation-based algebraic multigrid (AMG) methods,
 MueLu comes with specialized capabilities for (semi-)structured grids to perform semi-coarsening along grid lines,
 yet forming the coarse operator via a Galerkin product (in contrast to classical geometric multigrid methods).
 MueLu is extensible and allows for the research and development of new multigrid preconditioning methods.
-Its weak and strong scalability even for vector-valued partial differential equations (PDEs) on unstructured meshes
-up to 131,000 cores of a Cray XC40 and one million cores of a Blue Gene/Q system have been shown in~\cite{Lin2017a,Thomas2019a}.
+Its weak and strong scalability, even for vector-valued partial differential equations (PDEs) on unstructured meshes
+up to 131,000 cores of a Cray XC40 and one million cores of a Blue Gene/Q system, have been shown in~\cite{Lin2017a,Thomas2019a}.
 
 MueLu provides several approaches to constructing and solving the multilevel problem:
 
@@ -139,7 +139,7 @@ While MueLu requires Teuchos, Tpetra, Xpetra, Kokkos, and Kokkos Kernels, it has
 on the Amesos2, Ifpack2, and Zoltan2 libraries.
 MueLu also supports interfaces to abstraction layer packages such as Stratimikos and Thyra through the MueLu adapters library.
 These interfaces are required to use MueLu with the Teko block preconditioning package.
-For more details on using MueLu with Teko, see the MueLu examples directory in the Trilinos source code repository.
+For more details on using MueLu with Teko, see the MueLu examples directory.
 
 \subsection{Direct Linear Solvers: Amesos2, ShyLU}
 
@@ -147,9 +147,9 @@ Amesos2~\cite{Bavier2012a} provides a uniform interface to direct linear solvers
 These include third-party direct solvers such as CHOLMOD, MUMPS, Pardiso\_MKL, SuperLU, SuperLU\_MT, SuperLU\_Dist, and STRUMPACK.
 Furthermore, Amesos2 also provides the interface to two native Trilinos on-node sparse direct solvers, Basker and Tacho implemented in ShyLU.
 Basker~\cite{Basker2017} is a sparse direct solver based on LU factorization for the problems that have the block triangular form (BTF) typically seen in circuit simulation applications. Basker uses these structures to factor and solve the diagonal blocks in parallel. The larger diagonal blocks can themselves be factored in parallel by discovering the parallelism available using a nested-dissection reordering. Basker focuses on exploiting thread-parallelism on the multi-core CPU architectures. %However, we have still implemented the solver using Kokkos.
-Amesos2 also has a templated implementation of the sequential KLU solver called KLU2, which also exploits the BTF structure.
+Amesos2 also has a templated implementation of a sequential KLU solver called KLU2, which also exploits the BTF structure.
 
-Tacho is a sparse direct solver that exploits the supernodal block structures, commonly found in the sparse direct factorization of the matrices from mechanics applications. Tacho exploits this supernodal structure for both factorization and triangular solve phases.  It is based on Kokkos, and hence it is portable to different node architectures (including NVIDIA or AMD GPUs). Originally, Tacho implemented task-parallel Cholesky of a sparse symmetric positive definite (SPD) matrix~\cite{Tacho2018}. However, to improve its portability, it has been extended to compute the sparse factorization based on level-set scheduling. Moreover, its functionality has been extended to compute LDLt factorization of symmetric indefinite matrix and LU factorization of a general matrix with a symmetric sparsity structure.
+Tacho is a sparse direct solver that exploits supernodal block structure commonly found in sparse direct factorizations of matrices from mechanics applications. Tacho exploits this supernodal structure for both factorization and triangular-solve phases. It is based on Kokkos. Originally, Tacho implemented a task-parallel Cholesky factorization of sparse symmetric positive definite (SPD) matrices~\cite{Tacho2018}. However, to improve its portability, it has been extended to compute the sparse factorization based on level-set scheduling. Moreover, its functionality has been extended to the computation of an LDLt factorization of symmetric indefinite matrices, as well as the computation of an LU factorization of general matrices with a symmetric sparsity structure.
 
 In addition to their stand-alone use, the aforementioned node-level solvers may be used as the local solvers for domain decomposition preconditioners (Ifpack2 or FROSch) or as the coarse solvers for multilevel preconditioners (MueLu or FROSch).
 
@@ -160,11 +160,11 @@ ShyLU also implements a distributed-memory linear solver based on the Schur comp
 \label{sec:teko}
 
 The Teko library~\cite{Cyr2016a} provides interfaces for operators and preconditioners that are constructed from large physics-based sub-blocks.
-The sub-blocks are Thyra operators which themselves often are implemented using Tpetra matrices.
-Generic block preconditioning strategies such as Jacobi and Gauss-Seidel and commonly used approximate inverse strategies for the Navier-Stokes equation such as SIMPLEC, LSC and PCD are provided \cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
-More complicated multilevel hierarchy of block solvers can be generated via Teuchos ParameterLists.
-Block preconditioners for first order formulations of Maxwell's equations and Darcy flow are distributed with the Panzer package.
-Teko's solvers can be registered in the Stratimikos interface for entirely ParameterList driven usage.
+The sub-blocks are Thyra operators which are themselves often implemented using Tpetra matrices.
+Generic block preconditioning strategies, such as the Jacobi and Gauss-Seidel strategies, as well as commonly used approximate inverse strategies for the Navier-Stokes equation such as SIMPLEC, LSC and PCD, are provided \cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
+More complicated multilevel hierarchies of block solvers can be generated via \code{Teuchos::ParameterList} objects.
+Block preconditioners for first-order formulations of Maxwell's equations and Darcy flow are implemented in the Panzer package.
+Teko's solvers can be registered in the Stratimikos interface for usage entirely driven by \code{Teuchos::ParameterList} objects.
 
 
 \subsection{Eigensolvers: Anasazi}
@@ -175,15 +175,15 @@ implementation of the underlying linear algebra objects using traits mechanisms.
 are provided for Tpetra and Thyra, while users can also implement their own interfaces to leverage any existing
 investment in their description of matrices and vectors.  Any libraries that understand Tpetra and Thyra matrices
 and vectors, like Belos and Ifpack2, may also be used in conjunction with Anasazi.  The suite of eigensolvers provided
-by Anasazi includes locally-optimal block preconditioned conjugate gradient (LOBPCG), block Davidson, Riemannian Trust-Region
+by Anasazi includes locally optimal block preconditioned conjugate gradient (LOBPCG), block Davidson, Riemannian Trust-Region
 (RTR), and block Krylov-Schur.  Recently, there has been a family of trace minimization (TraceMin) methods and a
 generalized Davidson method added to the suite of eigensolvers in Anasazi.
 
 
 \subsection{Unified Solver Interface: Stratimikos}
 
-The Stratimikos package provides a unified interface to linear solvers and preconditioners in Trilinos (e.g., from Amesos2, Belos, FROSch, Ifpack2, MueLu, Teko).
-The matrix as well as right-hand side and solution vectors are required to support the Thyra interface.
+The Stratimikos package provides a unified interface to linear solvers and preconditioners in Trilinos (e.g., to Amesos2, Belos, FROSch, Ifpack2, MueLu, and Teko).
+The matrix as well as the right-hand side and the solution vectors are required to support the Thyra interface.
 Wrappers for Tpetra linear algebra are provided by Thyra.
 Solver and preconditioner parameters are specified via a \code{Teuchos::ParameterList},
 which users can easily populate from an xml file.
