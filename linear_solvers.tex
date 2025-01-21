@@ -161,11 +161,14 @@ ShyLU also implements a distributed-memory linear solver based on the Schur comp
 
 The Teko library~\cite{Cyr2016a} provides interfaces for operators and preconditioners that are constructed from large physics-based sub-blocks.
 The sub-blocks are Thyra operators which are themselves often implemented using Tpetra matrices.
-Generic block preconditioning strategies, such as the Jacobi and Gauss-Seidel strategies, as well as commonly used approximate inverse strategies for the Navier-Stokes equation such as SIMPLEC, LSC and PCD, are provided \cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
+Generic block preconditioning strategies, such as $2\times2$ Block-LU factorizations or the Jacobi and Gauss-Seidel strategies for block matrices of arbitrary size,
+as well as commonly used approximate inverse strategies for the Navier-Stokes equation
+such as SIMPLEC, LSC and PCD, are provided \cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
+The Block-LU class offers the possibility to implement user-specific inverse approximation strategies,
+for example using a sparse approximate inverse to construct the Schur complement~\cite{Firmbach2024a}.
 More complicated multilevel hierarchies of block solvers can be generated via \code{Teuchos::ParameterList} objects.
 Block preconditioners for first-order formulations of Maxwell's equations and Darcy flow are implemented in the Panzer package.
 Teko's solvers can be registered in the Stratimikos interface for usage entirely driven by \code{Teuchos::ParameterList} objects.
-
 
 \subsection{Eigensolvers: Anasazi}
 Anasazi~\cite{Baker2009a} is an extensible and interoperable framework for large-scale eigenvalue algorithms.
