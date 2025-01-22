@@ -188,9 +188,9 @@ generalized Davidson method added to the suite of eigensolvers in Anasazi.
 
 \subsection{Unified Solver Interface: Stratimikos}
 
-The Stratimikos package provides a unified interface to linear solvers and preconditioners in Trilinos (e.g., to Amesos2, Belos, FROSch, Ifpack2, MueLu, and Teko).
-The matrix as well as the right-hand side and the solution vectors are required to support the Thyra interface.
-Wrappers for Tpetra linear algebra are provided by Thyra.
-Solver and preconditioner parameters are specified via a \code{Teuchos::ParameterList},
-which users can easily populate from an xml file.
-Additional solver and preconditioner factories can easily be added via adapters (see \texttt{packages/stratimikos/adapters} for examples).
+The Stratimikos package offers a cohesive interface to various linear solvers and preconditioners within Trilinos, including Amesos2, Belos, FROSch, Ifpack2, MueLu, and Teko.
+It requires that the matrix, right-hand side, and the solution vectors all support the Thyra interface.
+Thyra also provides wrappers for Tpetra linear algebra.
+Users can specify solver and preconditioner parameters via a \code{Teuchos::ParameterList}
+which can be easily populated from an XML file.
+Moreover, the package allows for the easy addition of new solver and preconditioner factories via adapters, with examples available in the \texttt{packages/stratimikos/adapters} directory.
