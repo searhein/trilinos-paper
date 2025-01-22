@@ -71,14 +71,13 @@ A demo/tutorial for FROSch can be found at the GitHub repository~\cite{frosch_de
 \subsection{Multigrid Methods: MueLu}
 
 MueLu is a flexible and scalable high-performance multigrid solver library.
-It provides a variety of multigrid algorithms for problems ranging from Poisson-like operators, over elasticity, convection-diffusion, and Navier-Stokes, and Maxwell’s equations,
+It provides a variety of multigrid algorithms for problems ranging from Poisson-like operators, over elasticity, convection-diffusion, Navier-Stokes, and Maxwell's equations,
 all the way to multigrid methods for coupled multiphysics systems.
 Besides its strong focus on aggregation-based algebraic multigrid (AMG) methods,
-MueLu comes with specialized capabilities for (semi-)structured grids to perform semi-coarsening along grid lines,
-yet forming the coarse operator via a Galerkin product (in contrast to classical geometric multigrid methods).
+MueLu comes with specialized capabilities for (semi-)structured grids to perform semi-coarsening along grid lines
+while forming the coarse operator via a Galerkin product (in contrast to classical geometric multigrid methods).
 MueLu is extensible and allows for the research and development of new multigrid preconditioning methods.
-Its weak and strong scalability, even for vector-valued partial differential equations (PDEs) on unstructured meshes
-up to 131,000 cores of a Cray XC40 and one million cores of a Blue Gene/Q system, have been shown in~\cite{Lin2017a,Thomas2019a}.
+Its weak and strong scalability up to \num{131000} cores of a Cray XC40 and one million cores of a Blue Gene/Q system, even for vector-valued partial differential equations (PDEs) on unstructured meshes, have been shown in~\cite{Lin2017a,Thomas2019a}.
 
 MueLu provides several approaches to constructing and solving the multilevel problem:
 
@@ -90,7 +89,7 @@ A final projection operator is created by applying a smoother to the tentative o
 There are a variety of deterministic and non-deterministic coloring algorithms implemented directly
 in MueLu or in Kokkos Kernels.  For a full description, see~\cite{BergerVergiat2023a}.
 
-\item \emph{Algebraic multigrid for Maxwell’s equations}:
+\item \emph{Algebraic multigrid for Maxwell's equations}:
   MueLu implements specialized solvers for the solution of curl-curl problems~\cite{BochevHuEtAl2008_AlgebraicMultigridApproachBased}.
   Scaling results on Haswell, KNL, ARM and NVIDIA V100 GPUs at full machine scale can be found in~\cite{BettencourtBrownEtAl2021_EmpirePic}.
 
@@ -121,12 +120,12 @@ This enables one to use MueLu in a matrix-free fashion provided the user can sup
 \end{itemize}
 
 MueLu has a required dependency on Kokkos,
-and the main code routes in MueLu (e.g. smoothed aggregation, semi-coarsening, $p$-coarsening, structured aggregation)
+and the main code paths in MueLu (e.g. smoothed aggregation, semi-coarsening, $p$-coarsening, structured aggregation)
 utilize Kokkos and have been shown to scale on device \cite{BettencourtBrownEtAl2021_EmpirePic}.
-Some of the earlier algorithms such as energy minimization~\cite{Sala2008a} and the variable degree-of-freedom Laplacian have not been adapted to fully utilize Kokkos yet;
+Some of the earlier algorithms such as energy minimization~\cite{Sala2008a} and the variable degree-of-freedom Laplacian have not been adapted to fully utilize Kokkos yet,
 however, they are part of ongoing efforts to use Kokkos throughout MueLu completely and to merge serial and device-capable algorithms.
 
-Several resources provide insight into MueLu:
+There are a variety of resources to learn more about MueLu.
 An overview is given on the MueLu website\footnote{\url{https://trilinos.github.io/muelu.html}}.
 The MueLu User's Guide~\cite{BergerVergiat2023a} summarizes installation instructions and a reference to most of MueLu's configuration parameters.
 The MueLu Tutorial~\cite{Mayr2023b} introduces beginners and experts to various topics in MueLu and shows how to solve or precondition different linear systems using MueLu.
