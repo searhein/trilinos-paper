@@ -50,8 +50,8 @@ summarized as follows:
 \emph{Vector abstractions and matrix-free interface for universal applicability:}
 Similar to other Trilinos packages that implement abstract numerical
 algorithms, ROL's design is centered around an abstract linear algebra
-interface, through the {\tt ROL::Vector} class, which enables the use of any
-ROL~algorithm with any data type, such as the C++ {\tt std::vector}, MPI-parallel
+interface, through the \code{ROL::Vector} class, which enables the use of any
+ROL algorithm with any data type, such as the C++ \code{std::vector}, MPI-parallel
 data structures (e.g., Epetra, Tpetra, PETSc, HYPRE vectors), GPU-supporting data
 structures (e.g., Kokkos, ArrayFire \cite{Yalamanchili2015}), etc.  The abstract
 linear algebra interface further enables the definition of custom vector dot
@@ -61,12 +61,12 @@ applications of linear and nonlinear operators.  ROL's vector class design is
 inspired by the Hilbert Class Library \cite{hcl}, the Rice Vector Library \cite{rvl}
 and the RTOp framework \cite{rtop}, while ROL's operator interfaces for
 simulation-based optimization, known as the SimOpt middleware,
-are related to \cite{Heinkenschloss1999}.
+are inspired by~\cite{Heinkenschloss1999}.
 \item
 \emph{Modern algorithms for unconstrained and constrained optimization:}
 ROL features a large collection of well-established algorithms for smooth
 optimization as well as several novel algorithms developed by the ROL team.
-ROL categorizes optimization problems into four basic types, based on the
+ROL categorizes optimization problems into four types based on the
 presence of certain constraints: Type U (unconstrained), Type B (bound
 constraints), Type E (equality constraints) and Type G (general constraints).
 Additionally, each problem type can include linear constraints, which ROL can
@@ -145,7 +145,7 @@ GPU performance is targeted by using Kokkos and by commuting the layout of the G
 The implementation has been used in~\cite{constantine2014efficient} to efficiently propagate uncertainty in multiphysics systems by reducing the full system with a nonlinear elimination method.
 
 The embedded ensemble propagation consists in propagating a subset of samples gathered into a so-called ensemble through the forward simulation at once.
-It builds on~\cite{pawlowski2012automating} for automating embedded analysis capabilities. Stokhos defines an ensemble type, a SIMD data type, that is able to store
+It builds on~\cite{pawlowski2012automating} for automating embedded analysis capabilities. Stokhos defines an ensemble type: a SIMD data type that is able to store
 the values of input, output, and state variables for every sample of an ensemble. This type can then be used in the Tpetra solver stack as a template argument for the scalar type.
 This approach allows to save computation time in four ways: the sample-independent data and computation can be reused for every sample of an ensemble, the memory access pattern is improved,
 the operations on the ensemble type can be vectorized efficiently, and the message passing costs are reduced by sending fewer but larger messages.
