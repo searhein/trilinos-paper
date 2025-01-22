@@ -4,7 +4,7 @@ The Trilinos Framework product provides supporting infrastructure for Trilinos u
 
 \subsection{Build and Test Infrastructure}
 
-The primary focus of the Trilinos Framework product relates to building, testing, and releases of Trilinos. This effort includes setting up and maintaining the general infrastructure for structured building of subsets of packages, automated testing, maintaining and adding to the various testing configurations.
+The primary focus of the Trilinos Framework product relates to building, testing, and releases of Trilinos. This effort includes setting up and maintaining the general infrastructure for structured building of subsets of packages, automated testing, and maintaining and adding to the various testing configurations.
 
 The Trilinos Framework infrastructure is built on top of the Tribal Build, Integration, and Test System (TriBITS~\cite{Bartlett2014}) which is built on top of the open-source tools CMake and CTest\footnote{\url{https://cmake.org}}.
 The TriBITS framework allows building arbitrary subgraphs of dependent (Trilinos) CMake packages in one or more individual aggregated CMake projects (in any arrangement desired).
@@ -14,11 +14,11 @@ TriBITS then orchestrates the processing of all of the required CMake code to fi
 This allows a large number of (Trilinos) CMake packages to be configured, built, and tested in a flexible and efficient manner.
 In addition, TriBITS provides support for a number of advanced features that are not available in raw CMake/CTest including: eliminating a large amount of boiler-plate CMake code and avoiding common mistakes; enabling and testing all downstream packages given a set of enabled (i.e. modified) upstream packages; managing the enabling and disabling of tests based on various criteria; producing build and test results submitted to a CDash site on a package-by-package basis; producing reduced source tarballs for only a desired subset of enabled packages.
 As of Trilinos 14.4, TriBITS and Trilinos have been updated to allow packages using raw CMake to be integrated with just a few well-defined integration requirements.
-The TriBITS framework has allowed Trilinos to scalably grow in the number of packages and the complexity without undue burdening of individual Trilinos developers and users.
+The TriBITS framework has allowed Trilinos to scalably grow in the number of packages and the complexity without undue burden on individual Trilinos developers and users.
 
 \subsection{Documentation Infrastructure}
 
-The Trilinos Framework product is also responsible for maintaining the general infrastructure for the Trilinos website, wiki, and Doxygen documentation. It owns some of the documented workflows on these sites, such as the process for reproducing testing failures, but the Trilinos package developers own all of the documentation associated with their associated packages.
+The Trilinos Framework product is also responsible for maintaining the general infrastructure for the Trilinos website \footnote{\url{https://trilinos.github.io}}, wiki \footnote{\url{https://github.com/trilinos/Trilinos/wiki}}, and Doxygen documentation \footnote{\url{https://trilinos.github.io/documentation.html}}. It owns some of the documented workflows on these sites, such as the process for reproducing testing failures, but the Trilinos package developers own all of the documentation associated with their associated packages.
 
 
 \subsection{Python Wrappers: PyTrilinos2}
