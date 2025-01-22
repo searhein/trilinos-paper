@@ -145,7 +145,7 @@ GPU performance is targeted by using Kokkos and by commuting the layout of the G
 The implementation has been used in~\cite{constantine2014efficient} to efficiently propagate uncertainty in multiphysics systems by reducing the full system with a nonlinear elimination method.
 
 The embedded ensemble propagation consists in propagating a subset of samples gathered into a so-called ensemble through the forward simulation at once.
-It builds on~\cite{pawlowski2012automating} for automating embedded analysis capabilities. Stokhos defines an ensemble type, a SIMD data type, that is able to store
+It builds on~\cite{pawlowski2012automating} for automating embedded analysis capabilities. Stokhos defines an ensemble type: a SIMD data type that is able to store
 the values of input, output, and state variables for every sample of an ensemble. This type can then be used in the Tpetra solver stack as a template argument for the scalar type.
 This approach allows to save computation time in four ways: the sample-independent data and computation can be reused for every sample of an ensemble, the memory access pattern is improved,
 the operations on the ensemble type can be vectorized efficiently, and the message passing costs are reduced by sending fewer but larger messages.
