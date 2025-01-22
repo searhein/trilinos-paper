@@ -65,6 +65,8 @@
 
 \usepackage{color}
 \usepackage{todonotes}
+\usepackage{siunitx} % \num
+\sisetup{group-separator = {,}} % , sep for numbers
 \let\oldtodo\todo
 \renewcommand{\todo}[1]{
 	\oldtodo[inline]{#1}
