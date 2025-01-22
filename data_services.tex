@@ -48,7 +48,7 @@ sparse matrices, and dense vectors.  The implementation of these
 distributed-memory linear algebra objects uses Kokkos Core and Kokkos Kernels linear algebra objects locally on a compute node.
 The provided objects are templated on scalar type (e.g. \texttt{double}, \texttt{float}, or a Sacado or Stokhos type), local index type, global index type and Kokkos device (pair of execution and memory spaces).
 Distributed-memory sparse linear algebra operations, such as
-sparse matrix-vector product, are implemented through on-node calls
+sparse matrix-vector products, are implemented through on-node calls
 to Kokkos Kernels and inter-node MPI communication. Tpetra features
 include:
 \begin{itemize}
