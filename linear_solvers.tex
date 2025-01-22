@@ -164,9 +164,9 @@ Amesos2 also provides an interface to the on-node sparse direct solvers implemen
 
 The Teko library~\cite{Cyr2016a} provides interfaces for operators and preconditioners that are constructed from large physics-based sub-blocks.
 The sub-blocks are Thyra operators which are themselves often implemented using Tpetra matrices.
-Generic block preconditioning strategies, such as $2\times2$ Block-LU factorizations or the Jacobi and Gauss-Seidel strategies for block matrices of arbitrary size,
+Teko provices generic block preconditioning strategies such as $2\times2$ Block-LU factorizations and the Jacobi and Gauss-Seidel strategies for blocks of any size,
 as well as commonly used approximate inverse strategies for the Navier-Stokes equation
-such as SIMPLEC, LSC and PCD, are provided \cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
+such as SIMPLEC, LSC and PCD~\cite{CyrShadidEtAl2012_StabilizationScalableBlockPreconditioning}.
 The Block-LU class offers the possibility to implement user-specific inverse approximation strategies,
 for example using a sparse approximate inverse to construct the Schur complement~\cite{Firmbach2024a}.
 More complicated multilevel hierarchies of block solvers can be generated via \code{Teuchos::ParameterList} objects.
