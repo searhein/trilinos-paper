@@ -31,9 +31,9 @@ local subdomain solvers may be either CPU-only versions of incomplete
 factorization preconditioners implemented in Ifpack2 itself, such as
 ILU(k) and ILUt (thresholded ILU), or architecture portable algorithms
 for incomplete factorizations and triangular solvers implemented in
-Kokkos Kernels. It is possible to use direct solvers as subdomain
-solvers as well. There are options to call shared-memory inexact
-incomplete factorization preconditioners in ShyLU as well.
+Kokkos Kernels. It is also possible to use direct solvers as subdomain
+solvers, and ShyLU also supports shared-memory inexact
+incomplete factorization preconditioners.
 %
 Such one-level preconditioners can be used as smoothers within multigrid
 methods, for solving ``simpler'' problems where the setup cost of a
