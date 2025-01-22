@@ -4,7 +4,7 @@
 The Core product area provides essential tools for managing and distributing data across processing elements in parallel computing environments, addressing challenges such as load balancing and data redistribution. Key components discussed here include the Kokkos performance portability framework, Teuchos tools, Tpetra distributed-memory linear algebra, and Thyra abstractions for high-level formulations of numerical algorithms.
 
 \subsection{Performance Portability: Kokkos Core}\label{subsec:kokkos}
-Kokkos Core\footnote{For historical reasons the package name is ``Kokkos'' since it precedes the creation of other Kokkos subprojects such as Kokkos Kernels.} is a programming model designed for performance portability across hardware architectures such as CPUs and GPUs. Two primary insights into achieving performance portability shaped Kokkos's development are:
+Kokkos Core\footnote{For historical reasons the package name is ``Kokkos'' since it precedes the creation of other Kokkos subprojects such as Kokkos Kernels.} is a programming model designed for performance portability across hardware architectures such as CPUs and GPUs. Two primary insights into achieving performance portability shaped Kokkos's development:
 i) abstractions for both parallel execution and data structures are required, and
 ii) the fundamental programming model must be descriptive not prescriptive.
 
