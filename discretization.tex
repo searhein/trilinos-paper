@@ -92,7 +92,15 @@ through observers and creating derived classes).
 \subsection{Finite Element Analysis: Panzer}
 The Panzer package provides global tools for finite element analysis. The package is targeted for large-scale parallel implicit PDEs using continuous and discontinuous compatible finite elements as well as control volume finite elements. Panzer enables the solution of nonlinear problems by interfacing with several Trilinos linear and nonlinear solvers. It uses the Intrepid2 package for arbitrary order finite element bases. It computes derivatives and sensitivities with the Sacado automatic differentiation (AD) package. Panzer supports both Epetra and Tpetra data structures and achieves performance portability through the Kokkos programming model.
 
-Panzer is designed for multiphysics systems. The assembly engine allows for different equation sets in each element block of the mesh and allows for mixed bases for degrees of freedom (DOF) within each element block (e.g., mixed $H(\rm{div})$ and $H(\rm{curl})$ system for electro-magnetics). The assembly tools can create a single fully coupled Jacobian matrix with all off-block dependencies (as a single Tpetra::CrsMatrix), or it can create a blocked system, grouping sets of DOFs into separate explicit matrices. This allows for physics-based block preconditioning strategies using the Teko block preconditioner package in Trilinos \cite{Bonilla2023,Cyr2016a} or MueLu's fully coupled AMG hierarchies for multiphysics systems~\cite{Ohm2022a}. The assembly process relies on the Phalanx package for efficient assembly of the multiphysics systems. Panzer additionally can wrap the assembly in a \code{Thyra::ModelEvaluator}, providing direct interfaces to the linear and nonlinear analysis packages in Trilinos.
+Panzer is designed for multiphysics systems.
+The assembly engine allows for different equation sets in each element block of the mesh and allows for mixed bases for degrees of freedom (DOF) within each element block
+(e.g., mixed $H(\rm{div})$ and $H(\rm{curl})$ system for electro-magnetics).
+The assembly tools can create a single fully coupled Jacobian matrix with all off-block dependencies (as a single \code{Tpetra::CrsMatrix}),
+or it can create a blocked system, grouping sets of DOFs into separate explicit matrices.
+This allows for physics-based block preconditioning strategies using the Teko block preconditioner package in Trilinos \cite{Bonilla2023,Cyr2016a}
+or MueLu's fully coupled AMG hierarchies for multiphysics systems~\cite{Ohm2022a}.
+The assembly process relies on the Phalanx package for efficient assembly of the multiphysics systems.
+Panzer additionally can wrap the assembly in a \code{Thyra::ModelEvaluator}, providing direct interfaces to the linear and nonlinear analysis packages in Trilinos.
 
 Panzer can provide low level utilities for application codes to build on, or can be used as a high level application framework. Important capabilities include the following:
 \begin{itemize}
