@@ -142,7 +142,7 @@ For more details on using MueLu with Teko, see the MueLu examples directory.
 
 \subsection{Direct Linear Solvers: ShyLU and Amesos2}
 
-ShyLU~\cite{ShyLUCore2014} provides an implementation of three solvers: Basker, Tacho, and a distributed-memory solver based on the Schur completement method.
+ShyLU~\cite{ShyLUCore2014} provides an implementation of three solvers: Basker, Tacho, and a distributed-memory solver based on the Schur complement method.
 
 Basker~\cite{Basker2017} is a sparse direct solver based on LU factorization for the problems that have the block triangular form (BTF) typically seen in circuit simulation applications. Basker uses these structures to factor and solve the diagonal blocks in parallel. The larger diagonal blocks can themselves be factored in parallel by discovering the parallelism available using a nested-dissection reordering. Basker focuses on exploiting thread-parallelism on the multi-core CPU architectures. %However, we have still implemented the solver using Kokkos.
 Amesos2 also has a templated implementation of a sequential KLU solver called KLU2, which also exploits the BTF structure.
