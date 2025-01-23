@@ -4,17 +4,17 @@
 The Core product area provides essential tools for managing and distributing data across processing elements in parallel computing environments, addressing challenges such as load balancing and data redistribution. Key components discussed here include the Kokkos performance portability framework, Teuchos tools, Tpetra distributed-memory linear algebra, and Thyra abstractions for high-level formulations of numerical algorithms.
 
 \subsection{Performance Portability: Kokkos Core}\label{subsec:kokkos}
-Kokkos Core\footnote{For historical reasons the package name is ``Kokkos'' since it precedes the creation of other Kokkos subprojects such as Kokkos Kernels.} is a programming model designed for performance portability across hardware architectures such as CPUs and GPUs. Two primary insights into achieving performance portability shaped Kokkos's development are:
+Kokkos Core\footnote{For historical reasons the package name is ``Kokkos'' since it precedes the creation of other Kokkos subprojects such as Kokkos Kernels.} is a programming model designed for performance portability across hardware architectures such as CPUs and GPUs. Two primary insights into achieving performance portability shaped Kokkos's development:
 i) abstractions for both parallel execution and data structures are required, and
 ii) the fundamental programming model must be descriptive not prescriptive.
 
-The parallel execution includes \texttt{execution spaces} to specify where an algorithm should run, \texttt{execution policies} to indicate how the algorithm should be run in terms of hardware resources, and \texttt{execution patterns} to designate what pattern among \texttt{for, reduce, scan} will be used by the algorithm. The data structure abstractions are built around the concepts of \texttt{memory spaces} to indicate where memory is allocated, \texttt{memory layouts} to specify how data is laid out in memory, and \texttt{memory traits} that enable customizations of how data is accessed. The primary data structure incorporating
+The Kokkos programming model includes \texttt{execution spaces} to specify where an algorithm should run, \texttt{execution policies} to indicate how the algorithm should be run in terms of hardware resources, and \texttt{execution patterns} to designate whether the \texttt{for}, \texttt{reduce}, or \texttt{scan} pattern will be used by the algorithm. The data structure abstractions are built around the concepts of \texttt{memory spaces} to indicate where memory is allocated, \texttt{memory layouts} to specify how data is laid out in memory, and \texttt{memory traits} that enable customizations of how data is accessed. The primary data structure incorporating
 these concepts is \texttt{Kokkos::View}, a multidimensional array abstraction that inspired
 the ISO C++23 \texttt{mdspan} class. Detailed descriptions of Kokkos Core can be found
 in~\cite{edwards2014} and \cite{trott2022kokkos}.
 
 \subsection{Performance Portable Kernels: Kokkos Kernels}\label{subsec:kk}
-Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos ecosystem~\cite{trott2021kokkos} and provides node-local implementations of mathematical kernels widely used across packages in Trilinos. As a member of the Kokkos ecosystem, Kokkos Kernels is tightly integrated into Kokkos features and aims at delivering performance-portable algorithms across major CPU- and GPU-based HPC systems. Due to its node-local nature, Kokkos Kernels does not rely on MPI or other communication libraries unlike numerous other packages in Trilinos.
+Kokkos Kernels~\cite{rajamanickam2021kokkoskernels} is part of the Kokkos ecosystem~\cite{trott2021kokkos} and provides node-local implementations of mathematical kernels widely used across packages in Trilinos. As a member of the Kokkos ecosystem, Kokkos Kernels is tightly integrated into Kokkos features and aims at delivering performance-portable algorithms across major CPU- and GPU-based HPC systems. Due to its node-local nature, Kokkos Kernels does not rely on MPI or other communication libraries, unlike numerous other packages in Trilinos.
 
 The implementations of Kokkos Kernels algorithms leverage the hierarchical parallelism exposed by the Kokkos library~\cite{kim2017designing}. To ensure flexibility for the distributed libraries that might call its algorithms, Kokkos Kernels provides thread-safe implementations for most of its kernels, with increasing coverage for asynchronous implementations that allow an execution space instance to be passed when calling a kernel. Kokkos Kernels also serves as a major point of integration for vendor optimized libraries such as cuBLAS, cuSPARSE, rocBLAS, rocSPARSE, MKL, ARMpl and others.
 
@@ -23,11 +23,9 @@ The capabilities provided by Kokkos Kernels can be divided into four major categ
 4. batched dense and sparse linear algebra~\cite{liegeois2023performance}. The main
 points of integration of Kokkos Kernels in Trilinos are Tpetra for the dense and sparse
 linear algebra capabilities, Ifpack2 for the preconditioners and batched algorithms,
-the multigrid package MueLu that relies on these features both directly and indirectly
-as well as on some specialized algorithms such as graph
-coloring/coarsening~\cite{kelley2022parallel} and fused Jacobi-SpGEMM (generalized sparse matrix-matrix multiply) kernels.
+and the multigrid package MueLu which relies directly and indirectly on these general capabilities as well as more specialized algorithms such as graph coloring/coarsening~\cite{kelley2022parallel} and fused Jacobi-SpGEMM (generalized sparse matrix-matrix multiply) kernels.
 
-Similarly to the Kokkos library, Kokkos Kernels is developed in its own GitHub
+Similar to the Kokkos library, Kokkos Kernels is developed in its own GitHub
 repository\footnote{https://github.com/kokkos/kokkos-kernels} outside of the Trilinos
 GitHub repository. Every version of the library is integrated and tested in Trilinos
 as part of the Kokkos ecosystem release process. Additional information on Kokkos
@@ -39,18 +37,18 @@ Kernels' capabilities can be found here~\cite{deveci2018multithreaded,wolf2017fa
 
 \subsection{Tools: Teuchos}
 
-Teuchos provides a suite of common tools for many Trilinos packages. These tools include memory management classes~\cite{bartlett2010} such as smart pointers and arrays, parameter lists for communicating hierarchical lists of parameters between library or application layers, templated wrappers for BLAS and LAPACK, XML parsers, MPI, and other utilities. They provide a unified ``look and feel'' across Trilinos packages, and help avoid common programming mistakes.
+Teuchos provides a suite of common tools for many Trilinos packages. These tools include memory management classes~\cite{bartlett2010} such as smart pointers and arrays, parameter lists for communicating hierarchical lists of parameters between library or application layers, templated wrappers for BLAS and LAPACK, XML parsers, MPI, and other utilities. They provide a unified ``look and feel'' across Trilinos packages and help avoid common programming mistakes.
 
 
 
 \subsection{Distributed-Memory Linear Algebra: Tpetra}\label{subsec:tpetra}
-Tpetra \cite{hoemmen2015tpetra} provides the distributed-memory
+Tpetra~\cite{hoemmen2015tpetra} provides the distributed-memory
 infrastructure for sparse linear algebra objects, such as sparse graphs,
 sparse matrices, and dense vectors.  The implementation of these
 distributed-memory linear algebra objects uses Kokkos Core and Kokkos Kernels linear algebra objects locally on a compute node.
 The provided objects are templated on scalar type (e.g. \texttt{double}, \texttt{float}, or a Sacado or Stokhos type), local index type, global index type and Kokkos device (pair of execution and memory spaces).
 Distributed-memory sparse linear algebra operations, such as
-a sparse matrix-vector product, are implemented through on-node calls
+sparse matrix-vector products, are implemented through on-node calls
 to Kokkos Kernels and inter-node MPI communication. Tpetra features
 include:
 \begin{itemize}
@@ -58,7 +56,7 @@ include:
 \item \emph{(Multi)Vectors:} storage of dense vectors or collections of
 vectors (multivectors) and associated BLAS-1 like kernels (e.g., dot
 products, norms, scaling, vector addition, pointwise vector
-multiplication) as well as tall skinny QR (TSQR)  factorization for multivectors.
+multiplication) as well as tall skinny QR (TSQR) factorization for multivectors.
 \item \emph{Import/export:} communicating vector, graph, and matrix data
 between different distributions (maps). This is key for performing
 halo/boundary exchanges as well as other kernels such as
@@ -74,14 +72,14 @@ Frobenius norm calculation, and row/column scaling.
 \end{itemize}
 
 \subsection{Abstract Numerical Algorithms: Thyra}
-The Thyra package provides abstractions for implementing high-level abstract numerical algorithms (ANAs). Thyra is used by other Trilinos packages for implementing ANAs such as solvers for linear equations, nonlinear equations, bifurcation and stability analysis, optimization, and uncertainty quantification. The abstractions hide concrete linear algebra and solver implementations so that the algorithms can be written once and reused across many application codes. For example, one could write a Krylov solver and use it with multiple concrete linear algebra implementations such as Tpetra in Trilinos %, Epetra in Trilinos
+The Thyra package provides abstractions for implementing high-level abstract numerical algorithms (ANAs). Thyra is used by other Trilinos packages for implementing ANAs such as solvers for linear and nonlinear equations, bifurcation and stability analysis, optimization, and uncertainty quantification. The abstractions hide concrete linear algebra and solver implementations so that the algorithms can be written once and reused across many application codes. For example, one could write a Krylov solver and use it with multiple concrete linear algebra implementations such as Tpetra in Trilinos %, Epetra in Trilinos
 or the vector/matrix objects in PETSc.
 
 Thyra is organized into three sets of abstractions depending on the type of operation required. All are templated on the scalar type. These sets are:
 \begin{itemize}
 \item \emph{Vector/Operator Interfaces:} The first level is an abstraction for vectors and operators \cite{Bartlett2007}. This set includes abstractions for vector spaces, vectors, multivectors, and linear operators. Thyra provides a default set of vector/vector and vector-operator operations for standard linear algebra tasks such ad AXPY from BLAS. Defining an extensible interface such that users can add arbitrary vector/matrix operations and maintain performance can be difficult. A general tool to achieve this is the Trilinos utility package RTOp \cite{rtop}, which provides an interface for users to add new Thyra operations. RTOp accepts a vector of Thyra input objects and a vector of Thyra output objects along with a functor. RTOp will then apply the functor to each element of the data.
 
-\item \emph{Operator Solve Interfaces:} The second set of abstractions supply abstract linear solvers that can be attached to operators. The interfaces include base classes for preconditioners, preconditioner factories, linear operators with a solver, and factories for linear operators with a solver. The factories build and update the preconditioners and linear solvers as needed. The solver interfaces allow one to wrap any concrete linear solver or preconditioner for use with the ANAs. Trilinos provides a separate library named Stratimikos that wraps all of the Trilinos preconditioners and linear solvers in Thyra abstractions. This library is driven by \code{Teuchos::ParameterList} options.
+\item \emph{Operator Solve Interfaces:} The second set of abstractions supply abstract linear solvers that can be attached to operators. The interfaces include base classes for preconditioners, preconditioner factories, linear operators with a solver, and factories for linear operators with a solver. The factories build and update the preconditioners and linear solvers as needed. The solver interfaces allow one to wrap any concrete linear solver or preconditioner for use with the ANAs. Trilinos provides a separate library named Stratimikos that wraps all of the Trilinos preconditioners and linear solvers in Thyra abstractions. Run-time configuration of Stratimikos is driven by \code{Teuchos::ParameterList} options.
 
 \item \emph{Nonlinear Interfaces:} The final set of abstractions support nonlinear operations. Thyra provides an interface that wraps nonlinear solvers. Implicit time integration and optimization solvers typically require nonlinear solves and can abstract away the concrete implementation via Thyra. The NOX package in Trilinos (described in Section~\ref{sec:nox}) provides a concrete implementation of this interface. The final interface in Thyra is for querying a physics application for common objects required by high-level Newton-based solvers. The \code{Thyra::ModelEvaluator} interface allows codes to ask the application to evaluate residuals, Jacobians, parametric sensitivities, Hessians, and post-processed quantities/derivatives of interest. The interface is designed to be stateless (i.e., consecutive calls with the same inputs should produce the same outputs). This design was chosen to avoid pitfalls in complex application codes interacting with general nonlinear algorithms. The design does not preclude its use in stateful applications that have a ``memory'' between time steps, but rather forces the explicit use of the stateful information in the interface.
 \end{itemize}
