@@ -27,7 +27,7 @@ introduction of GPU acceleration for scientific software. Today, nine of the top
 \todo{MMW:  We should verify these programming models... I think these are right but I'm not sure for Fugakyu }
 % CWP: https://www.fujitsu.com/global/about/innovation/fugaku/specifications/ lists OpenMP but also things called XcalableMP and FPDPS that I'm not familiar with
 
-To avoid the necessity of diverging code paths, Trilinos leverages the Kokkos Ecosystem~\cite{trott2021kokkos} to write performance portable code. The Kokkos Ecosystem started as the native Trilinos packages Kokkos and Kokkos Kernels but split off a decade ago into a standalone project hosted and developed independently from Trilinos\footnote{https://github.com/kokkos}.
+To avoid the necessity of diverging code paths, Trilinos leverages the Kokkos Ecosystem\footnote{\url{https://kokkos.org}}~\cite{trott2021kokkos} to write performance portable code. The Kokkos Ecosystem started as the native Trilinos packages Kokkos and Kokkos Kernels but split off a decade ago into a standalone project hosted and developed independently from Trilinos\footnote{https://github.com/kokkos}.
 Now, Trilinos provides snapshots of the two primary Kokkos subprojects (Core and Kernels) that reflect the latest release of Kokkos. Trilinos can also be built against version-compatible external installations of Kokkos --- a capability required for interoperability with other Kokkos-based libraries.
 
 Kokkos enables Trilinos developers to write single source implementations of their packages that perform well on all major HPC hardware architectures. Some of its design principles are also reflected in Trilinos API designs. In particular, the
@@ -41,6 +41,20 @@ use of \texttt{execution} and \texttt{memory spaces} as parameters of data struc
 
 The features and capabilities of Trilinos are divided into several software units called \textit{packages}.
 Each Trilinos package has a well-defined set of unique capabilities that is important for scientific or engineering applications. Packages are semi-autonomous, often having their own development team, users, and set of requirements and development principles.  However, packages also follow a general set of Trilinos expectations such as having a designated point-of-contact and following the software quality expectations (e.g., sufficient documentation, continuous integration testing, clearly defined dependencies, and using the Trilinos infrastructure for building and installation).
+
+While most packages are developed natively in the Trilinos repository, some packages are developed externally and snapshotted into Trilinos.
+These are (in alphabetical order):
+Compadre\footnote{\url{https://github.com/sandialabs/compadre}},
+Kokkos and Kokkos Kernels,
+Krino,
+SEACAS\footnote{\url{https://github.com/sandialabs/seacas}},
+Sierra ToolKit (STK),
+TriBITS\footnote{\url{https://github.com/TriBITSPub/TriBITS}}.
+Reasons for snapshotting external packages into Trilinos are:
+external packages and repositories facilitates easy and independent usage by other software projects without having to pull in Trilinos,
+snapshotting provides an integration process for external packages into Trilinos, ensuring continual compatibility between all packages,
+and snapshotting allows easy integration into Trilinos-based application codes, alleviating users from managing these dependencies themselves.
+We refer to the Trilinos website (\url{https://trilinos.github.io}) for a brief description of these packages.
 
 In the following sections of this paper, we group the Trilinos packages that share common objectives (e.g., solving linear systems) together into five \textit{product areas}:  Core, Linear Solvers and Preconditioners, Nonlinear Solvers and Analysis Tools, Discretization Tools, and Framework Infrastructure.  We briefly describe these product areas below.
 
