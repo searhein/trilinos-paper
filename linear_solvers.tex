@@ -42,7 +42,7 @@ is simply not amenable to multilevel methods.
 
 Ifpack2 also supplies classic iterative methods based on matrix-splitting techniques, such as Jacobi iteration, Gauss-Seidel, and an MPI-oriented hybrid of Jacobi and Gauss-Seidel (e.g., Jacobi between ranks and Gauss-Seidel on them). Ifpack2 also provides preconditioners
 based on Chebyshev iterations. The aforementioned preconditioners are available both in point and block
-forms and can operate on CSR and BSR matrices. In the block case,
+forms and can operate on CRS and BSR matrices. In the block case,
 line relaxation is also supported, while in the point case, techniques
 like Vanka relaxation \cite{Vanka1986} are possible.  Auxiliary-space
 smoothing for $H(curl)$ and $H(div)$ discretizations of the style of
