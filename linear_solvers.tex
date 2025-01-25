@@ -42,7 +42,7 @@ is simply not amenable to multilevel methods.
 
 Ifpack2 also supplies classic iterative methods based on matrix-splitting techniques, such as Jacobi iteration, Gauss-Seidel, and an MPI-oriented hybrid of Jacobi and Gauss-Seidel (e.g., Jacobi between ranks and Gauss-Seidel on them). Ifpack2 also provides preconditioners
 based on Chebyshev iterations. The aforementioned preconditioners are available both in point and block
-forms and can operate on CSR and BSR matrices. In the block case,
+forms and can operate on CRS and BSR matrices. In the block case,
 line relaxation is also supported, while in the point case, techniques
 like Vanka relaxation \cite{Vanka1986} are possible.  Auxiliary-space
 smoothing for $H(curl)$ and $H(div)$ discretizations of the style of
@@ -86,7 +86,7 @@ The matrix graph is colored to create aggregates (groups) of nodes.
 These aggregates define a tentative projection operator.
 A final projection operator is created by applying a smoother to the tentative operator.
 There are a variety of deterministic and non-deterministic coloring algorithms implemented directly
-in MueLu or in Kokkos Kernels.  For a full description, see~\cite{BergerVergiat2023a}.
+in MueLu and in Kokkos Kernels.  For a full description, see~\cite{BergerVergiat2023a}.
 
 \item \emph{Algebraic multigrid for Maxwell's equations}:
   MueLu implements specialized solvers for the solution of curl-curl problems~\cite{BochevHuEtAl2008_AlgebraicMultigridApproachBased}.
@@ -109,7 +109,7 @@ The coarse operators are then formed via a Galerkin product to avoid remeshing o
 This work has been extended to semi-structured grids to leverage structured-grid computational performance also for globally unstructured grids~\cite{Mayr2022a}.
 
 \item \emph{Geometric multigrid / matrix-free capabilities}:
-MueLu treats many of the objects in its hierarchy as operators instead of matrices when possible.
+MueLu treats the objects in its hierarchy as operators instead of matrices whenever possible.
 This enables one to use MueLu in a matrix-free fashion provided the user can supply their own grid transfers and coarse operators.
 % through factories such as \texttt{MatrixFreeTentativePFactory},
 % which only requires aggregates in order to perform a grid transfer using a tentative prolongator.
