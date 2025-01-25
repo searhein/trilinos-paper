@@ -4,14 +4,14 @@ Trilinos is a community-driven open-source C++ software framework and collection
 While Trilinos can run on a variety of hardware platforms ranging from small workstations to large supercomputers, the typical use of Trilinos is on leadership-class systems with new or emerging hardware architectures.
 
 % History
-Trilinos was originally conceived as a framework of three packages for distributed memory systems. The original Trilinos publication~\cite{Heroux2005a} described the motivation, philosophy, and capabilities of Trilinos at that time. A few years later, the second Trilinos overview publication~\cite{Heroux2012} described the intervening expansion of Trilinos' capabilities and strategic goals for Trilinos. Trilinos today hews to the overall vision from two decades ago, but has evolved alongside changes in programming models, application needs, hardware architectures, and algorithms. Trilinos has grown from a library of three packages to more than fifty packages with functionality and features supporting a wide range of applications.
+Trilinos was originally conceived as a framework of three packages for distributed memory systems. The original Trilinos publication~\cite{Heroux2005a} described the motivation, philosophy, and capabilities of Trilinos at that time. Seven years later, a two-part collection of 16 papers provided a new overview of Trilinos and many of its packages~\cite{Heroux2012,HerouxIntro2012part1,HerouxIntro2012part2,pawlowski2012automating,Oldfield2012,bochev2012,Boman2012,Baker2012,Kokkos2012,pawlowski2012automatingpart2,Spotz2012,Long2012,Morris2012,Howle2012,Bavier2012a,Gaidamour2012} described the intervening expansion of Trilinos' capabilities and strategic goals for Trilinos. Trilinos today hews to the overall vision from two decades ago, but has evolved alongside changes in programming models, application needs, hardware architectures, and algorithms. Trilinos has grown from a library of three packages to more than fifty packages with functionality and features supporting a wide range of applications.
 
 For much of its history, packages have relied heavily on the linear algebra classes provided by Epetra.
 Epetra does not support larger problems (2B+ unknowns), nor does it allow for accelerator offload.
 Since the packages of the old Epetra stack are scheduled to be archived and removed from the main Trilinos repository on GitHub by the end of 2025, this paper describes only the modern Trilinos software stack, which builds upon the Tpetra and the Kokkos Ecosystem to achieve performance portability across hardware architectures.
 
 % Purpose
-This article is an attempt to capture a snapshot of where Trilinos is today, as an update to the two articles published thirteen and twenty years ago.
+This article is an attempt to capture a snapshot of where Trilinos is today, as an update to the articles published thirteen and twenty years ago.
 Therefore it will focus on the major developments within Trilinos in the last decade as well as new features and functionality that have been added to advance scientific and engineering applications.
 It will give only an overview of the features, and we refer to the extensive list of references for the details of these features.
 We are also cognizant of the fact that this article describes software that is being actively developed and constantly evolving.
@@ -27,7 +27,7 @@ introduction of GPU acceleration for scientific software. Today, nine of the top
 \todo{MMW:  We should verify these programming models... I think these are right but I'm not sure for Fugakyu }
 % CWP: https://www.fujitsu.com/global/about/innovation/fugaku/specifications/ lists OpenMP but also things called XcalableMP and FPDPS that I'm not familiar with
 
-To avoid the necessity of diverging code paths, Trilinos leverages the Kokkos Ecosystem\footnote{\url{https://kokkos.org}}~\cite{trott2021kokkos} to write performance portable code. The Kokkos Ecosystem started as the native Trilinos packages Kokkos and Kokkos Kernels but split off a decade ago into a standalone project hosted and developed independently from Trilinos\footnote{https://github.com/kokkos}.
+To avoid the necessity of diverging code paths, Trilinos leverages the Kokkos Ecosystem\footnote{\url{https://kokkos.org}}~\cite{trott2021kokkos} to write performance portable code. The Kokkos Ecosystem started as the native Trilinos packages Kokkos~\cite{heroux2011toward} and Kokkos Kernels but split off a decade ago into a standalone project hosted and developed independently from Trilinos\footnote{https://github.com/kokkos}.
 Now, Trilinos provides snapshots of the two primary Kokkos subprojects (Core and Kernels) that reflect the latest release of Kokkos. Trilinos can also be built against version-compatible external installations of Kokkos --- a capability required for interoperability with other Kokkos-based libraries.
 
 Kokkos enables Trilinos developers to write single source implementations of their packages that perform well on all major HPC hardware architectures. Some of its design principles are also reflected in Trilinos API designs. In particular, the
