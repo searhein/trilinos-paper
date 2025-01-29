@@ -20,6 +20,7 @@
 \def\ri{4}
 \def\rm{4.5}
 \def\ro{5}
+\def\areah{0.75}
 \def\packagew{3.0}
 \def\packageh{0.6}
 \def\dist{0.1}
@@ -33,10 +34,11 @@
 
 \fill[even odd rule,gray!10] circle (\ri) circle (\ro);
 
-\begin{scope}[shift={(80:\rm-0.3)}]
+\begin{scope}[shift={(84:\rm-0.3)}]
 \begin{scope}[shift={(-0.5*\packagew,-2.5*\packageh)}]
 % Core: Kokkos, Kokkos Kernels, Teuchos, Tpetra, Thyra (5)
-\draw [fill=\colCore!20] (-\dist,-\dist) rectangle (\packagew+\dist, 5*\packageh+6*\dist);
+\draw [fill=\colCore!20] (-\dist-\areah,-\dist) rectangle (\packagew+\dist, 5*\packageh+6*\dist);
+\node [rotate=90] at (-0.5*\dist-0.5*\areah,3*\dist+2.5*\packageh) {\textbf{Core}};
 \draw [fill=\colCore!40] (0,0) rectangle (\packagew, \packageh+\dist) node [pos=0.5] {Kokkos};
 \draw [fill=\colCore!40] (0,\packageh+2*\dist) rectangle (\packagew, 2*\packageh+2*\dist) node [pos=0.5] {Kokkos Kernels};
 \draw [fill=\colCore!40] (0,2*\packageh+3*\dist) rectangle (\packagew, 3*\packageh+3*\dist) node [pos=0.5] {Teuchos};
@@ -45,10 +47,11 @@
 \end{scope}
 \end{scope}
 
-\begin{scope}[shift={(150:\rm+0.2)}]
+\begin{scope}[shift={(156:\rm+0.2)}]
 \begin{scope}[shift={(-0.5*\packagew,-2.5*\packageh)}]
 % Nonlinear Solvers and Analysis Tools: NOX & LOCA, ROL, Sacado, Stokhos, Piro (5)
-\draw [fill=\colNonlinear!20] (-\dist,-\dist) rectangle (\packagew+\dist, 5*\packageh+6*\dist);
+\draw [fill=\colNonlinear!20] (-\dist-\areah,-\dist) rectangle (\packagew+\dist, 5*\packageh+6*\dist);
+\node [rotate=90,align=center] at (-0.5*\dist-0.5*\areah,3*\dist+2.5*\packageh) {\textbf{Nonlinear Solvers and}\\\textbf{Analysis Tools}};
 \draw [fill=\colNonlinear!40] (0,0) rectangle (\packagew, \packageh+\dist) node [pos=0.5] {NOX \& LOCA};
 \draw [fill=\colNonlinear!40] (0,\packageh+2*\dist) rectangle (\packagew, 2*\packageh+2*\dist) node [pos=0.5] {ROL};
 \draw [fill=\colNonlinear!40] (0,2*\packageh+3*\dist) rectangle (\packagew, 3*\packageh+3*\dist) node [pos=0.5] {Sacado};
@@ -57,10 +60,11 @@
 \end{scope}
 \end{scope}
 
-\begin{scope}[shift={(222:\rm+0.3)}]
+\begin{scope}[shift={(218:\rm+0.6)}]
 \begin{scope}[shift={(-0.5*\packagew,-2.5*\packageh)}]
 % Discretizations: Intrepid2, Phalanx, Tempus, Panzer, Comparde (5)
-\draw [fill=\colDisc!20] (-\dist,-\dist) rectangle (\packagew+\dist, 5*\packageh+6*\dist);
+\draw [fill=\colDisc!20] (-0.5*\dist-\dist-\areah,-\dist) rectangle (\packagew+\dist, 5*\packageh+6*\dist);
+\node [rotate=90] at (-0.5*\areah,3*\dist+2.5*\packageh) {\textbf{Discretizations}};
 \draw [fill=\colDisc!40] (0,0) rectangle (\packagew, \packageh+\dist) node [pos=0.5] {Intrepid2};
 \draw [fill=\colDisc!40] (0,\packageh+2*\dist) rectangle (\packagew, 2*\packageh+2*\dist) node [pos=0.5] {Phalanx};
 \draw [fill=\colDisc!40] (0,2*\packageh+3*\dist) rectangle (\packagew, 3*\packageh+3*\dist) node [pos=0.5] {Tempus};
@@ -69,10 +73,11 @@
 \end{scope}
 \end{scope}
 
-\begin{scope}[shift={(0:\rm)}]
+\begin{scope}[shift={(0:\rm+0.5)}]
 \begin{scope}[shift={(-0.5*\packagew,-4*\packageh)}]
 % Linear Solvers and Preconditioners: Belos, Ifpack2, FROSch, MueLu, ShyLu and Amesos2, Teko, Anasazi, Stratimikos (8)
-\draw [fill=\colLinear!20] (-\dist,-\dist) rectangle (\packagew+\dist, 8*\packageh+9*\dist);
+\draw [fill=\colLinear!20] (-\dist-\areah,-\dist) rectangle (\packagew+\dist, 8*\packageh+9*\dist);
+\node [rotate=90] at (-0.5*\dist-0.5*\areah,4.5*\dist+4*\packageh) {\textbf{Linear Solvers and Preconditioners}};
 \draw [fill=\colLinear!40] (0,0) rectangle (\packagew, \packageh+\dist) node [pos=0.5] {Belos};
 \draw [fill=\colLinear!40] (0,\packageh+2*\dist) rectangle (\packagew, 2*\packageh+2*\dist) node [pos=0.5] {Ifpack2};
 \draw [fill=\colLinear!40] (0,2*\packageh+3*\dist) rectangle (\packagew, 3*\packageh+3*\dist) node [pos=0.5] {FROSch};
@@ -87,7 +92,8 @@
 \begin{scope}[shift={(284:\rm+0.2)}]
 \begin{scope}[shift={(-0.5*\packagew,-1.5*\packageh)}]
 % Framework: Build and Test Infrastructure, Documentation Infrastructure, PyTrilinos2 (3)
-\draw [fill=\colFrame!20] (-\dist,-\dist) rectangle (\packagew+\dist, 3*\packageh+4*\dist);
+\draw [fill=\colFrame!20] (-\dist-\areah,-\dist) rectangle (\packagew+\dist, 3*\packageh+4*\dist);
+\node [rotate=90] at (-0.5*\dist-0.5*\areah,2*\dist+1.5*\packageh) {\textbf{Framework}};
 \draw [fill=\colFrame!40] (0,0) rectangle (\packagew, \packageh+\dist) node [pos=0.5] {Building \& Testing};
 \draw [fill=\colFrame!40] (0,\packageh+2*\dist) rectangle (\packagew, 2*\packageh+2*\dist) node [pos=0.5] {Documentation};
 \draw [fill=\colFrame!40] (0,2*\packageh+3*\dist) rectangle (\packagew, 3*\packageh+3*\dist) node [pos=0.5] {PyTrilinos2};
