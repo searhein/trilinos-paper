@@ -54,7 +54,16 @@ snapshotting provides an integration process for external packages into Trilinos
 and snapshotting allows easy integration into Trilinos-based application codes, alleviating users from managing these dependencies themselves.
 We refer to the Trilinos website (\url{https://trilinos.github.io}) for a brief description of these packages.
 
-In the following sections of this paper, we group the Trilinos packages that share common objectives (e.g., solving linear systems) together into five \textit{product areas}:  Core, Linear Solvers and Preconditioners, Nonlinear Solvers and Analysis Tools, Discretization Tools, and Framework Infrastructure.  We briefly describe these product areas below.
+In the following sections of this paper, we group the Trilinos packages that share common objectives (e.g., solving linear systems) together into five \textit{product areas}:  Core, Linear Solvers and Preconditioners, Nonlinear Solvers and Analysis Tools, Discretization Tools, and Framework Infrastructure.
+Trilinos' packages and their assignment to a product area are illustrated in Figure~\ref{fig:GraphicalOverview}.
+\begin{figure}
+\centering
+\input{graphical_overview.tex}
+\caption{Organization of the Trilinos library into five product areas and their packages: Product areas are labeled in bold font with their respective packages.
+Snapshotted packages described in this paper are marked by dashed boxes.}
+\label{fig:GraphicalOverview}
+\end{figure}
+We briefly describe these product areas below.
 
 \paragraph{Core} Core packages cover all aspects of creating, distributing, and mapping data to processing elements (cores, threads, nodes), load balancing, and redistributing data. This includes Trilinos abstractions for linear algebra data structures and algorithms and concrete implementations such as Tpetra linear algebra data structures. On a modern accelerator-based compute node, the abstractions provided by the Kokkos library become critical for Tpetra. These capabilities are described in detail in Section~\ref{sec:data_services}.
 
