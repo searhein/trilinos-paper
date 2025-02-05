@@ -23,7 +23,7 @@ NOX also provides capabilities for continuation and stability analysis through t
 LOCA (Library of Continuation Algorithms)~\cite{Salinger2005}
 provides techniques for computing families of solutions to nonlinear equations as well as methods for investigating their stability when these nonlinear equations define equilibria of dynamical systems.  It builds on the NOX nonlinear solver package to track solutions to sets of nonlinear equations as a function of one or more parameters (continuation).
 Given an interface to NOX that defines the nonlinear equations, users only need to provide a method for setting the parameter values being varied.
-LOCA provides several continuation methods, including pseudo-arclength continuation which allows tracking solution curves around turning points/folds.  Furthermore, LOCA has hooks to call the Anasazi eigensolver package to estimate leading eigenvalues of the linearization at each point along the continuation curve for linear stability analysis, including various spectral transformations highlighting eigenvalues in different regimes (e.g., largest magnitude, largest real, ...).  Finally, LOCA implements equations augmenting the original nonlinear equations to locate and track bifurcation points where linear stability changes (e.g., turning point, pitchfork, and Hopf bifurcations) as a function of additional parameters. Examples of using LOCA for stability and bifurcation analysis include stability of a differentially heated cavity \cite{Salinger2002}, design of chemical vapor deposition reactors \cite{Pawlowski2001}, flow instabilities in counterflowing jets \cite{pawlowski_salinger_shadid_mountziaris_2006} and ignition in laminar diffusion flames \cite{Shadid20061846}.
+LOCA provides several continuation methods, including pseudo-arclength continuation which allows tracking solution curves around turning points/folds.  Furthermore, LOCA has hooks to call the Anasazi eigensolver package to estimate leading eigenvalues of the linearization at each point along the continuation curve for linear stability analysis, including various spectral transformations highlighting eigenvalues in different regimes (e.g., largest magnitude, largest real).  Finally, LOCA implements equations augmenting the original nonlinear equations to locate and track bifurcation points where linear stability changes (e.g., turning point, pitchfork, and Hopf bifurcations) as a function of additional parameters. Examples of using LOCA for stability and bifurcation analysis include stability of a differentially heated cavity \cite{Salinger2002}, design of chemical vapor deposition reactors \cite{Pawlowski2001}, flow instabilities in counterflowing jets \cite{pawlowski_salinger_shadid_mountziaris_2006} and ignition in laminar diffusion flames \cite{Shadid20061846}.
 
 %\todo{Why is LOCA not a separate section?}
 
@@ -107,20 +107,20 @@ for solving general nonconvex, nonsmooth optimization problems.
 ROL controls inexact function evaluations and exploits adaptive computations
 and multi-fidelity models through its trust-region methods. Several of these methods
 have been pioneered by the ROL team.  Their implementations typically require some
-knowledge of error in the computations, i.e., an \emph{error estimate}.
+knowledge of error in the computations (i.e., an \emph{error estimate}).
 For a comprehensive overview of problem formulations, algorithms with error control,
 and their ROL implementations, see \cite{Kouri2018}.
 \item
 \emph{PDE-OPT application development kit for PDE-constrained optimization:}
 To build and optimize models based on partial differential equations (PDEs),
-ROL offers an application development kit, called PDE-OPT. PDE-OPT is based on a
+ROL offers an application development kit called PDE-OPT. PDE-OPT is based on a
 modular design with three layers: local finite element computations,
 which encode the physical equations governing the optimization problem;
 global computations, which utilize Tpetra data structures;
 and an interface to ROL, enabling efficient optimization.
 To solve PDE-constrained optimization problems, the users need only implement the
-local finite element layer of PDE-OPT, i.e., the evaluations of weak forms on
-a mesh element; PDE-OPT automates all remaining steps.
+local finite element layer of PDE-OPT (i.e., the evaluations of weak forms on
+a mesh element); PDE-OPT automates all remaining steps.
 \end{itemize}
 
 
