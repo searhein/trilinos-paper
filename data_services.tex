@@ -83,3 +83,13 @@ Thyra is organized into three sets of abstractions depending on the type of oper
 
 \item \emph{Nonlinear Interfaces:} The final set of abstractions supports nonlinear operations. Thyra provides an interface that wraps nonlinear solvers. Implicit time integration and optimization solvers typically require nonlinear solves and can abstract away the concrete implementation via Thyra. The NOX package in Trilinos (described in Section~\ref{sec:nox}) provides a concrete implementation of this interface. The final interface in Thyra is for querying a physics application for common objects required by high-level Newton-based solvers. The \code{Thyra::ModelEvaluator} interface allows codes to ask the application to evaluate residuals, Jacobians, parametric sensitivities, Hessians, and post-processed quantities/derivatives of interest. The interface is designed to be stateless (i.e., consecutive calls with the same inputs should produce the same outputs). This design was chosen to avoid pitfalls in complex application codes interacting with general nonlinear algorithms. The design does not preclude its use in stateful applications that have a ``memory'' between timesteps, but rather forces the explicit use of the stateful information in the interface.
 \end{itemize}
+
+
+\subsection{Combinatorial algorithms with hybrid parallelism: Zoltan2}
+Zoltan2 is a package for partitioning, load balancing, and other combinatorial scientific computing. It can be viewed as a successor to Zoltan~\cite{Boman2012} that provides both tighter integration with other Trilinos packages and support for hybrid parallelism. It is used primarily to partition and distribute data objects (such as sparse matrices) across processors.
+
+Zoltan2 has a highly modular design. The user provides input via
+input adapters. Adapters for Xpetra (which supports both Epetra and Tpetra) are provided. The models create a graph, hypergraph, or coordinate model from the user input, which is typically a sparse matrix, mesh, or vector. The algorithms then use the model to solve the particular problem (e.g., partitioning or coloring) requested by the user.
+
+Zoltan2 supports both distributed-memory parallelism and on-node parallelism for both CPU and GPU (via Kokkos).
+Algorithms that support such hybrid parallelism include Multi-jagged~\cite{Z1} (geometric partitioning), Sphynx~\cite{Z2} (spectral graph partitioning), graph coloring~\cite{Z5}, and MPI task placement~\cite{Z3}.
