@@ -43,29 +43,37 @@ Teuchos provides a suite of common tools for many Trilinos packages. These tools
 
 \subsection{Distributed-Memory Linear Algebra: Tpetra}\label{subsec:tpetra}
 Tpetra~\cite{Baker2012,hoemmen2015tpetra} provides the distributed-memory
-infrastructure for sparse linear algebra objects, such as sparse graphs,
-sparse matrices, and dense vectors.  The implementation of these
-distributed-memory linear algebra objects uses Kokkos Core and Kokkos Kernels linear algebra objects locally on a compute node.
+infrastructure for linear algebra objects such as sparse graphs,
+sparse matrices, and dense vectors. These linear algebra objects are
+implemented using MPI-based abstractions for the inter-process communication,
+and Kokkos-based data structures for the portions of the object
+owned by each process (MPI rank). Kokkos Kernels is used for
+performing local, parallel computations within each MPI rank.
+
 The provided objects are templated on scalar type (e.g., \texttt{double}, \texttt{float}, or a Sacado or Stokhos type), local index type, global index type and Kokkos device (pair of execution and memory spaces).
-Distributed-memory sparse linear algebra operations, such as
-sparse matrix-vector products, are implemented through on-node calls
-to Kokkos Kernels and inter-node MPI communication. Tpetra features
-include:
+The distribution of the linear algebra objects is described by a \emph{Map} data structure, which defines which elements are present on which ranks.
+Here ``element'' could be a row or column of a sparse matrix, or an entry of a vector.
+Global indices number elements across an entire distributed object, while local indices number elements only within a rank.
+Since memory capacity limits the sizes of local objects, local indices can be safely represented with a more compact type than global indices (e.g. 32-bit \code{int} instead of 64-bit \code{long}).
+
+\emph{DistObject} is Tpetra's abstract base class for general distributed objects.
+Subclasses define how to pack elements into a buffer for sending with MPI, and how to unpack received elements.
+The \emph{Import} and \emph{Export} classes describe how one DistObject communicates data to another.
+They are both created from a pair of Maps, a source and a target. For example, halo exchange on a vector is an Import where
+the source is the vector's original distribution, and the target is the same except that each rank
+also ``owns'' the degrees-of-freedom in the halo around its subdomain.
+
+The following are the primary linear algebra objects in Tpetra (all are subclasses of DistObject):
 \begin{itemize}
-\item \emph{Maps:} distributions of objects over MPI ranks.
 \item \emph{(Multi)Vectors:} storage of dense vectors or collections of
 vectors (multivectors) and associated BLAS-1 like kernels (e.g., dot
 products, norms, scaling, vector addition, pointwise vector
 multiplication) as well as tall skinny QR (TSQR) factorization for multivectors.
-\item \emph{Import/export:} communicating vector, graph, and matrix data
-between different distributions (maps). This is key for performing
-halo/boundary exchanges as well as other kernels such as
-sparse matrix-matrix multiplication.
-\item \emph{Sparse graphs} in compressed row storage (CRS)
+\item \emph{CrsGraph} a sparse graph in compressed row storage (CRS)
 format. Graphs also include import/export objects for use in
-halo/boundary exchanges associate with the graph.
-\item \emph{Sparse matrices} in compressed row storage (CRS) and
-block compressed sparse row (BSR) formats.  Associated kernels include
+halo/boundary exchanges associated with the graph.
+\item \emph{CrsMatrix} and \emph{BlockCrsMatrix} are sparse matrices in CRS and
+block compressed sparse row (BSR) formats. Associated kernels include
 sparse matrix vector product (SPMV), sparse matrix-matrix
 multiplication (SPGEMM) and triple-product, sparse matrix-matrix addition, sparse matrix transpose, diagonal extraction,
 Frobenius norm calculation, and row/column scaling.
