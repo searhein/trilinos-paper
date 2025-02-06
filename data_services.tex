@@ -51,19 +51,19 @@ owned by each process (MPI rank). Kokkos Kernels is used for
 performing local, parallel computations within each MPI rank.
 
 The provided objects are templated on scalar type (e.g., \texttt{double}, \texttt{float}, or a Sacado or Stokhos type), local index type, global index type and Kokkos device (pair of execution and memory spaces).
-The distribution of the linear algebra objects is described by a \emph{Map} data structure, which defines which elements are present on which ranks.
+The distribution of the linear algebra objects is described by a \code{Map} data structure, which defines which elements are present on which ranks.
 Here ``element'' could be a row or column of a sparse matrix, or an entry of a vector.
 Global indices number elements across an entire distributed object, while local indices number elements only within a rank.
 Since memory capacity limits the sizes of local objects, local indices can be safely represented with a more compact type than global indices (e.g. 32-bit \code{int} instead of 64-bit \code{long}).
 
-\emph{DistObject} is Tpetra's abstract base class for general distributed objects.
+\code{DistObject} is Tpetra's abstract base class for general distributed objects.
 Subclasses define how to pack elements into a buffer for sending with MPI, and how to unpack received elements.
-The \emph{Import} and \emph{Export} classes describe how one DistObject communicates data to another.
-They are both created from a pair of Maps, a source and a target. For example, halo exchange on a vector is an Import where
+The \code{Import} and \code{Export} classes describe how one \code{DistObject} communicates data to another.
+They are both created from a pair of \code{Map}s, a source and a target. For example, halo exchange on a vector is an \code{Import} where
 the source is the vector's original distribution, and the target is the same except that each rank
 also ``owns'' the degrees-of-freedom in the halo around its subdomain.
 
-The following are the primary linear algebra objects in Tpetra (all are subclasses of DistObject):
+The following are the primary linear algebra objects in Tpetra (all are subclasses of \code{DistObject}):
 \begin{itemize}
 \item \emph{(Multi)Vectors:} storage of dense vectors or collections of
 vectors (multivectors) and associated BLAS-1 like kernels (e.g., dot
