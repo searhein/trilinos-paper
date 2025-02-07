@@ -54,7 +54,7 @@ The provided objects are templated on scalar type (e.g., \texttt{double}, \textt
 The distribution of the linear algebra objects is described by a \code{Map} data structure, which defines which elements are present on which ranks.
 Here ``element'' could be a row or column of a sparse matrix, or an entry of a vector.
 Global indices number elements across an entire distributed object, while local indices number elements only within a rank.
-Since memory capacity limits the sizes of local objects, local indices can be safely represented with a more compact type than global indices (e.g. 32-bit \code{int} instead of 64-bit \code{long}).
+Since memory capacity limits the sizes of local objects, local indices can be safely represented with a more compact type than global indices (e.g., 32-bit \code{int} instead of 64-bit \code{long}).
 
 \code{DistObject} is Tpetra's abstract base class for general distributed objects.
 Subclasses define how to pack elements into a buffer for sending with MPI, and how to unpack received elements.
