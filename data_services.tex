@@ -50,7 +50,7 @@ and Kokkos-based data structures for the portions of the object
 owned by each process (MPI rank). Kokkos Kernels is used for
 performing local, parallel computations within each MPI rank.
 
-The provided objects are templated on scalar type (e.g., \texttt{double}, \texttt{float}, or a Sacado or Stokhos type), local index type, global index type and Kokkos device (pair of execution and memory spaces).
+The provided objects are templated on scalar type (e.g., \code{double}, \code{float}, or a Sacado or Stokhos type), local index type, global index type and Kokkos device (pair of execution and memory spaces).
 The distribution of the linear algebra objects is described by a \code{Map} data structure, which defines which elements are present on which ranks.
 Here ``element'' could be a row or column of a sparse matrix, or an entry of a vector.
 Global indices number elements across an entire distributed object, while local indices number elements only within a rank.
