@@ -6,8 +6,8 @@ A common theme of this collection is the philosophy of ``analysis beyond simulat
 Additionally, utilities for nonlinear analysis include abstraction layers and interfaces for application callbacks, as well as automatic differentiation tools that can provide the derivatives critical to analysis algorithms.
 
 \subsection{Nonlinear Solvers: NOX, LOCA} \label{sec:nox}
-%\paragraph{NOX} 
-%Short for , 
+%\paragraph{NOX}
+%Short for ,
 NOX (Nonlinear Object-oriented Solutions) provides robust and efficient algorithms for solving systems of nonlinear equations.
 NOX implements a number of Newton-based globalization techniques including line search \cite{Pawlowski2006}, trust region \cite{Pawlowski2006,Pawlowski2008} and homotopy algorithms \cite{Coffey2003}.
 Additionally, it provides lower- and higher-order models including Broyden, Anderson acceleration \cite{Walker2011}, and tensor methods \cite{Bader2005}.
@@ -19,7 +19,7 @@ NOX provides various stopping criteria including absolute, relative, and weighte
 Applications can build custom stopping criteria within a tree-based logical structure and provide additional criteria through the StatusTest abstraction.
 NOX also provides capabilities for continuation and stability analysis through the subpackage LOCA.
 
-%Short for the 
+%Short for the
 LOCA (Library of Continuation Algorithms)~\cite{Salinger2005}
 provides techniques for computing families of solutions to nonlinear equations as well as methods for investigating their stability when these nonlinear equations define equilibria of dynamical systems.  It builds on the NOX nonlinear solver package to track solutions to sets of nonlinear equations as a function of one or more parameters (continuation).
 Given an interface to NOX that defines the nonlinear equations, users only need to provide a method for setting the parameter values being varied.
@@ -128,18 +128,18 @@ a mesh element); PDE-OPT automates all remaining steps.
 \subsection{Automatic Differentiation: Sacado} \label{sec:sacado}
 
 Sacado \cite{SacadoURL,phipps2012efficient,phipps2008large} provides forward and reverse-mode operator-overloading-based automatic differentiation (AD) tools within Trilinos.
-%The package provides both forward and reverse-mode AD data types. 
+%The package provides both forward and reverse-mode AD data types.
 Sacado's forward AD tools have been integrated with Kokkos and have demonstrated good performance on GPU architectures~\cite{phipps2022automatic}.
-Sacado, along with its Kokkos integration, provides high-performance derivative capabilities to numerous Office of Science and NNSA extreme scale applications, including Albany for solid mechanics and land ice modeling~\cite{Salinger2016,MPASAlbany2018}, 
-Charon for semiconductor device modeling~\cite{CharonUsersManual2020} and multiphase chemically reacting flows~\cite{Musson2009}, Drekar for computational fluid dynamics (CFD)~\cite{Sondak2021,Shadid2016}, magnetohydrodynamics~\cite{Shadid2016mhd} and 
-plasma physics~\cite{Crockatt2022,Miller2019}, Xyce for electronic circuit simulation~\cite{xyceTrilinos,xycePCE}, and SPARC for hypersonic fluid flows~\cite{SparcValidation}. 
+Sacado, along with its Kokkos integration, provides high-performance derivative capabilities to numerous Office of Science and NNSA extreme scale applications, including Albany for solid mechanics and land ice modeling~\cite{Salinger2016,MPASAlbany2018},
+Charon for semiconductor device modeling~\cite{CharonUsersManual2020} and multiphase chemically reacting flows~\cite{Musson2009}, Drekar for computational fluid dynamics (CFD)~\cite{Sondak2021,Shadid2016}, magnetohydrodynamics~\cite{Shadid2016mhd} and
+plasma physics~\cite{Crockatt2022,Miller2019}, Xyce for electronic circuit simulation~\cite{xyceTrilinos,xycePCE}, and SPARC for hypersonic fluid flows~\cite{SparcValidation}.
 
 \subsection{Uncertainty Quantification: Stokhos}
 
-Stokhos~\cite{phipps2015stokhos,Phipps2016,phipps2014exploring} provides implementations of two intrusive uncertainty quantification strategies: 
+Stokhos~\cite{phipps2015stokhos,Phipps2016,phipps2014exploring} provides implementations of two intrusive uncertainty quantification strategies:
 the intrusive stochastic Galerkin uncertainty quantification method~\cite{ghanem1990polynomial,ghanem2003stochastic} and the embedded ensemble propagation method~\cite{phipps2017embedded}.
 
-Stokhos's implementation of the intrusive stochastic Galerkin uncertainty quantification method allows stochastic projections to be computed, such as Polynomial Chaos and Generalized Polynomial Chaos expansions.
+Stokhos' implementation of the intrusive stochastic Galerkin uncertainty quantification method allows stochastic projections to be computed, such as Polynomial Chaos and Generalized Polynomial Chaos expansions.
 The implementation includes interfaces for forming the linear and/or nonlinear systems that follow from the stochastic Galerkin projection, as well as linear solver methods that can exploit the block structure of these systems.
 GPU performance is targeted by using Kokkos and by commuting the layout of the Galerkin operator to be outer-spatial and inner-stochastic~\cite{phipps2014exploring}.
 The implementation has been used in~\cite{constantine2014efficient} to efficiently propagate uncertainty in multiphysics systems by reducing the full system with a nonlinear elimination method.
@@ -149,13 +149,13 @@ It builds on~\cite{pawlowski2012automating} for automating embedded analysis cap
 the values of input, output, and state variables for every sample of an ensemble. This type can then be used in the Tpetra solver stack as a template argument for the scalar type.
 This approach allows to save computation time in four ways: the sample-independent data and computation can be reused for every sample of an ensemble, the memory access pattern is improved,
 the operations on the ensemble type can be vectorized efficiently, and the message passing costs are reduced by sending fewer but larger messages.
-However, the approach requires solvers and BLAS functions to be aware of the extra dimension associated to the ensemble; for example, a GMRES for ensemble types~\cite{liegeois2020gmres} needs to monitor 
+However, the approach requires solvers and BLAS functions to be aware of the extra dimension associated to the ensemble; for example, a GMRES for ensemble types~\cite{liegeois2020gmres} needs to monitor
 the convergence of the individual samples in order to decide when to stop based on the union of the information.
 
 \subsection{Nonlinear Analysis Tools: Piro}
-%Piro~\cite{osti_1231283} is the top-level, unifying package for nonlinear analysis. 
-%The main purpose of the package is to provide driver classes for the common uses of Trilinos nonlinear analysis tools. 
-%These drivers all can be constructed similarly, with a \lstinline{Thyra::ModelEvaluator} and a \lstinline{Teuchos::ParameterList}, to make it simple to switch between different types of analysis. 
+%Piro~\cite{osti_1231283} is the top-level, unifying package for nonlinear analysis.
+%The main purpose of the package is to provide driver classes for the common uses of Trilinos nonlinear analysis tools.
+%These drivers all can be constructed similarly, with a \lstinline{Thyra::ModelEvaluator} and a \lstinline{Teuchos::ParameterList}, to make it simple to switch between different types of analysis.
 %They also all inherit from the same base classes (response-only model evaluators) so that the resulting analysis can in turn be driven by non-intrusive analysis routines.
 %The Piro library is a new package that is part of the Trilinos framework. Piro is a convenience package provides a simple and unified interface to many of the solver and analysis packages in Trilinos. The Piro package wraps many of the common usages of other existing Trilinos packages (e.g. NOX, Rythmos, TriKota) and provides a simple interface. In this way, a computer simulation code that wants to use Trilinos analysis tools can access them with just and handful of lines of Piro code. This saves much effort in interfacing their code to each of the other codes one at a time.
 Piro~\cite{osti_1231283} provides a simple and unified interface to nonlinear analysis tools in Trilinos, exposing capabilities for computing sensitivities, performing parameter continuation and bifurcation analysis, and solving constrained optimization problems.
