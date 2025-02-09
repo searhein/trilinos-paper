@@ -3,7 +3,7 @@
 % Core: Kokkos, Kokkos Kernels, Teuchos, Tpetra, Thyra (5)
 % Linear Solvers and Preconditioners: Belos, Ifpack2, FROSch, MueLu, ShyLu and Amesos2, Teko, Anasazi, Stratimikos (8)
 % Nonlinear Solvers and Analysis Tools: NOX & LOCA, ROL, Sacado, Stokhos, Piro (5)
-% Discretizations: Intrepid2, Phalanx, Tempus, Panzer, Comparde (5)
+% Discretization Tools: Intrepid2, Phalanx, Tempus, Panzer, Comparde (5)
 % Framework: Build and Test Infrastructure, Documentation Infrastructure, PyTrilinos2 (3)
 
 \begin{tikzpicture}
@@ -63,9 +63,9 @@
 
 \begin{scope}[shift={(218:\rm+0.6)}]
 \begin{scope}[shift={(-0.5*\packagew,-2.5*\packageh)}]
-% Discretizations: Intrepid2, Phalanx, Tempus, Panzer, Comparde (5)
+% Discretization Tools: Intrepid2, Phalanx, Tempus, Panzer, Comparde (5)
 \draw [fill=\colDisc!20] (-0.5*\dist-\dist-\areah,-\dist) rectangle (\packagew+\dist, 5*\packageh+5*\dist);
-\node [rotate=90] at (-0.5*\areah,2*\dist+2.5*\packageh) {\textbf{Discretizations}};
+\node [rotate=90] at (-0.5*\areah,2*\dist+2.5*\packageh) {\textbf{Discretization Tools}};
 \draw [fill=\colDisc!40,dashed] (0,0) rectangle (\packagew, \packageh) node [pos=0.5] {Compadre};
 \draw [fill=\colDisc!40] (0,\packageh+1*\dist) rectangle (\packagew, 2*\packageh+1*\dist) node [pos=0.5] {Panzer};
 \draw [fill=\colDisc!40] (0,2*\packageh+2*\dist) rectangle (\packagew, 3*\packageh+2*\dist) node [pos=0.5] {Tempus};
