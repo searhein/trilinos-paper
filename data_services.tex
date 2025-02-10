@@ -98,7 +98,9 @@ Details on Stratimikos are given in Section~\ref{sec:Stratimikos}.
 Zoltan2 is a package for partitioning, load balancing, and other combinatorial scientific computing. It can be viewed as a successor to Zoltan~\cite{Boman2012} that provides both tighter integration with other Trilinos packages and support for hybrid parallelism. It is used primarily to partition and distribute data objects (such as sparse matrices) across processors.
 
 Zoltan2 has a highly modular design. The user provides input via
-input adapters. Adapters for Xpetra (which supports both Epetra and Tpetra) are provided. The models create a graph, hypergraph, or coordinate model from the user input, which is typically a sparse matrix, mesh, or vector. The algorithms then use the model to solve the particular problem (e.g., partitioning or coloring) requested by the user.
+input adapters. Adapters for sparse graphs and matrices are provided for Xpetra, which can also be used to interface Tpetra data structures.
+The models create a graph, hypergraph, or coordinate model from the user input, which is typically a sparse matrix, mesh, or vector.
+The algorithms then use the model to solve the particular problem (e.g., partitioning or coloring) requested by the user.
 
 Zoltan2 supports both distributed-memory parallelism and on-node parallelism for both CPU and GPU (via Kokkos).
 Algorithms that support such hybrid parallelism include Multi-jagged~\cite{Z1} (geometric partitioning), Sphynx~\cite{Z2} (spectral graph partitioning), graph coloring~\cite{Z5}, and MPI task placement~\cite{Z3}.
