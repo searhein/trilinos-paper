@@ -35,8 +35,9 @@ solvers, and ShyLU also supports shared-memory inexact
 incomplete factorization preconditioners.
 %
 Such one-level preconditioners can be used as smoothers within multigrid
-methods for solving ``simpler'' problems where the setup cost of a
-more robust multilevel methods is prohibitive when compared to the
+methods,
+for solving ``simpler'' problems where the setup cost of a
+more robust multilevel methods is prohibitive in comparison to the
 reduction in the number of iterations, or when the underlying problem
 is simply not amenable to multilevel methods.
 
@@ -48,7 +49,7 @@ like Vanka relaxation \cite{Vanka1986} are possible.  Auxiliary-space
 smoothing for $H(curl)$ and $H(div)$ discretizations of the style of
 Hiptmair \cite{Hiptmair1997} are also supported.
 Local kernels are either implemented in Ifpack2 itself
-but can also be called from Kokkos Kernels for portable shared-memory algorithmic variants of Gauss-Seidel and Jacobi iterations.
+but can also be called from Kokkos Kernels for performance\hyp{}portable shared-memory algorithmic variants of Gauss-Seidel and Jacobi iterations.
 
 \subsection{Multilevel Domain Decomposition Methods: FROSch}
 \label{ssec:frosch}
@@ -95,7 +96,7 @@ in MueLu and in Kokkos Kernels.  For a full description, see~\cite{BergerVergiat
 \item \emph{Multigrid for multiphysics problems}:
 MueLu implements a tool box to compile multi-level block preconditioners for block matrices arising from coupled multiphysics problems.
 Applications range from Navier-Stokes equations
-over surface-coupling (as in fluid/structure interaction or contact mechanics~\cite{Wiesner2021a})
+over surface-coupling (as in fluid\hyp{}structure interaction or contact mechanics~\cite{Wiesner2021a})
 to volume-coupled problems (e.g., in magneto-hydro dynamics~\cite{Ohm2022a}).
 
 \item \emph{Semi-coarsening algebraic multigrid approach}~\cite{Tuminaro2016a}:
@@ -186,7 +187,7 @@ generalized Davidson method added to the suite of eigensolvers in Anasazi.
 
 
 \subsection{Unified Solver Interface: Stratimikos}
-
+\label{sec:Stratimikos}
 The Stratimikos package offers a cohesive interface to various linear solvers and preconditioners within Trilinos, including Amesos2, Belos, FROSch, Ifpack2, MueLu, and Teko.
 It requires that the matrix, right-hand side, and the solution vectors all support the Thyra interface.
 Thyra also provides wrappers for Tpetra linear algebra.
