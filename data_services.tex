@@ -29,7 +29,7 @@ Similar to the Kokkos library, Kokkos Kernels is developed in its own GitHub
 repository\footnote{https://github.com/kokkos/kokkos-kernels} outside of the Trilinos
 GitHub repository. Every version of the library is integrated and tested in Trilinos
 as part of the Kokkos ecosystem release process. Additional information on Kokkos
-Kernels' capabilities can be found here~\cite{deveci2018multithreaded,wolf2017fast}.
+Kernels' capabilities can be found in~\cite{deveci2018multithreaded,wolf2017fast}.
 
 %\todo{I'm not sure if we want to include Teuchos, but it might be necessary since it is omnipresent in the use of Trilinos.  We probably should expand this a bit more.}
 
@@ -50,10 +50,10 @@ and Kokkos-based data structures for the portions of the object
 owned by each process (MPI rank). Kokkos Kernels is used for
 performing local, parallel computations within each MPI rank.
 
-The provided objects are templated on scalar type (e.g., \code{double}, \code{float}, or a Sacado or Stokhos type), local index type, global index type and Kokkos device (pair of execution and memory spaces).
+The objects provided are templated on scalar type (e.g., \code{double}, \code{float}, or a Sacado or Stokhos type), local index type, global index type, and Kokkos device (pair of execution and memory spaces).
 The distribution of the linear algebra objects is described by a \code{Map} data structure, which defines which elements are present on which ranks.
-Here ``element'' could be a row or column of a sparse matrix, or an entry of a vector.
-Global indices number elements across an entire distributed object, while local indices number elements only within a rank.
+Here ``element'' could be a row or column of a sparse matrix or an entry of a vector.
+Global indices assign numbers to elements across an entire distributed object, while local indices number elements only within a rank.
 Since memory capacity limits the sizes of local objects, local indices can be safely represented with a more compact type than global indices (e.g., 32-bit \code{int} instead of 64-bit \code{long}).
 
 \code{DistObject} is Tpetra's abstract base class for general distributed objects.
@@ -74,7 +74,7 @@ format. Graphs also include import/export objects for use in
 halo/boundary exchanges associated with the graph.
 \item \emph{CrsMatrix} and \emph{BlockCrsMatrix} are sparse matrices in CRS and
 block compressed sparse row (BSR) formats. Associated kernels include
-sparse matrix vector product (SPMV), sparse matrix-matrix
+sparse matrix-vector product (SPMV), sparse matrix-matrix
 multiplication (SPGEMM) and triple-product, sparse matrix-matrix addition, sparse matrix transpose, diagonal extraction,
 Frobenius norm calculation, and row/column scaling.
 \end{itemize}
@@ -85,7 +85,7 @@ or the vector/matrix objects in PETSc~\cite{petsc-web-page}.
 
 Thyra is organized into three sets of abstractions depending on the type of operation required. All are templated on the scalar type. These sets are:
 \begin{itemize}
-\item \emph{Vector/Operator Interfaces:} The first level is an abstraction for vectors and operators \cite{Bartlett2007}. This set includes abstractions for vector spaces, vectors, multivectors, and linear operators. Thyra provides a default set of vector/vector and vector-operator operations for standard linear algebra tasks such as AXPY from BLAS. Defining an extensible interface such that users can add arbitrary vector/matrix operations and maintain performance can be difficult. A general tool to achieve this is the Trilinos utility package RTOp \cite{rtop}, which provides an interface for users to add new Thyra operations. RTOp accepts a vector of Thyra input objects and a vector of Thyra output objects along with a functor. RTOp will then apply the functor to each element of the data.
+\item \emph{Vector/Operator Interfaces:} The first level is an abstraction for vectors and operators \cite{Bartlett2007}. This set includes abstractions for vector spaces, vectors, multivectors, and linear operators. Thyra provides a default set of vector-vector and vector-operator operations for standard linear algebra tasks such as AXPY from BLAS. Defining an extensible interface such that users can add arbitrary vector/matrix operations and maintain performance can be difficult. A general tool to achieve this is the Trilinos utility package RTOp \cite{rtop}, which provides an interface for users to add new Thyra operations. RTOp accepts a vector of Thyra input objects and a vector of Thyra output objects along with a functor. RTOp will then apply the functor to each element of the data.
 
 \item \emph{Operator Solve Interfaces:} The second set of abstractions supplies abstract linear solvers that can be attached to operators. The interfaces include base classes for preconditioners, preconditioner factories, linear operators with a solver, and factories for linear operators with a solver. The factories build and update the preconditioners and linear solvers as needed. The solver interfaces allow one to wrap any concrete linear solver or preconditioner for use with the ANAs. Trilinos provides a separate library named Stratimikos that wraps all of the Trilinos preconditioners and linear solvers in Thyra abstractions. Run-time configuration of Stratimikos is driven by \code{Teuchos::ParameterList} options.
 Details on Stratimikos are given in Section~\ref{sec:Stratimikos}.
@@ -100,7 +100,7 @@ Zoltan2 is a package for partitioning, load balancing, and other combinatorial s
 Zoltan2 has a highly modular design. The user provides input via
 input adapters. Adapters for sparse graphs and matrices are provided for Xpetra, which can also be used to interface Tpetra data structures.
 The models create a graph, hypergraph, or coordinate model from the user input, which is typically a sparse matrix, mesh, or vector.
-The algorithms then use the model to solve the particular problem (e.g., partitioning or coloring) requested by the user.
+The algorithms then use this model to solve the particular problem (e.g., partitioning or coloring) requested by the user.
 
 Zoltan2 supports both distributed-memory parallelism and on-node parallelism for both CPU and GPU (via Kokkos).
 Algorithms that support such hybrid parallelism include Multi-jagged~\cite{Z1} (geometric partitioning), Sphynx~\cite{Z2} (spectral graph partitioning), graph coloring~\cite{Z5}, and MPI task placement~\cite{Z3}.
