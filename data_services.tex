@@ -53,7 +53,7 @@ performing local, parallel computations within each MPI rank.
 The objects provided are templated on scalar type (e.g., \code{double}, \code{float}, or a Sacado or Stokhos type), local index type, global index type, and Kokkos device (pair of execution and memory spaces).
 The distribution of the linear algebra objects is described by a \code{Map} data structure, which defines which elements are present on which ranks.
 Here ``element'' could be a row or column of a sparse matrix or an entry of a vector.
-Global indices assign numbers to elements across an entire distributed object, while local indices number elements only within a rank.
+Global indices number elements across an entire distributed object, while local indices number elements only within a rank.
 Since memory capacity limits the sizes of local objects, local indices can be safely represented with a more compact type than global indices (e.g., 32-bit \code{int} instead of 64-bit \code{long}).
 
 \code{DistObject} is Tpetra's abstract base class for general distributed objects.
